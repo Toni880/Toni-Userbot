@@ -1,7 +1,7 @@
 {
-  "name": "⚡Skyzu-Userbot⚡",
-  "description": "🚫Skyzu-Userbot🚫 USERBOT KHUSUS YANG DIGUNAKAN UNTUK BERSENANG-SENANG DI TELEGRAM.",
-  "logo": "https://telegra.ph/file/392a8cf066efbe726c6e1.jpg",
+  "name": "✨ ᴛᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ ✨",
+  "description": "🚫Tonic-Userbot🚫 USERBOT KHUSUS YANG DIGUNAKAN UNTUK BERSENANG-SENANG DI TELEGRAM.",
+  "logo": "https://telegra.ph/file/33193e0075fc37c000379.jpg",
   "keywords": [
     "telegram",
     "userbot",
@@ -9,9 +9,9 @@
     "modular",
     "productivity"
 ],
-  "repository": "https://github.com/Askarbot/Skyzuu-Userbot",
-  "telegram": "https://t.me/skyzuuuu",
-  "success_url": "https://t.me/GirlHd",
+  "repository": "https://github.com/Tonic990/Tonic-User",
+  "telegram": "https://t.me/Bukan_guudlooking",
+  "success_url": "https://t.me/GroupVirtualMusic",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -23,7 +23,7 @@
       "required": true
     },
      "STRING_SESSION": {
-      "description": "Dapatkan String Session di termux caranya ada di repo, jika tidak tau reponya tanya ke @skyzuuuu di telegram",
+      "description": "Dapatkan String Session di termux caranya ada di repo, jika tidak tau reponya tanya ke @Bukan_guudlooking di telegram",
       "required": true
     },
     "HEROKU_APP_NAME": {
@@ -42,12 +42,12 @@
     },
     "BOTLOG_CHATID": {
       "description": "Buatlah Sebuah Grup Publik Lalu Masukkan Bot @MissRose_Bot Ke Grup Mu, Setelah itu Ketik /id. Nanti akan muncul ID seperti ini Contoh : -1001234567890",
-      "value": "-1001572742132",
+      "value": "-1001155402562",
       "required": true
     },
     "G_BAN_LOGGER_GROUP": {
       "description": "Buatlah Sebuah Grup Publik Lalu Masukkan Bot @MissRose_Bot Ke Grup Mu, Setelah itu Ketik /id. Nanti akan muncul ID seperti ini Contoh : -1001234567890",
-      "value": "-1001572742132",
+      "value": "-1001155402562",
       "required": true
     },
     "PM_AUTO_BAN": {
