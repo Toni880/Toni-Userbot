@@ -227,13 +227,13 @@ async def pipcheck(pip):
         await pip.edit("Gunakan `.help pip` Untuk Melihat Contoh")
 
 
-@register(outgoing=True, pattern=r"^\.(?:skyzualive)\s?(.)?")
+@register(outgoing=True, pattern=r"^\.(?:tonicalive)\s?(.)?")
 async def amireallyalive(alive):
     user = await bot.get_me()
     await get_readable_time((time.time() - StartTime))
     output = (
-        f"丂Ҝㄚ乙ㄩ 卂ㄥ丨ᐯ乇\n\n"
-        f"\n__**{SKYZU_TEKS_KUSTOM}**__\n\n\n"
+        f"ㄒㄖ几丨匚 卂ㄥ丨ᐯ乇\n\n"
+        f"\n__**{TONIC_TEKS_KUSTOM}**__\n\n\n"
         f"╭✠╼━━━━━━━━━━━━━━━✠╮\n"
         f"➥ **Name** : `{DEFAULTUSER}` \n"
         f"➥ **Username** : @{user.username} \n"
@@ -242,7 +242,7 @@ async def amireallyalive(alive):
         f"➥ **Bot Ver**  : `{BOT_VER}` \n"
         f"➥ **Modules**  : `{len(modules)}` \n"
         f"╰✠╼━━━━━━━━━━━━━━━✠╯\n"
-        f"[ɢʀᴏᴜᴘꜱ](https://t.me/GroupVirtualMusic) | [ʙᴏᴛᴏꜰ](https://t.me/{user.username}) | [ɢɪᴛʜᴜʙ](https://github.com/Askarbot/Skyzuu-Userbot)"
+        f"[ɢʀᴏᴜᴘꜱ](https://t.me/GroupVirtualMusic) | [ʙᴏᴛᴏꜰ](https://t.me/{user.username}) | [ɢɪᴛʜᴜʙ](https://github.com/Tonic990/Tonic-User)"
     )
     if ALIVE_LOGO:
         try:
@@ -264,13 +264,13 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@register(outgoing=True, pattern=r"^\.(?:skyzuon)\s?(.)?")
+@register(outgoing=True, pattern=r"^\.(?:tonicon)\s?(.)?")
 async def amireallyalive(alive):
     await bot.get_me()
     await get_readable_time((time.time() - StartTime))
     output = (
         f"●▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬● \n"
-        f"✾ 🤴 • `ᴏᴡɴᴇʀ :`[Sƙȥυ](t.me/skyzuuuu)             ㅤ \n"
+        f"✾ 🤴 • `ᴏᴡɴᴇʀ :`[『TØNIC』 乂 ₭ILLΣR](t.me/Bukan_guudlooking)             ㅤ \n"
         f"✾ 🖥️ • `ꜱʏꜱᴛᴇᴍ. :`Ubuntu 20.10            \n"
         f"✾ ⚙️ • `ᴛᴇʟᴇᴛʜᴏɴ :`v.{version.__version__}                ㅤㅤ  \n"
         f"✾ 🐍 • `ᴘʏᴛʜᴏɴ. :`v.{python_version()} ㅤㅤ\n"
@@ -320,10 +320,10 @@ async def redis(alive):
         f"┃✧ **Branch   :** {UPSTREAM_REPO_BRANCH} \n"
         f"┃✧ **Bot Ver  :** {BOT_VER} \n"
         f"┃✧ **Modules  :** {len(modules)} Modules \n"
-        f"┃✧ **GitHub   :** [Sƙȥυ](https://github.com/Askarbot/Skyzuu-Userbot) \n"
+        f"┃✧ **GitHub   :** [Repo](https://github.com/Tonic990/Tonic-User) \n"
         f"┃✧ **Groups   :** [groups](https://t.me/GroupVirtualMusic) \n"
-        f"┃✧ **Owner    :** [Skyzu](https://t.me/skyzuuuu) \n"
-        f"┃✧ **channel  :** [channel](https://t.me/Skyzuproject) \n"
+        f"┃✧ **Owner    :** [『TØNIC』 乂 ₭ILLΣR](https://t.me/Bukan_guudlooking) \n"
+        f"┃✧ **channel  :** [channel](https://t.me/VirtualMusicChannel) \n"
         f"╰✠╼━━━━━━━━━━━━━━━━━━━✠╯"
     )
     if ALIVE_LOGO:
