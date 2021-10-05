@@ -18,7 +18,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern="^.help(?: |$)(.*)")
+@register(outgoing=True, pattern=".help")
 async def help(event):
     """For .help command,"""
     args = event.pattern_match.group(1).lower()
@@ -35,7 +35,7 @@ async def help(event):
             string += "`" + str(i)
             string += "`\t ❉  "
         await event.edit(
-            "**⚡Sƙყȥυ-υʂҽɾႦσƚ⚡**\n\n"
+            "**✨ ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ✨**\n\n"
             f"**◉ Bᴏᴛ ᴏꜰ {DEFAULTUSER}**\n**◉ Mᴏᴅᴜʟᴇꜱ : {len(modules)}**\n\n"
             "**• Mᴀɪɴ Mᴇɴᴜ :**\n"
             f"◉ {string}◉\n\n✐ **ɴᴏᴛᴇꜱ :**  `.help animasi`"
