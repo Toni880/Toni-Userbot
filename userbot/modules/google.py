@@ -3,6 +3,7 @@ Available Commands:
 .go <query> credits to owner of bot
 """
 
+import register
 from re import findall
 
 from search_engine_parser import GoogleSearch
