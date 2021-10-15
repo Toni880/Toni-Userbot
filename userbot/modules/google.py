@@ -5,10 +5,10 @@ Available Commands:
 
 from re import findall
 
-import register
 from search_engine_parser import GoogleSearch
 
 from userbot import CMD_HELP
+from userbot.events import register
 
 
 def progress(current, total):
