@@ -6,7 +6,7 @@ Available Commands:
 from re import findall
 
 from search_engine_parser import GoogleSearch
-from telebot import CMD_HELP
+from userbot import CMD_HELP
 
 
 def progress(current, total):
