@@ -3,9 +3,9 @@ Available Commands:
 .go <query> credits to owner of bot
 """
 
-import register
 from re import findall
 
+import register
 from search_engine_parser import GoogleSearch
 
 from userbot import CMD_HELP
