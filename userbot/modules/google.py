@@ -18,7 +18,7 @@ def progress(current, total):
     )
 
 
-@register(admin_cmd(outgoing=True, pattern="go (.*)"))
+@register(outgoing=True, pattern=r"^\.go")
 async def gsearch(q_event):
     """For .google command, do a Google search."""
     match = q_event.pattern_match.group(1)
