@@ -19,6 +19,55 @@ async def typewriter(typew):
     await typew.edit("**GA KEREN LO BEGITU NGENTOT**")
 
 
+@register(outgoing=True, pattern="^.wah(?: |$)(.*)")
+async def typewriter(typew):
+    typew.pattern_match.group(1)
+    await typew.edit("`Wahh, War nya keren bang`")
+    sleep(2)
+    await typew.edit("`Tapi, Yang gua liat, kok Kaya lawakan`")
+    sleep(2)
+    await typew.edit("`Oh iya, Kan lo badut 🤡`")
+    sleep(2)
+    await typew.edit("`Kosa kata pas ngelawak, Jangan di pake war bang`")
+    sleep(2)
+    await typew.edit("`Kesannya lo ngasih kita hiburan.`")
+    sleep(2)
+    await typew.edit(
+        "`Kasian badut🤡, Ga di hargain pengunjung, Eh lampiaskan nya ke Tele, Wkwkwkwk`"
+    )
+    sleep(3)
+    await typew.edit("`Dah sana cabut, Makasih hiburannya, Udah bikin Gua tawa ngakak`")
+
+
+@register(outgoing=True, pattern=r"^\.kont(?: |$)(.*)")
+async def typewriter(typew):
+    typew.pattern_match.group(1)
+    sleep(1)
+    await typew.edit("**KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**LU ANAK KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**DI BIKIN DARI KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**MUKALU PERSIS KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**DASAR ANAK NGONTOLLLL**")
+    sleep(1.5)
+    await typew.edit("**NOLEP KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**NGERUSUH KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**BENER BENER KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**PADAHAL LO GAPUNYA KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**MENDING LO OPERASI KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**BIAR LO PUNYA KONTOLL**")
+    sleep(1.5)
+    await typew.edit("**KASIAN CACAD GAPUNYA KONTOLL**")
+
+
 @register(outgoing=True, pattern=r"^\.an(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
@@ -107,6 +156,10 @@ CMD_HELP.update(
          \n↳ : ngatain bocah hina\
          \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: .gh\
          \n↳ : lihat sendiri\
+         \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: .wah\
+         \n↳ : lihat sendiri\
+         \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: .kont\
+         \n↳ : ngatain anak kontol\
          \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: .gj\
          \n↳ : ngatain bocah gajelas\
          \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: .lol\
