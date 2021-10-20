@@ -351,7 +351,7 @@ with bot:
 
 
 async def check_alive():
-    await bot.send_message(BOTLOG_CHATID, "**ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ʙᴇʀʜᴀsɪʟ ᴅɪᴀᴋᴛɪꜰᴋᴀɴ✨**\n━━━━━━━━━━━━━━━\n❃ **Branch :** `Tonic-Userbot`\n❃ **BotVer :** `5.0`\n━━━━━━━━━━━━━━━\n❃ **Support :** @GroupVirtualMusic\n━━━━━━━━━━━━━━━")
+    await bot.send_message(BOTLOG_CHATID, "**ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ʙᴇʀʜᴀsɪʟ ᴅɪᴀᴋᴛɪꜰᴋᴀɴ✨**\n━━━━━━━━━━━━━━━\n❃ **Branch :** `Tonic-Userbot`\n❃ **BotVer :** `5.0`\n━━━━━━━━━━━━━━━\n❃ **Support :** @AkiraSupport\n━━━━━━━━━━━━━━━")
     return
 
 with bot:
