@@ -8,7 +8,7 @@ from userbot.events import register
 
 @register(outgoing=True, pattern=r"^.kamuii(:? |$)([1-8])?")
 async def _(fry):
-    await fry.edit("`Prosess, mengaktifkan kekuatan skyzu...`")
+    await fry.edit("`Prosess, mengaktifkan kekuatan Tonic...`")
     level = fry.pattern_match.group(2)
     if fry.fwd_from:
         return
