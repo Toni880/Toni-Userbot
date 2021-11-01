@@ -314,7 +314,8 @@ async def pencil(client, message):
             img = cv2.imread(a)
             img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             img_invert = cv2.bitwise_not(img_gray)
-            img_smoothing = cv2.GaussianBlur(img_invert, (21, 21), sigmaX=0, sigmaY=0)
+            img_smoothing = cv2.GaussianBlur(
+                img_invert, (21, 21), sigmaX=0, sigmaY=0)
             final_img = dodgeV2(img_gray, img_smoothing)
             cv2.imwrite(edit_img_loc, final_img)
             await message.reply_chat_action("upload_photo")
@@ -372,7 +373,8 @@ async def cartoon(client, message):
             edges = cv2.adaptiveThreshold(
                 gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 9, 5
             )
-            color = cv2.bilateralFilter(img, d=9, sigmaColor=200, sigmaSpace=200)
+            color = cv2.bilateralFilter(
+                img, d=9, sigmaColor=200, sigmaSpace=200)
 
             cv2.bitwise_and(color, color, mask=edges)
             img_1 = color_quantization(img, 7)
