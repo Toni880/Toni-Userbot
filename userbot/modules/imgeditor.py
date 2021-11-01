@@ -9,6 +9,8 @@ from pyrogram.types import (
     Message,
 )
 
+from userbot import pbot
+
 # By @TroJanzHEX
 from userbot.helper_extra.ImageEditor.edit_1 import (  # pylint:disable=import-error
     black_white,
@@ -56,22 +58,23 @@ from userbot.helper_extra.ImageEditor.edit_5 import (  # pylint:disable=import-e
     scanlineglitch_4,
     scanlineglitch_5,
 )
-from userbot import pbot
 
 lel = 00000000
 # pylint:disable=import-error
+
+
 @pbot.on_message(filters.command(["edit", "editor"]))
 async def photo(client: pbot, message: Message):
     try:
         if not message.reply_to_message.photo:
             await client.send_message(message.chat.id, "Reply to an image man!ㅤㅤ")
             return
-    except:
+    except BaseException:
         return
     global lel
     try:
         lel = message.from_user.id
-    except:
+    except BaseException:
         return
     try:
         await client.send_message(
