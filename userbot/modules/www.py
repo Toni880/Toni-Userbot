@@ -12,7 +12,7 @@ from datetime import datetime
 
 import redis
 from speedtest import Speedtest
-
+from userbot import DEVS
 from userbot import ALIVE_NAME, CMD_HELP, StartTime
 from userbot.events import register
 
@@ -58,12 +58,12 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@register(incoming=True, from_users=1416529201, pattern=r"^.absen$")
+@register(incoming=True, from_users=DEVS, pattern=r"^.absen$")
 async def _(skyzuu):
     await skyzuu.reply(random.choice(absen))
 
 
-@register(incoming=True, from_users=1416529201, pattern=r"^.pacar$")
+@register(incoming=True, from_users=DEVS, pattern=r"^.pacar$")
 async def _(asadekontol):
     await asadekontol.reply(random.choice(pacar))
 
