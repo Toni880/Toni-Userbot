@@ -66,10 +66,10 @@ BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", ""))
 
 # DEVS
 DEVS = (
-    2001537177,
+
     1416529201,
     1403094256,
-    1663258664,
+
     1979717764,
     1977978893,
 )
@@ -361,7 +361,7 @@ with bot:
 
 
 async def check_alive():
-    await bot.send_message(BOTLOG_CHATID, "**ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ʙᴇʀʜᴀsɪʟ ᴅɪᴀᴋᴛɪꜰᴋᴀɴ✨**\n━━━━━━━━━━━━━━━\n❃ **Branch :** `Tonic-Userbot`\n❃ **BotVer :** `5.0`\n━━━━━━━━━━━━━━━\n❃ **Support :** @AkiraSupport\n━━━━━━━━━━━━━━━")
+    await bot.send_message(BOTLOG_CHATID, "**ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ʙᴇʀʜᴀsɪʟ ᴅɪᴀᴋᴛɪꜰᴋᴀɴ✨**\n━━━━━━━━━━━━━━━\n❃ **Branch :** `Tonic-Userbot`\n❃ **BotVer :** `5.0`\n━━━━━━━━━━━━━━━\n❃ **Support :** @PrimeSupportGroup\n━━━━━━━━━━━━━━━")
     return
 
 with bot:
