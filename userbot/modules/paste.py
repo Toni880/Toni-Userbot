@@ -2,9 +2,9 @@ import os
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from userbot.events import register
 from userbot.utils import edit_delete, edit_or_reply
 from userbot.utils.pastebin import PasteBin
-from userbot.events import register
 
 
 @register(pattern="paste(?: (-d|-n|-h|-k)|$)?(?: ([\\s\\S]+)|$)")
