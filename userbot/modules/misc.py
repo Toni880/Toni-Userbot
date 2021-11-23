@@ -120,7 +120,7 @@ async def repo_is_here(wannasee):
         "✨ ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ✨ \n"
         "✰ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Github](https://github.com/Tonic990/Tonic-User)\n"
         "✰ **ᴏᴡɴᴇʀ ʙᴏᴛ :** [『TØNIC』 乂 ₭ILLΣR](t.me/Bukan_guudlooking)\n"
-        "✰ **ᴄʜᴀɴɴᴇʟ :** [Channel](t.me/VirtualMusicChannel)\n"
+        "✰ **ᴄʜᴀɴɴᴇʟ :** [Channel](t.me/PrimeSupportChannel)\n"
         "✰ **ʟɪᴄᴇɴsᴇ :** [GPL-3.0 License](https://github.com/Tonic990/Tonic-User/blob/Skyzuu-Userbot/LICENSE)"
     )
 
