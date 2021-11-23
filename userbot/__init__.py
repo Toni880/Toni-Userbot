@@ -66,12 +66,8 @@ BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", ""))
 
 # DEVS
 DEVS = (
-
     1416529201,
     1403094256,
-
-
-
 )
 
 # Userbot logging feature switch.
@@ -484,7 +480,7 @@ with bot:
                     buttons=[
                         [
                             Button.url("【﻿Ｃｈａｎｎｅｌ】",
-                                       "https://t.me/VirtualMusicChannel")],
+                                       "https://t.me/PrimeSupportChannel")],
                     ]
                 )
 
@@ -563,7 +559,7 @@ with bot:
                     f"❁ __Saya Adalah Tonic Userbot Yang Digunakan Banyak User Telegram__.\n\n"
                     f"❁ __Saya Dibuat Hanya Untuk Bersenang Senang Ditelegram__.\n\n"
                     f"❁ __Kelebihan Saya Banyak, Saya Mempunyai 180 Modules__.\n\n"
-                    f"© @VirtualMusicChannel")
+                    f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
                     file=roselogo,
@@ -641,7 +637,7 @@ with bot:
                     f"°__Mengubah Foto Alive Kamu, Yang Kamu Inginkan__.\n\n"
                     f"× `.set var TONIC_TEKS_KUSTOM` [**TEKS**]\n"
                     f"°__Mengganti Teks Yang Ada Command tonicAlive__.\n\n"
-                    f"© @VirtualMusicChannel")
+                    f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
                     file=roselogo,
@@ -671,7 +667,7 @@ with bot:
                     f"°__Mengaktifkan Pmpermit Kalian Atau Disebut Pesan Otomatis__.\n\n"
                     f"× `.set pm_msg` [**REPLYCHAT**]\n"
                     f"°__Mengganti Teks Pmpermit Selera Kamu__.\n\n"
-                    f"© @VirtualMusicChannel")
+                    f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
                     file=roselogo,
@@ -701,7 +697,7 @@ with bot:
                     f"°__Mengubah Emoji Inline Yang Ada Dicomand__ `.helpme`\n\n"
                     f"× `.set var INLINE_PIC` [**LINK**]\n"
                     f"°__Mengubah Foto Yang Ada Dicomand__ `.helpme`\n\n"
-                    f"© @VirtualMusicChannel")
+                    f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
                     file=roselogo,
@@ -729,7 +725,7 @@ with bot:
                     f"Modules Name **pmbot**\n\n"
                     f"× `.set var START_WELCOME` [**TEKS**] \n"
                     f"°__Kamu Juga Bisa Mengubah Start Welcome Untuk Bot Kamu Yang Ini, Dengan Cara Diatas Dan Kata Kata Bebas__.\n\n"
-                    f"© @VirtualMusicChannel")
+                    f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
                     file=roselogo,
@@ -759,7 +755,7 @@ with bot:
                     f"⚒Pembaruan Data :\n"
                     f"`.update deploy`\n"
                     f"`update`\n\n"
-                    f"© @VirtualMusicChannel")
+                    f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
                     file=roselogo,
@@ -824,7 +820,7 @@ with bot:
                     f"**|**  [`{percentage}`**%**]\n"
                     f" ✠➲ **ʙᴏᴛ ᴏꜰ :** {ALIVE_NAME}  "
                     "\n╚════════════════════╝"
-                    f"© @GroupVirtualMusic")
+                    f"© @PrimeSupportGroup")
                 await event.edit(
                     text,
                     file=roselogo,
@@ -875,7 +871,7 @@ with bot:
                     buttons=[
                         [
                             Button.url("ᴄʜᴀɴɴᴇʟ",
-                                       "t.me/VirtualMusicChannel")],
+                                       "t.me/PrimeSupportChannel")],
                     ]
                 )
 
@@ -913,7 +909,7 @@ with bot:
 
                             custom.Button.url(
                                 "CHANNEL",
-                                "t.me/VirtualMusicChannel")],
+                                "t.me/PrimeSupportChannel")],
                         [custom.Button.url(
                             "LICENSE",
                             "https://github.com/Tonic990/Tonic-User/LICENSE")],
@@ -953,9 +949,9 @@ with bot:
                     buttons=[
                         [
                             Button.url("❈ꜱᴜᴘᴘᴏʀᴛ❈",
-                                       "t.me/GroupVirtualMusic"),
+                                       "t.me/PrimeSupportGroup"),
                             Button.url("❈ᴄʜᴀɴɴᴇʟ❈",
-                                       "t.me/VirtualMusicChannel")],
+                                       "t.me/PrimeSupportChannel")],
                         [custom.Button.inline(
                             "°ᴏᴘᴇɴ ᴍᴇɴᴜ°", data="open_plugin")],
                         [custom.Button.inline(
