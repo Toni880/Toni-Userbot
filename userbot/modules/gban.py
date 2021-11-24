@@ -32,7 +32,7 @@ async def get_full_user(event):
             user_obj = await event.client.get_entity(user)
         except Exception as err:
             return await event.edit(
-                "`Terjadi Kesalahan... Mohon Lapor Ke Grup` @GeezSupportGroup", str(err)
+                "`Terjadi Kesalahan... Mohon Lapor Ke Grup` @PrimeSupportGroup", str(err)
             )
     return user_obj, extra
 
@@ -77,8 +77,8 @@ async def handler(tele):
                         except BaseException:
                             return
 
-
 @register(outgoing=True, pattern="^.gban(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cgban(?: |$)(.*)")
 async def gben(userbot):
     dc = userbot
     sender = await dc.get_sender()
@@ -147,6 +147,7 @@ async def gben(userbot):
 
 
 @register(outgoing=True, pattern="^.ungban(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cungban(?: |$)(.*)")
 async def gunben(userbot):
     dc = userbot
     sender = await dc.get_sender()
