@@ -13,13 +13,11 @@ from math import ceil
 
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
-from pytgcalls import PyTgCalls
 from pymongo import MongoClient
 from datetime import datetime
 from redis import StrictRedis
 from dotenv import load_dotenv
 from requests import get
-from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sync import TelegramClient, custom, events
 from telethon.sessions import StringSession
 from telethon import Button, events, functions, types
@@ -326,22 +324,11 @@ for binary, path in binaries.items():
 
 # 'bot' variable
 if STRING_SESSION:
-    session = StringSession(str(STRING_SESSION))
+    # pylint: disable=invalid-name
+    bot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
 else:
-    session = "ManUserBot"
-try:
-    bot = TelegramClient(
-        session=session,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-except Exception as e:
-    print(f"STRING_SESSION - {e}")
-    sys.exit()
-call_py = PyTgCalls(bot)
+    # pylint: disable=invalid-name
+    bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
 async def check_botlog_chatid():
