@@ -18,7 +18,6 @@ from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
 from userbot import ALIVE_NAME
-from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot.events import register
 
@@ -106,14 +105,14 @@ async def change_title(e):
 
 CMD_HELP.update(
     {
-        "vcg": f"**Plugin : **`vcg`\
-        \n\n  •  **Syntax :** `{cmd}startvc`\
+        "vcg": f"**Plugin : **`.vcg`\
+        \n\n  •  **Syntax :** `.startvc`\
         \n  •  **Function : **Untuk Memulai voice chat group\
-        \n\n  •  **Syntax :** `{cmd}stopvc`\
+        \n\n  •  **Syntax :** `.stopvc`\
         \n  •  **Function : **Untuk Memberhentikan voice chat group\
-        \n\n  •  **Syntax :** `{cmd}vctitle` <title vcg>\
+        \n\n  •  **Syntax :** `.vctitle` <title vcg>\
         \n  •  **Function : **Untuk Mengubah title/judul voice chat group\
-        \n\n  •  **Syntax :** `{cmd}vcinvite`\
+        \n\n  •  **Syntax :** `.vcinvite`\
         \n  •  **Function : **Mengundang Member group ke voice chat group\
     "
     }
