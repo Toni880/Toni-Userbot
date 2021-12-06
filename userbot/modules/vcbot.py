@@ -11,7 +11,6 @@ from telethon.tl import types
 from telethon.utils import get_display_name
 from youtube_search import YoutubeSearch
 
-from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, call_py
 from userbot.events import register
 from userbot.utils import download_lagu, edit_or_reply, runcmd
@@ -176,17 +175,17 @@ async def stream_end_handler(c, u: Update):
 CMD_HELP.update(
     {
         "voiceplay": f"**Plugin : **`voiceplay`\
-        \n\n  •  **Syntax :** `{cmd}play` <Judul Lagu/Link YT>\
+        \n\n  •  **Syntax :** `.play` <Judul Lagu/Link YT>\
         \n  •  **Function : **Untuk Memutar lagu di voice chat group dengan akun kamu\
-        \n\n  •  **Syntax :** `{cmd}end`\
+        \n\n  •  **Syntax :** `.end`\
         \n  •  **Function : **Untuk Memberhentikan lagu yang di putar di voice chat group\
-        \n\n  •  **Syntax :** `{cmd}pause`\
+        \n\n  •  **Syntax :** `.pause`\
         \n  •  **Function : **Untuk memberhentikan lagu yang sedang diputar\
-        \n\n  •  **Syntax :** `{cmd}resume`\
+        \n\n  •  **Syntax :** `.resume`\
         \n  •  **Function : **Untuk melanjutkan pemutaran lagu yang sedang diputar\
-        \n\n  •  **Syntax :** `{cmd}delraw`\
-        \n  •  **Function : **Untuk menghapus file raw bekas play music (Rekomendasi sesudah `{cmd}delraw` ketik `{cmd}restart`)\
-        \n\n  •  **NOTE :** Play Music hanya bisa di 1 Grup Chat saja, untuk memutar di GC lain ketik `{cmd}end` terlebih dahulu\
+        \n\n  •  **Syntax :** `.delraw`\
+        \n  •  **Function : **Untuk menghapus file raw bekas play music (Rekomendasi sesudah `.delraw` ketik `.restart`)\
+        \n\n  •  **NOTE :** Play Music hanya bisa di 1 Grup Chat saja, untuk memutar di GC lain ketik `.end` terlebih dahulu\
     "
     }
 )
