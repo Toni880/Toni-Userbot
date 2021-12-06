@@ -102,3 +102,4 @@ scikit-image
 pendulum
 opencv-python
 youtube-search-python
+py-tgcalls
