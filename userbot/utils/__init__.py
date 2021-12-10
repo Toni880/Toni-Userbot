@@ -27,5 +27,4 @@ from .tools import (
     runcmd,
     edit_delete,
     edit_or_reply,
-    register
 )
