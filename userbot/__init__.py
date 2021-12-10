@@ -29,9 +29,10 @@ load_dotenv("config.env")
 
 StartTime = time.time()
 
+# Global Variables
 CMD_LIST = {}
-# for later purposes
 CMD_HELP = {}
+SUDO_LIST = {}
 INT_PLUG = ""
 LOAD_PLUG = {}
 
@@ -71,6 +72,7 @@ DEVS = (
     1663258664,
     1979717764,
 )
+SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 
 # Userbot logging feature switch.
 BOTLOG = sb(os.environ.get("BOTLOG", "True"))
