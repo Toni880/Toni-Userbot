@@ -107,6 +107,7 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
         LOGS.error(err)
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
+
 async def reply_id(event):
     reply_to_id = None
     if event.sender_id in SUDO_USERS:
