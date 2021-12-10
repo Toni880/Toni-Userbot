@@ -32,7 +32,6 @@ StartTime = time.time()
 # Global Variables
 CMD_LIST = {}
 CMD_HELP = {}
-SUDO_LIST = {}
 INT_PLUG = ""
 LOAD_PLUG = {}
 
@@ -72,8 +71,6 @@ DEVS = (
     1663258664,
     1979717764,
 )
-SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
-BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
 
 # Userbot logging feature switch.
 BOTLOG = sb(os.environ.get("BOTLOG", "True"))
