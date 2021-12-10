@@ -132,8 +132,8 @@ async def dyno_usage(dyno):
     """
     Get your account Dyno Usage
     """
-    await dyno.edit("`Processing...`")
-    await asyncio.sleep(2)
+    await dyno.edit("**Processing...**")
+    await asyncio.sleep(1)
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -180,17 +180,11 @@ async def dyno_usage(dyno):
             AppMinutes = math.floor(AppQuotaUsed % 60)
 
             await dyno.edit(
-                "✨ **ɪɴꜰᴏʀᴍᴀsɪ ᴅʏɴᴏ ʜᴇʀᴏᴋᴜ :**\n"
-                "╔════════════════════╗\n"
-                f" ☂ **ᴘᴇɴɢɢᴜɴᴀ ᴅʏɴᴏ sᴀᴀᴛ ɪɴɪ :**\n"
-                f"  ➽  `{AppHours}`**ᴊᴀᴍ**  `{AppMinutes}`**ᴍᴇɴɪᴛ**  "
-                f"**|**  [`{AppPercentage}`**%**]"
-                "\n◖════════════════════◗\n"
-                " ☂ **sɪsᴀ ᴋᴏᴜᴛᴀ ᴅʏɴᴏ ʙᴜʟᴀɴ ɪɴɪ :**\n"
-                f"  ➽  `{hours}`**ᴊᴀᴍ**  `{minutes}`**ᴍᴇɴɪᴛ**  "
-                f"**|**  [`{percentage}`**%**]\n"
-                f" ✠➲ **ʙᴏᴛ ᴏꜰ :** {ALIVE_NAME}  "
-                "\n╚════════════════════╝"
+                "☂Dყɳσ Sααƚ Iɳι : \n"
+                f"➽ {AppHours} ᴊᴀᴍ - {AppMinutes} ᴍᴇɴɪᴛ [ {AppPercentage}% ]  \n"
+                f"☂Dყɳσ Bυʅαɳ Iɳι: \n"
+                f"➽ {hours} ᴊᴀᴍ - {minutes} ᴍᴇɴɪᴛ [ {percentage}% ] \n"
+                f" ✄ вσт σƒ  : {ALIVE_NAME} \n"
             )
             await asyncio.sleep(20)
             await event.delete()
@@ -222,8 +216,6 @@ CMD_HELP.update(
     {
         "herokuapp": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.usage`"
         "\n↳ : Check Quota Dyno Heroku"
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.logs`"
-        "\n↳ : Melihat Logs Heroku Anda"
         "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.set var <NEW VAR> <VALUE>`"
         "\n↳ : Tambahkan Variabel Baru Atau Memperbarui Variabel"
         "\nSetelah Menyetel Variabel Tersebut, Rose-Userbot Akan Di Restart."
