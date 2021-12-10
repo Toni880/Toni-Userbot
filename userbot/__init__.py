@@ -29,8 +29,8 @@ load_dotenv("config.env")
 
 StartTime = time.time()
 
-# Global Variables
 CMD_LIST = {}
+# for later purposes
 CMD_HELP = {}
 INT_PLUG = ""
 LOAD_PLUG = {}
