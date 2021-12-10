@@ -25,7 +25,7 @@ async def sudo(event):
         await edit_delete(event, "🔮 **Sudo:** `Disabled`")
 
 
-@man_cmd(pattern="addsudo(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="addsudo(?:\\s|$)([\\s\\S]*)")
 async def add(event):
     suu = event.text[9:]
     if f"{cmd}add " in event.text:
@@ -67,7 +67,7 @@ async def add(event):
     heroku_Config[var] = newsudo
 
 
-@man_cmd(pattern="delsudo(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="delsudo(?:\\s|$)([\\s\\S]*)")
 async def _(event):
     suu = event.text[8:]
     xxx = await edit_or_reply(event, "`Processing...`")
