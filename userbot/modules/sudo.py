@@ -2,8 +2,13 @@ import os
 
 import heroku3
 from telethon.tl.functions.users import GetFullUserRequest
-
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_HANDLER, SUDO_USERS
+from userbot import (
+    CMD_HELP,
+    HEROKU_API_KEY,
+    HEROKU_APP_NAME,
+    SUDO_HANDLER,
+    SUDO_USERS,
+)
 from userbot.event import register
 from userbot.utils import edit_delete, edit_or_reply
 
