@@ -3,16 +3,16 @@ import os
 import heroku3
 from telethon.tl.functions.users import GetFullUserRequest
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_HANDLER, SUDO_USERS
-from userbot.utils import edit_delete, edit_or_reply, man_cmd
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_HANDLER, SUDO_USERS,
+from userbot.event import register
+from userbot.utils import edit_delete, edit_or_reply
 
 Heroku = heroku3.from_key(HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"
 sudousers = os.environ.get("SUDO_USERS") or ""
 
 
-@man_cmd(pattern="sudo$")
+@register(pattern="sudo$")
 async def sudo(event):
     sudo = "True" if SUDO_USERS else "False"
     users = sudousers
@@ -25,7 +25,7 @@ async def sudo(event):
         await edit_delete(event, "🔮 **Sudo:** `Disabled`")
 
 
-@man_cmd(pattern="addsudo(?:\\s|$)([\\s\\S]*)")
+@register(pattern="addsudo(?:\\s|$)([\\s\\S]*)")
 async def add(event):
     suu = event.text[9:]
     if f"{cmd}add " in event.text:
@@ -67,7 +67,7 @@ async def add(event):
     heroku_Config[var] = newsudo
 
 
-@man_cmd(pattern="delsudo(?:\\s|$)([\\s\\S]*)")
+@register(pattern="delsudo(?:\\s|$)([\\s\\S]*)")
 async def _(event):
     suu = event.text[8:]
     xxx = await edit_or_reply(event, "`Processing...`")
@@ -128,11 +128,11 @@ async def get_user(event):
 CMD_HELP.update(
     {
         "sudo": f"**Plugin : **`sudo`\
-        \n\n  •  **Syntax :** `{cmd}sudo`\
+        \n\n  •  **Syntax :** `.sudo`\
         \n  •  **Function : **Untuk Mengecek informasi Sudo.\
-        \n\n  •  **Syntax :** `{cmd}addsudo` <reply/user id>\
+        \n\n  •  **Syntax :** `.addsudo` <reply/user id>\
         \n  •  **Function : **Untuk Menambahkan User ke Pengguna Sudo.\
-        \n\n  •  **Syntax :** `{cmd}delsudo` <reply/user id>\
+        \n\n  •  **Syntax :** `.delsudo` <reply/user id>\
         \n  •  **Function : **Untuk Menghapus User dari Pengguna Sudo.\
         \n\n  •  **NOTE: Berikan Hak Sudo anda Kepada orang yang anda percayai**\
     "
