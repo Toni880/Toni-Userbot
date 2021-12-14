@@ -230,37 +230,60 @@ async def moni(event):
         return await event.edit("`Invalid syntax.`")
 
 
-@register(outgoing=True, pattern=r"^\.google (.*)")
+@register(outgoing=True, pattern=r"google ([\s\S]*)"))
 async def gsearch(q_event):
+    man = await edit_or_reply(q_event, "`Processing...`")
     match = q_event.pattern_match.group(1)
-    page = findall(r"page=\d+", match)
+    page = re.findall(r"-p\d+", match)
+    lim = re.findall(r"-l\d+", match)
     try:
         page = page[0]
-        page = page.replace("page=", "")
-        match = match.replace("page=" + page[0], "")
+        page = page.replace("-p", "")
+        match = match.replace("-p" + page, "")
     except IndexError:
         page = 1
-    search_args = (str(match), int(page))
+    try:
+        lim = lim[0]
+        lim = lim.replace("-l", "")
+        match = match.replace("-l" + lim, "")
+        lim = int(lim)
+        if lim <= 0:
+            lim = int(5)
+    except IndexError:
+        lim = 5
+    smatch = match.replace(" ", "+")
+    search_args = (str(smatch), int(page))
     gsearch = GoogleSearch()
-    gresults = await gsearch.async_search(*search_args)
+    bsearch = BingSearch()
+    ysearch = YahooSearch()
+    try:
+        gresults = await gsearch.async_search(*search_args)
+    except NoResultsOrTrafficError:
+        try:
+            gresults = await bsearch.async_search(*search_args)
+        except NoResultsOrTrafficError:
+            try:
+                gresults = await ysearch.async_search(*search_args)
+            except Exception as e:
+                return await edit_delete(man, f"**ERROR:**\n`{e}`", time=10)
     msg = ""
-    for i in range(10):
+    for i in range(lim):
+        if i > len(gresults["links"]):
+            break
         try:
             title = gresults["titles"][i]
             link = gresults["links"][i]
             desc = gresults["descriptions"][i]
-            msg += f"[{title}]({link})\n`{desc}`\n\n"
+            msg += f"👉 [{title}]({link})\n`{desc}`\n\n"
         except IndexError:
             break
-    await q_event.edit(
-        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg, link_preview=False
+    await edit_or_reply(
+        man,
+        "**Keyword Google Search:**\n`" + match + "`\n\n**Results:**\n" + msg,
+        link_preview=False,
+        aslink=True,
+        linktext=f"**Hasil Pencarian untuk Keyword** `{match}` **adalah** :",
     )
-
-    if BOTLOG:
-        await q_event.client.send_message(
-            BOTLOG_CHATID,
-            "Google Search query `" + match + "` was executed successfully",
-        )
 
 
 @register(outgoing=True, pattern=r"^\.wiki (.*)")
@@ -920,69 +943,7 @@ async def get_dogbin_content(dog_url):
             "Get dogbin content query was executed successfully",
         )
 
-
-@register(outgoing=True, pattern=r"^\.paste(?: |$)([\s\S]*)")
-async def paste(pstl):
-    dogbin_final_url = ""
-    match = pstl.pattern_match.group(1).strip()
-    reply_id = pstl.reply_to_msg_id
-
-    if not match and not reply_id:
-        return await pstl.edit("`Elon Musk said I cannot paste void.`")
-
-    if match:
-        message = match
-    elif reply_id:
-        message = await pstl.get_reply_message()
-        if message.media:
-            downloaded_file_name = await pstl.client.download_media(
-                message,
-                TEMP_DOWNLOAD_DIRECTORY,
-            )
-            m_list = None
-            with open(downloaded_file_name, "rb") as fd:
-                m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8")
-            os.remove(downloaded_file_name)
-        else:
-            message = message.message
-
-    # Dogbin
-    await pstl.edit("`Pasting text . . .`")
-    resp = post(DOGBIN_URL + "documents", data=message.encode("utf-8"))
-
-    if resp.status_code == 200:
-        response = resp.json()
-        key = response["key"]
-        dogbin_final_url = DOGBIN_URL + key
-
-        if response["isUrl"]:
-            reply_text = (
-                "`Pasted successfully!`\n\n"
-                f"[Shortened URL]({dogbin_final_url})\n\n"
-                "`Original(non-shortened) URLs`\n"
-                f"[Dogbin URL]({DOGBIN_URL}v/{key})\n"
-                f"[View RAW]({DOGBIN_URL}raw/{key})"
-            )
-        else:
-            reply_text = (
-                "`Pasted successfully!`\n\n"
-                f"[Dogbin URL]({dogbin_final_url})\n"
-                f"[View RAW]({DOGBIN_URL}raw/{key})"
-            )
-    else:
-        reply_text = "`Failed to reach Dogbin`"
-
-    await pstl.edit(reply_text)
-    if BOTLOG:
-        await pstl.client.send_message(
-            BOTLOG_CHATID,
-            "Paste query was executed successfully",
-        )
-
-
+        
 @register(outgoing=True, pattern="^.removebg(?: |$)(.*)")
 async def kbg(remob):
     """For .rbg command, Remove Image Background."""
