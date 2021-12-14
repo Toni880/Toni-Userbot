@@ -943,7 +943,7 @@ async def get_dogbin_content(dog_url):
             "Get dogbin content query was executed successfully",
         )
 
-        
+
 @register(outgoing=True, pattern="^.removebg(?: |$)(.*)")
 async def kbg(remob):
     """For .rbg command, Remove Image Background."""
