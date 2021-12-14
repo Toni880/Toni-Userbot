@@ -230,7 +230,7 @@ async def moni(event):
         return await event.edit("`Invalid syntax.`")
 
 
-@register(outgoing=True, pattern=r"google ([\s\S]*)"))
+@register(outgoing=True, pattern=r"^\.google (.*)")
 async def gsearch(q_event):
     man = await edit_or_reply(q_event, "`Processing...`")
     match = q_event.pattern_match.group(1)
