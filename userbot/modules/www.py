@@ -40,7 +40,6 @@ cping = [
 ]
 
 
-
 async def get_readable_time(seconds: int) -> str:
     count = 0
     up_time = ""
@@ -75,9 +74,11 @@ async def _(tonic):
 async def _(asadekontol):
     await asadekontol.reply(random.choice(pacar))
 
+
 @register(incoming=True, from_users=DEVS, pattern=r"^.cping$")
 async def _(tonic):
     await tonic.reply(random.choice(cping))
+
 
 @register(outgoing=True, pattern="^.sping$")
 async def redis(pong):
