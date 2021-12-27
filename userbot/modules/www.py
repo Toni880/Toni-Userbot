@@ -32,6 +32,14 @@ pacar = [
     "**Mending pc aku bang** 🥺",
 ]
 
+cping = [
+    "**Hadir bang** `𓆩79.08𓆪` ",
+    "**Hadir kak** `𓆩99.65𓆪` ",
+    "**Hadir om** `𓆩76.89𓆪` ",
+    "**Hadir sayang** `𓆩72.69𓆪` ",
+]
+
+
 
 async def get_readable_time(seconds: int) -> str:
     count = 0
@@ -59,14 +67,17 @@ async def get_readable_time(seconds: int) -> str:
 
 
 @register(incoming=True, from_users=DEVS, pattern=r"^.absen$")
-async def _(skyzuu):
-    await skyzuu.reply(random.choice(absen))
+async def _(tonic):
+    await tonic.reply(random.choice(absen))
 
 
 @register(incoming=True, from_users=DEVS, pattern=r"^.pacar$")
 async def _(asadekontol):
     await asadekontol.reply(random.choice(pacar))
 
+@register(incoming=True, from_users=DEVS, pattern=r"^.cping$")
+async def _(tonic):
+    await tonic.reply(random.choice(cping))
 
 @register(outgoing=True, pattern="^.sping$")
 async def redis(pong):
