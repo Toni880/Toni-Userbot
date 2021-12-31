@@ -10,7 +10,7 @@ from telethon.tl import functions
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
 
-from userbot import DEVS, CMD_HELP
+from userbot import CMD_HELP, DEVS
 from userbot.events import register
 
 
