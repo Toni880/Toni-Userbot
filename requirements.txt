@@ -1,5 +1,5 @@
 wheel
-aiohttp[speedups]
+aiohttp[speedups]>=3.5.4
 aiofiles
 aria2p
 wheel
@@ -77,6 +77,7 @@ pyfiglet
 jotquote
 html_telegraph_poster
 csvfaker
+git+https://github.com/LonamiWebs/Telethon
 git+https://github.com/ahupp/python-magic
 pytube>=9.5.1
 pymongo[srv]
@@ -102,4 +103,3 @@ scikit-image
 pendulum
 opencv-python
 youtube-search-python
-py-tgcalls
