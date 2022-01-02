@@ -22,9 +22,9 @@ async def typewriter(typew):
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(3)
-    await typew.edit("**Apapun Yang Terjadi**")
+    await typew.edit("**Apapun Yang Terjadi!**")
     sleep(3)
-    await typew.edit("**Tetaplah Bernapas**")
+    await typew.edit("**Tetaplah Bernapas!**")
     sleep(1)
     await typew.edit("**Dan Selalu Bersyukur**")
 
