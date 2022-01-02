@@ -71,6 +71,7 @@ DEVS = (
     1403094256,
     1663258664,
     1979717764,
+    1705562427,
 )
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
