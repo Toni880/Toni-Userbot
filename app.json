@@ -15,15 +15,15 @@
   "stack": "container",
   "env": {
     "API_KEY": {
-      "description": "Dapatkan Api Key di web my.telegram.org/Dibot @scrapsenbot.",
+      "description": "Dapatkan Api Key di web my.telegram.org/Dibot @PrimeApiBot.",
       "required": true
     },
     "API_HASH": {
-      "description": "Dapatkan Api Hash Di Web my.telegram.org/Dibot @scrapsendbot.",
+      "description": "Dapatkan Api Hash Di Web my.telegram.org/Dibot @PrimeApiBot.",
       "required": true
     },
      "STRING_SESSION": {
-      "description": "Dapatkan String Session di termux caranya ada di repo, jika tidak tau reponya tanya ke @Bukan_guudlooking di telegram",
+      "description": "Dapatkan String Session di termux caranya ada di repo atau gunakan bot @PrimeStringBot",
       "required": true
     },
     "HEROKU_APP_NAME": {
