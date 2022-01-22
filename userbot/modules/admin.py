@@ -30,12 +30,7 @@ from telethon.tl.types import (
     PeerChat,
 )
 
-from userbot import (
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    DEVS,
-)
+from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS
 from userbot.events import register
 
 # =================== CONSTANT ===================
