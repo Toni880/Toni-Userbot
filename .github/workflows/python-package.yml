@@ -2,9 +2,9 @@
 
 on:
   push:
-    branches: [ Skyzuu-Userbot ]
+    branches: [ Tonic-Userbot ]
   pull_request:
-    branches: [ Skyzuu-Userbot ]
+    branches: [ Tonic-Userbot ]
 
 jobs:
   build:
@@ -34,4 +34,4 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-[![Python package](https://github.com/Askarbot/Skyzuu-Userbot/actions/workflows/python-package.yml/badge.svg?branch=Skyzuu-Userbot&event=workflow_dispatch)](https://github.com/Askarbot/Skyzuu-Userbot/actions/workflows/python-package.yml)
+[![Python package](https://github.com/Tonic990/Tonic990-Userbot/actions/workflows/python-package.yml/badge.svg?branch=Tonic-Userbot&event=workflow_dispatch)](https://github.com/Tonic990/Tonic-Userbot/actions/workflows/python-package.yml)
