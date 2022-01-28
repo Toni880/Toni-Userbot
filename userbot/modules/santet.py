@@ -1,10 +1,10 @@
 from time import sleep
+from userbot import CMD_HELP, bot
+from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd
 
-from userbot import CMD_HELP
-from userbot.events import register
 
-
-@register(outgoing=True, pattern=r"^\.santet(?: |$)(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"santet(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`Anda Telah Mengaktifkan Perintah Santet Online ツ`")
@@ -314,12 +314,11 @@ async def typewriter(typew):
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████████▌")
     sleep(1)
-    await typew.edit("`Target Berhasil Tersantet Online mampus lo anjeng:v`")
+    await typew.edit("`Target Berhasil Tersantet Online:v`")
 
 
-CMD_HELP.update(
-    {
-        "santetonline": "`.santet`\
-        \nUsage: Santet Online Buat Bercanda."
-    }
-)
+CMD_HELP.update({
+    "santetonline":
+    f"✘ Plugin santetonline :\
+\n\n  •  Perintah : `{cmd}santet` \
+  \n  •  Fungsi : Santet Online Buat Bercanda."})
