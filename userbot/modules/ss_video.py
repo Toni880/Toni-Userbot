@@ -10,40 +10,41 @@ import time
 
 from telethon.tl.types import DocumentAttributeFilename
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import toni_cmd
 from userbot.utils import progress
 
 
-@register(outgoing=True, pattern=r"^\.ssvideo(?: |$)(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"ssvideo(?: |$)(.*)"))
 async def ssvideo(event):
     if not event.reply_to_msg_id:
-        await event.edit("`Reply to any media..`")
+        await event.edit("📛 `Balas ke media apa pun..`")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("`reply to a video..`")
+        await event.edit("🎥 `Membalas video..`")
         return
     try:
         frame = int(event.pattern_match.group(1))
         if frame > 10:
-            return await event.edit("`hey..dont put that much`")
+            return await event.edit("`hey..jangan terlalu banyak`")
     except BaseException:
-        return await event.edit("`Please input number of frame!`")
+        return await event.edit("`Silakan masukkan nomor bingkai!`")
     if reply_message.photo:
-        return await event.edit("`Hey..this is an image!`")
+        return await event.edit("`Hei..ini adalah gambar!`")
     if (
         DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
         in reply_message.media.document.attributes
     ):
-        return await event.edit("`Unsupported files..`")
+        return await event.edit("`File tidak didukung..`")
     elif (
         DocumentAttributeFilename(file_name="sticker.webp")
         in reply_message.media.document.attributes
     ):
-        return await event.edit("`Unsupported files..`")
+        return await event.edit("`File tidak didukung..`")
     c_time = time.time()
-    await event.edit("`Downloading media..`")
+    await event.edit("📂 `Downloading media..`")
     ss = await bot.download_media(
         reply_message,
         "anu.mp4",
@@ -52,7 +53,7 @@ async def ssvideo(event):
         ),
     )
     try:
-        await event.edit("`Proccessing..`")
+        await event.edit("🔍 `Proccessing..`")
         command = f"vcsi -g {frame}x{frame} {ss} -o ss.png "
         os.system(command)
         await event.client.send_file(
@@ -69,6 +70,8 @@ async def ssvideo(event):
         return await event.edit(f"{e}")
 
 
-CMD_HELP.update(
-    {"ssvideo": "`>.ssvideo <frame>`" "\nUsage: to ss video frame per frame"}
-)
+CMD_HELP.update({
+    "ssvideo":
+    f"✘ **Plugin ssvideo** :\
+\n\n  •  **Perintah** : `{cmd}ssvideo` [nomer]\
+  \n  •  **Fungsi** :  ke ss bingkai video per bingkai."})
