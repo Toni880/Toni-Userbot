@@ -1,12 +1,11 @@
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+from userbot import bot, CMD_HELP
+from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd
 from asyncio.exceptions import TimeoutError
 
-from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
-
-
-@register(outgoing=True, pattern=r"^\.sa(?: |$)(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"sa(?: |$)(.*)"))
 async def lastname(steal):
     if steal.fwd_from:
         return
@@ -20,7 +19,7 @@ async def lastname(steal):
     if message.sender.bot:
         await steal.edit("```Balas Ke Pesan Pengguna Yang Sebenarnya.```")
         return
-    await steal.edit("```Lu siapa si ngentot, gua intip sabi laa..```")
+    await steal.edit("```Mengambil Informasi Pengguna Tersebut, Mohon Menunggu..```")
     try:
         async with bot.conversation(chat) as conv:
             try:
@@ -28,7 +27,9 @@ async def lastname(steal):
                 r = await conv.get_response()
                 response = await conv.get_response()
             except YouBlockedUserError:
-                await steal.reply("```Mohon Unblock @sangmatainfo_bot Dan Coba Lagi```")
+                await steal.reply(
+                    "```Mohon Unblock @sangmatainfo_bot Dan Coba Lagi```"
+                )
                 return
             if r.text.startswith("Name"):
                 respond = await conv.get_response()
@@ -40,9 +41,7 @@ async def lastname(steal):
             if response.text.startswith("No records") or r.text.startswith(
                 "No records"
             ):
-                await steal.edit(
-                    "```Saya Tidak Menemukan Informasi Pengguna Ini, Pengguna Ini Belum Pernah Mengganti Nama Sebelumnya```"
-                )
+                await steal.edit("```Saya Tidak Menemukan Informasi Pengguna Ini, Pengguna Ini Belum Pernah Mengganti Nama Sebelumnya```")
                 await steal.client.delete_messages(
                     conv.chat_id, [msg.id, r.id, response.id]
                 )
@@ -57,9 +56,8 @@ async def lastname(steal):
         return await steal.edit("`Saya Sedang Sakit Mohon Maaf`")
 
 
-CMD_HELP.update(
-    {
-        "sangmata": "`.sa`\
-          \nUsage: Mendapatkan Riwayat Nama Pengguna."
-    }
-)
+CMD_HELP.update({
+    "sangmata":
+    f"✘ Plugin sangmata :\
+\n\n  •  Perintah : `{cmd}sa` [pengguna]\
+  \n  •  Fungsi : Mendapatkan Riwayat Nama Pengguna."})
