@@ -29,7 +29,8 @@ from userbot import (
     StartTime,
     bot,
 )
-from userbot.events import register
+from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
@@ -65,7 +66,7 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@register(outgoing=True, pattern=r"^\.spc")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.spc"))
 async def psu(event):
     uname = platform.uname()
     softw = "**Informasi Sistem**\n"
@@ -121,7 +122,7 @@ def get_size(bytes, suffix="B"):
         bytes /= factor
 
 
-@register(outgoing=True, pattern=r"^\.sysd$")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.sysd$"))
 async def sysdetails(sysd):
     if not sysd.text[0].isalpha() and sysd.text[0] not in ("/", "#", "@", "!"):
         try:
@@ -140,7 +141,7 @@ async def sysdetails(sysd):
             await sysd.edit("`Install neofetch first !!`")
 
 
-@register(outgoing=True, pattern=r"^\.botver$")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.botver$"))
 async def bot_ver(event):
     if event.text[0].isalpha() or event.text[0] in ("/", "#", "@", "!"):
         return
@@ -179,7 +180,7 @@ async def bot_ver(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.pip(?: |$)(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.pip(?: |$)(.*)"))
 async def pipcheck(pip):
     if pip.text[0].isalpha() or pip.text[0] in ("/", "#", "@", "!"):
         return
@@ -227,7 +228,7 @@ async def pipcheck(pip):
         await pip.edit("Gunakan `.help pip` Untuk Melihat Contoh")
 
 
-@register(outgoing=True, pattern=r"^\.(?:tonicalive)\s?(.)?")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.(?:tonicalive)\s?(.)?"))
 async def amireallyalive(alive):
     user = await bot.get_me()
     await get_readable_time((time.time() - StartTime))
@@ -264,7 +265,7 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@register(outgoing=True, pattern=r"^\.(?:tonicon)\s?(.)?")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.(?:tonion)\s?(.)?"))
 async def amireallyalive(alive):
     await bot.get_me()
     await get_readable_time((time.time() - StartTime))
@@ -298,7 +299,7 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@register(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?"))
 async def redis(alive):
     user = await bot.get_me()
     await get_readable_time((time.time() - StartTime))
@@ -346,7 +347,7 @@ async def redis(alive):
         await alive.delete()
 
 
-@register(outgoing=True, pattern="^.aliveu")
+@bot.on(toni_cmd(outgoing=True, pattern="^.aliveu"))
 async def amireallyaliveuser(username):
     """For .aliveu command, change the username in the .alive command."""
     message = username.text
@@ -359,38 +360,37 @@ async def amireallyaliveuser(username):
     await username.edit("`" f"{output}" "`")
 
 
-@register(outgoing=True, pattern=r"^\.resetalive$")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^\.resetalive$"))
 async def amireallyalivereset(ureset):
     global DEFAULTUSER  # global statement
     DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
     await ureset.edit("`" "Successfully reset user for alive!" "`")
 
 
-CMD_HELP.update(
-    {
-        "system": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.sysd`"
-        "\n↳ : Shows system information using neofetch."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.db`"
-        "\n↳ : Shows database related info."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.spc`"
-        "\n↳ : Show system specification."
-    }
-)
-CMD_HELP.update(
-    {
-        "alive": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.alive` or `.on` or `skyzu`"
-        "\n↳ : To see whether your bot is working or not."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.aliveu` <text>"
-        "\n↳ : Changes the 'user' in alive to the text you want."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.restalive`"
-        "\n↳ : Resets the user to default."
-    }
-)
-CMD_HELP.update(
-    {
-        "botversion": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.botver`"
-        "\n↳ : Shows the userbot version."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.pip` <module(s)>"
-        "\n↳ : Does a search of pip modules(s)."
-    }
-)
+CMD_HELP.update({
+    "system":
+    f"✘ **Plugin system**:\
+\n\n  •  **Perintah:** `{cmd}sysd` \
+  \n  •  **Fungsi:* Menampilkan informasi sistem menggunakan neofetch.\
+\n\n  •  **Perintah:** `{cmd}db` \
+  \n  •  **Fungsi:** Menampilkan info terkait basis data.\
+\n\n  •  **Perintah:** `{cmd}spc`\
+  \n  •  **Fungsi:** Tampilkan spesifikasi sistem."})
+
+CMD_HELP.update({
+    "alive":
+    f"✘ **Plugin alive**:\
+\n\n  •  **Perintah:** `{cmd}alive` \
+  \n  •  **Fungsi:** Untuk melihat apakah bot Anda berfungsi atau tidak.\
+\n\n  •  **Perintah:** `{cmd}aliveu` \
+  \n  •  **Fungsi:** Ubah 'pengguna' menjadi teks yang Anda inginkan.\
+\n\n  •  **Perintah:** `{cmd}restalive`\
+  \n  •  **Fungsi:** Mengatur ulang pengguna ke default."})
+
+CMD_HELP.update({
+    "botver":
+    f"✘ **Plugin botver**:\
+\n\n  •  **Perintah:** `{cmd}botver` \
+  \n  •  **Fungsi:** lihat versi userbot.\
+\n\n  •  **Perintah:** `{cmd}pip` (Modules)\
+  \n  •  **Fungsi:** Melakukan pencarian pip modules(s)."})
