@@ -9,13 +9,14 @@
 import io
 import textwrap
 
+
 from PIL import Image, ImageDraw, ImageFont
+from userbot import CMD_HELP, bot
+from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd
 
-from userbot import CMD_HELP
-from userbot.events import register
 
-
-@register(outgoing=True, pattern=r"^\.stick (.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"stick (.*)"))
 async def stext(event):
     sticktext = event.pattern_match.group(1)
 
@@ -26,21 +27,28 @@ async def stext(event):
     await event.delete()
 
     sticktext = textwrap.wrap(sticktext, width=10)
-    sticktext = "\n".join(sticktext)
+    sticktext = '\n'.join(sticktext)
 
     image = Image.new("RGBA", (512, 512), (255, 255, 255, 0))
     draw = ImageDraw.Draw(image)
     fontsize = 220
-    font = ImageFont.truetype("userbot/files/RobotoMono-Regular.ttf", size=fontsize)
+    font = ImageFont.truetype(
+        "userbot/files/RobotoMono-Regular.ttf",
+        size=fontsize)
 
     while draw.multiline_textsize(sticktext, font=font) > (512, 512):
         fontsize -= 3
-        font = ImageFont.truetype("userbot/files/RobotoMono-Regular.ttf", size=fontsize)
+        font = ImageFont.truetype(
+            "userbot/files/RobotoMono-Regular.ttf",
+            size=fontsize)
 
     width, height = draw.multiline_textsize(sticktext, font=font)
     draw.multiline_text(
-        ((512 - width) / 2, (512 - height) / 2), sticktext, font=font, fill="white"
-    )
+        ((512 - width) / 2,
+         (512 - height) / 2),
+        sticktext,
+        font=font,
+        fill="white")
 
     image_stream = io.BytesIO()
     image_stream.name = "sticker.webp"
@@ -50,9 +58,8 @@ async def stext(event):
     await event.client.send_file(event.chat_id, image_stream)
 
 
-CMD_HELP.update(
-    {
-        "stickertext": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.stick` <text>"
-        "\nUsage: Mengubah Teks/Kata-Kata, Menjadi Stiker Anda."
-    }
-)
+CMD_HELP.update({
+    "stickertext":
+    f"✘ Plugin stickertext :\
+\n\n  •  Perintah : `{cmd}stick` [teks]\
+  \n  •  Fungsi : Mengubah Teks/Kata-Kata, Menjadi Stiker Anda."})
