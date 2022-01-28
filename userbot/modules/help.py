@@ -6,10 +6,10 @@
 """ Userbot help command """
 
 import asyncio
+from userbot import ALIVE_NAME, CMD_HELP, bot
+from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd
 from platform import uname
-
-from userbot import ALIVE_NAME, CMD_HELP
-from userbot.events import register
 
 modules = CMD_HELP
 
@@ -18,7 +18,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern="^.help(?: |$)(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern="^.help(?: |$)(.*)"))
 async def help(event):
     """For .help command,"""
     args = event.pattern_match.group(1).lower()
