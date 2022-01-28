@@ -9,15 +9,12 @@ from telethon.tl.types import UserStatusOnline as onn
 from telethon.tl.types import UserStatusRecently as rec
 from telethon.utils import get_display_name
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import toni_cmd
+from userbot import CMD_HELP, bot
 
 
-@register(
-    outgoing=True,
-    pattern=r"^\.tag(on|off|all|bots|rec|admins|owner)?(.*)",
-    disable_errors=True,
-)
+@bot.on(toni_cmd(pattern="tag(on|off|all|bots|rec|admins|owner)?(.*)", outgoing=True))
 async def _(e):
     okk = e.text
     lll = e.pattern_match.group(2)
@@ -64,21 +61,20 @@ async def _(e):
     await e.delete()
 
 
-CMD_HELP.update(
-    {
-        "tags": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tag all`"
-        "\n• : Tag Top 100 Members of chat."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tag admin`"
-        "\n• : Tag Admins of that chat."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tag owner`"
-        "\n• : Tag Owner of that chat."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tag bot`"
-        "\n• : Tag Bots of that chat."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tag rec`"
-        "\n• : Tag recently Active Members."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tag on`"
-        "\n• : Tag online Members(work only if privacy off)."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tag off`"
-        "\n• : Tag Offline Members(work only if privacy off)."
-    }
-)
+CMD_HELP.update({
+    "tags":
+    f"**✘ Plugin** `tags` :\
+\n\n  •  **Perintah :** `{cmd}tag all`\
+  \n  •  **Fungsi : **Tag Top 100 Members of chat.\
+\n\n  •  **Perintah :** `{cmd} tag admin` \
+  \n  •  **Fungsi : **Tag Admins of that chat.\
+\n\n  •  **Perintah :** `{cmd}tag owner` \
+  \n  •  **Fungsi : **Tag Owner of that chat.\
+\n\n  •  **Perintah :** `{cmd}tag bot` \
+  \n  • ** Fungsi: **Tag Bots of that chat.\
+\n\n  •  **Perintah :** `{cmd}tag rec`\
+  \n  •  **Fungsi : **Tag recently Active Members.\
+\n\n  • ** Perintah: ** `{cmd}tag on` \
+  \n  • ** Fungsi: **Tag online Members(work only if privacy off).\
+\n\n  • ** Perintah: ** `{cmd}tag of`\
+  \n  • ** Fungsi: **Tag offline Members(work only if privacy off)."})
