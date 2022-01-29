@@ -11,7 +11,7 @@ import random
 import re
 
 from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot.events import register
 
 usernexp = re.compile(r"@(\w{3,32})\[(.+?)\]")
 nameexp = re.compile(r"\[([\w\S]+)\]\(tg://user\?id=(\d+)\)\[(.+?)\]")
@@ -24,7 +24,7 @@ class FlagContainer:
     is_active = False
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.mention(?: |$)(.*)", disable_errors=True))
+@register(outgoing=True, pattern=r"^\.mention(?: |$)(.*)", disable_errors=True)
 async def _(event):
     if event.fwd_from:
         return
@@ -37,7 +37,7 @@ async def _(event):
     await bot.send_message(chat, mentions, reply_to=event.message.reply_to_msg_id)
 
 
-@bot.on(toni_cmd(outgoing=True, groups_only=True, pattern=r"^\.emojitag(?: |$)(.*)"))
+@register(outgoing=True, groups_only=True, pattern=r"^\.emojitag(?: |$)(.*)")
 async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
@@ -83,7 +83,7 @@ async def _(event):
         FlagContainer.is_active = False
 
 
-@bot.on(toni_cmd(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)"))
+@register(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)")
 async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
