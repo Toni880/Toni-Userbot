@@ -9,6 +9,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
+from userbot.events import toni_cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 
 bground = "black"
