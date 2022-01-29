@@ -10,7 +10,6 @@ from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from userbot import (
-    bot,
     BOTLOG,
     BOTLOG_CHATID,
     CMD_HELP,
@@ -18,6 +17,7 @@ from userbot import (
     HEROKU_APP_NAME,
     UPSTREAM_REPO_BRANCH,
     UPSTREAM_REPO_URL,
+    bot,
 )
 from userbot.events import toni_cmd
 
