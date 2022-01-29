@@ -26,6 +26,8 @@ from telethon.utils import get_display_name
 redis_db = None
 
 load_dotenv("config.env")
+repo = Repo()
+branch = repo.active_branch.name
 
 StartTime = time.time()
 
