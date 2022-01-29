@@ -5,11 +5,12 @@ import os
 import requests
 from bs4 import BeautifulSoup as bs
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot.events import toni_cmd
 
 
-@register(outgoing=True, pattern=r"^\.ts (.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"ts(?: |$)(.*)"))
 async def gengkapak(e):
     await e.edit("`Please wait, fetching results...`")
     query = e.pattern_match.group(1)
@@ -27,8 +28,7 @@ async def gengkapak(e):
             run += 1
             r1 = ts[run]
             list1 = "<-----{}----->\nName: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(
-                run, r1["name"], r1["seeder"], r1["size"], r1["age"], r1["magnet"]
-            )
+                run, r1["name"], r1["seeder"], r1["size"], r1["age"], r1["magnet"])
             listdata += list1
         except BaseException:
             break
@@ -41,12 +41,8 @@ async def gengkapak(e):
         out_file.write(str(listdata))
     fd = codecs.open(tsfileloc, "r", encoding="utf-8")
     data = fd.read()
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": data})
-        .json()
-        .get("result")
-        .get("key")
-    )
+    key = (requests.post("https://nekobin.com/api/documents",
+                         json={"content": data}) .json() .get("result") .get("key"))
     url = f"https://nekobin.com/raw/{key}"
     caption = (
         f"`Here the results for the query: {query}`\n\nPasted to: [Nekobin]({url})"
@@ -68,7 +64,7 @@ def dogbin(magnets):
     return urls
 
 
-@register(outgoing=True, pattern=r"^\.tos(?: |$)(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"tos(?: |$)(.*)"))
 async def tor_search(event):
     if event.fwd_from:
         return
@@ -91,8 +87,9 @@ async def tor_search(event):
 
     else:
         res = requests.get(
-            "https://www.torrentdownloads.me/search/?search=" + search_str, headers
-        )
+            "https://www.torrentdownloads.me/search/?search=" +
+            search_str,
+            headers)
 
     source = bs(res.text, "lxml")
     urls = []
@@ -138,7 +135,8 @@ async def tor_search(event):
         search_str = search_str.replace("+", " ")
     except BaseException:
         pass
-    msg = "**Torrent Search Query**\n`{}`".format(search_str) + "\n**Results**\n"
+    msg = "**Torrent Search Query**\n`{}`".format(
+        search_str) + "\n**Results**\n"
     counter = 0
     while counter != len(titles):
         msg = (
@@ -151,11 +149,10 @@ async def tor_search(event):
     await event.edit(msg, link_preview=False)
 
 
-CMD_HELP.update(
-    {
-        "torrent": ">`.ts` Search query."
-        "\nUsage: Search for torrent query and post to dogbin.\n\n"
-        ">`.tos` Search query."
-        "\nUsage: Search for torrent magnet from query."
-    }
-)
+CMD_HELP.update({
+    "torrent":
+    f"✘ Plugin torrent :\
+\n\n  •  Perintah : `{cmd}ts` [Search query]\
+  \n  •  Fungsi : Cari kueri torrent dan poskan ke dogbin.\
+\n\n  •  Perintah : `{cmd}tos` [Search query]\
+  \n  •  Fungsi : Cari magnet torrent dari kueri."})
