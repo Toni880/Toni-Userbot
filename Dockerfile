@@ -1,9 +1,17 @@
+# Using Python Slim-Buster
 FROM vckyouuu/geezprojects:buster
+#━━━━━ Userbot Telegram ━━━━━
+#━━━━━ By Tonic-Userbot ━━━━━
 
-RUN git clone -b Tonic-Userbot https://github.com/Tonic990/Tonic-Userbot  /root/userbot/
-    && chmod 777 /root/userbot \
-    && mkdir /root/userbot/bin/
+RUN git clone -b Tonic-Userbot https://github.com/Ara-423/Ara-Userbot /root/userbot
+RUN mkdir /root/userbot/.bin
+RUN pip install --upgrade pip setuptools
+WORKDIR /root/userbot
 
-WORKDIR /root/userbot/
+#Install python requirements
+RUN pip3 install -r https://raw.githubusercontent.com/Askarbot/Skyzuu-Userbot/Skyzuu-Userbot/requirements.txt
 
-CMD [ "bash", "start" ]
+EXPOSE 80 443
+
+# Finalization
+CMD ["python3", "-m", "userbot"]
