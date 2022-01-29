@@ -10,6 +10,7 @@ from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from userbot import (
+    bot,
     BOTLOG,
     BOTLOG_CHATID,
     CMD_HELP,
