@@ -7,6 +7,7 @@ import urllib
 from telethon.tl import functions
 
 from userbot import ALIVE_NAME
+from userbot.events import toni_cmd
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 
