@@ -19,7 +19,6 @@ from userbot import (
     UPSTREAM_REPO_URL,
 )
 from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
 
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"

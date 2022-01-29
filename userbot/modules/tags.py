@@ -10,8 +10,8 @@ from telethon.tl.types import UserStatusRecently as rec
 from telethon.utils import get_display_name
 
 from userbot import CMD_HANDLER as cmd
-from userbot.events import toni_cmd
 from userbot import CMD_HELP, bot
+from userbot.events import toni_cmd
 
 
 @bot.on(toni_cmd(pattern="tag(on|off|all|bots|rec|admins|owner)?(.*)", outgoing=True))
@@ -61,9 +61,9 @@ async def _(e):
     await e.delete()
 
 
-CMD_HELP.update({
-    "tags":
-    f"**✘ Plugin** `tags` :\
+CMD_HELP.update(
+    {
+        "tags": f"**✘ Plugin** `tags` :\
 \n\n  •  **Perintah :** `{cmd}tag all`\
   \n  •  **Fungsi : **Tag Top 100 Members of chat.\
 \n\n  •  **Perintah :** `{cmd} tag admin` \
@@ -77,4 +77,6 @@ CMD_HELP.update({
 \n\n  • ** Perintah: ** `{cmd}tag on` \
   \n  • ** Fungsi: **Tag online Members(work only if privacy off).\
 \n\n  • ** Perintah: ** `{cmd}tag of`\
-  \n  • ** Fungsi: **Tag offline Members(work only if privacy off)."})
+  \n  • ** Fungsi: **Tag offline Members(work only if privacy off)."
+    }
+)

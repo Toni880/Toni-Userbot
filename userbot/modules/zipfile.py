@@ -1,12 +1,14 @@
 import asyncio
+import os
+import time
 import zipfile
 from datetime import date
-import time
-import os
-from userbot import TEMP_DOWNLOAD_DIRECTORY, ZIP_DOWNLOAD_DIRECTORY, bot, CMD_HELP
-from userbot.utils import progress
-from userbot.events import toni_cmd
+
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, ZIP_DOWNLOAD_DIRECTORY, bot
+from userbot.events import toni_cmd
+from userbot.utils import progress
+
 # ====================
 today = date.today()
 # ====================
@@ -64,7 +66,7 @@ async def _(event):
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"addzip(?: |$)(.*)"))
 async def addzip(add):
-    """ Copyright (c) 2020 azrim @github"""
+    """Copyright (c) 2020 azrim @github"""
     # Prevent Channel Bug to use update
     if add.is_channel and not add.is_group:
         await add.edit("✖️ `Perintah tidak diizinkan di saluran...`")
@@ -104,7 +106,7 @@ async def upload_zip(up):
     input_str = up.pattern_match.group(1)
     curdate = today.strftime("%m%d%y")
     title = str(input_str) if input_str else "zipfile" + f"{curdate}"
-    zipf = zipfile.ZipFile(title + '.zip', 'w', zipfile.ZIP_DEFLATED)
+    zipf = zipfile.ZipFile(title + ".zip", "w", zipfile.ZIP_DEFLATED)
     zipdir(ZIP_DOWNLOAD_DIRECTORY, zipf)
     zipf.close()
     c_time = time.time()
@@ -139,9 +141,9 @@ def zipdir(path, ziph):
             os.remove(os.path.join(root, file))
 
 
-CMD_HELP.update({
-    "zipfile":
-    f"**✘ Plugin** `zipfile` :\
+CMD_HELP.update(
+    {
+        "zipfile": f"**✘ Plugin** `zipfile` :\
 \n\n  •  **Perintah :** `{cmd}compress` [**Membalas File**]\
   \n  •  **Fungsi : **Buat File Menjadi Zip.\
 \n\n  •  **Perintah :** `{cmd}addzip` [**Membalas File**]\
@@ -149,4 +151,6 @@ CMD_HELP.update({
 \n\n  •  **Perintah :** `{cmd}upzip` [**Judul zip**]\
   \n  •  **Fungsi : **Unggah Daftar zip.\
 \n\n  •  **Perintah :** `{cmd}rmzip` [**Judul zip**]\
-  \n  •  **Fungsi : **Hapus Daftar zip."})
+  \n  •  **Fungsi : **Hapus Daftar zip."
+    }
+)

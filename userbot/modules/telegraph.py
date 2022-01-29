@@ -4,9 +4,9 @@ from datetime import datetime
 from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
 
 telegraph = Telegraph()
 r = telegraph.create_account(short_name="telegraph")
@@ -16,8 +16,7 @@ auth_url = r["auth_url"]
 @bot.on(toni_cmd(outgoing=True, pattern="tg (t|m)(?: |$)(.*)"))
 async def telegraphs(graph):
     await graph.edit("`Sedang Memproses...`")
-    if not graph.text[0].isalpha() and graph.text[0] not in (
-            "/", "#", "@", "!"):
+    if not graph.text[0].isalpha() and graph.text[0] not in ("/", "#", "@", "!"):
         if graph.fwd_from:
             return
         if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -86,7 +85,9 @@ async def telegraphs(graph):
                     link_preview=True,
                 )
         else:
-            await graph.edit("`Mohon Balas Ke Pesan, Untuk Mendapatkan Link Telegraph Permanen.`")
+            await graph.edit(
+                "`Mohon Balas Ke Pesan, Untuk Mendapatkan Link Telegraph Permanen.`"
+            )
 
 
 def resize_image(image):
@@ -94,8 +95,10 @@ def resize_image(image):
     im.save(image, "PNG")
 
 
-CMD_HELP.update({
-    "telegraph":
-    f"**✘ Plugin telegraph :\
+CMD_HELP.update(
+    {
+        "telegraph": f"**✘ Plugin telegraph :\
 \n\n  •  Perintah : `{cmd}tg` [m/t]\
-  \n  •  Fungsi : Mengunggah t(Teks) Atau m(Media) Ke Telegraph."})
+  \n  •  Fungsi : Mengunggah t(Teks) Atau m(Media) Ke Telegraph."
+    }
+)

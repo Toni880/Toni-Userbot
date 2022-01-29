@@ -20,17 +20,10 @@ from shutil import which
 import psutil
 from telethon import __version__, version
 
-from userbot import (
-    ALIVE_LOGO,
-    ALIVE_NAME,
-    BOT_VER,
-    CMD_HELP,
-    UPSTREAM_REPO_BRANCH,
-    StartTime,
-    bot,
-)
-from userbot.events import toni_cmd
+from userbot import ALIVE_LOGO, ALIVE_NAME, BOT_VER
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, UPSTREAM_REPO_BRANCH, StartTime, bot
+from userbot.events import toni_cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
@@ -367,30 +360,36 @@ async def amireallyalivereset(ureset):
     await ureset.edit("`" "Successfully reset user for alive!" "`")
 
 
-CMD_HELP.update({
-    "system":
-    f"✘ **Plugin system**:\
+CMD_HELP.update(
+    {
+        "system": f"✘ **Plugin system**:\
 \n\n  •  **Perintah:** `{cmd}sysd` \
   \n  •  **Fungsi:* Menampilkan informasi sistem menggunakan neofetch.\
 \n\n  •  **Perintah:** `{cmd}db` \
   \n  •  **Fungsi:** Menampilkan info terkait basis data.\
 \n\n  •  **Perintah:** `{cmd}spc`\
-  \n  •  **Fungsi:** Tampilkan spesifikasi sistem."})
+  \n  •  **Fungsi:** Tampilkan spesifikasi sistem."
+    }
+)
 
-CMD_HELP.update({
-    "alive":
-    f"✘ **Plugin alive**:\
+CMD_HELP.update(
+    {
+        "alive": f"✘ **Plugin alive**:\
 \n\n  •  **Perintah:** `{cmd}alive` \
   \n  •  **Fungsi:** Untuk melihat apakah bot Anda berfungsi atau tidak.\
 \n\n  •  **Perintah:** `{cmd}aliveu` \
   \n  •  **Fungsi:** Ubah 'pengguna' menjadi teks yang Anda inginkan.\
 \n\n  •  **Perintah:** `{cmd}restalive`\
-  \n  •  **Fungsi:** Mengatur ulang pengguna ke default."})
+  \n  •  **Fungsi:** Mengatur ulang pengguna ke default."
+    }
+)
 
-CMD_HELP.update({
-    "botver":
-    f"✘ **Plugin botver**:\
+CMD_HELP.update(
+    {
+        "botver": f"✘ **Plugin botver**:\
 \n\n  •  **Perintah:** `{cmd}botver` \
   \n  •  **Fungsi:** lihat versi userbot.\
 \n\n  •  **Perintah:** `{cmd}pip` (Modules)\
-  \n  •  **Fungsi:** Melakukan pencarian pip modules(s)."})
+  \n  •  **Fungsi:** Melakukan pencarian pip modules(s)."
+    }
+)

@@ -5,15 +5,10 @@ import os
 import urllib
 
 from telethon.tl import functions
-from userbot.events import rose_cmd
-from userbot import (
-    CMD_HELP,
-    bot,
-    ALIVE_NAME,
-)
-from userbot import CMD_HANDLER as cmd
-from userbot import TEMP_DOWNLOAD_DIRECTORY
 
+from userbot import ALIVE_NAME
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 
 OFFLINE_TAG = f"{ALIVE_NAME} #OFFLINE"
 ONLINE_TAG = f"{ALIVE_NAME} #ONLINE"
@@ -106,10 +101,12 @@ async def _(event):
         await event.edit(str(e))
 
 
-CMD_HELP.update({
-    "mystatus":
-    f"✘ **Plugin mystatus** :\
+CMD_HELP.update(
+    {
+        "mystatus": f"✘ **Plugin mystatus** :\
 \n\n  •  **Perintah** : `{cmd}offline` \
   \n  •  **Fungsi** : Tambahkan tag offline di nama Anda dan ubah foto profil menjadi hitam.\
 \n\n  •  **Perintah** : `{cmd}unoff` \
-  \n  •  **Fungsi** : Hapus Tag Offline dari nama Anda dan ubah foto profil menjadi `{cmd}set var PROFILE_IMAGE` [link]."})
+  \n  •  **Fungsi** : Hapus Tag Offline dari nama Anda dan ubah foto profil menjadi `{cmd}set var PROFILE_IMAGE` [link]."
+    }
+)

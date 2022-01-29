@@ -1,7 +1,8 @@
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"shazam(?: |$)(.*)"))
@@ -33,14 +34,17 @@ async def _(event):
         \n\n**Details : **__{result.text.splitlines()[2]}__"
             await event.edit(namem)
             await event.client.delete_messages(
-                conv.chat_id, [start_msg.id, send_audio.id, check.id, result.id, response.id]
+                conv.chat_id,
+                [start_msg.id, send_audio.id, check.id, result.id, response.id],
             )
     except TimeoutError:
         return await event.edit("`Error: `@auddbot` tidak merespons, coba lagi nanti")
 
 
-CMD_HELP.update({
-    "shazam":
-    f"✘ **Plugin shazam** :\
+CMD_HELP.update(
+    {
+        "shazam": f"✘ **Plugin shazam** :\
 \n\n  •  **Perintah** : `{cmd}shazam` [reply voice/audio]\
-  \n  •  **Fungsi** : Membalikkan file audio pencarian menggunakan (@auddbot)."})
+  \n  •  **Fungsi** : Membalikkan file audio pencarian menggunakan (@auddbot)."
+    }
+)

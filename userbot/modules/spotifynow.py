@@ -1,11 +1,12 @@
 # Ported by Aidil Aryanto
 
 import os
+
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot.events import toni_cmd
 from userbot import CMD_HANDLER as cmd
-from userbot import bot, TEMP_DOWNLOAD_DIRECTORY, CMD_HELP
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot.events import toni_cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"spotnow(:? |$)(.*)?"))
@@ -25,19 +26,18 @@ async def _(event):
             await event.reply("`Please unblock` @SpotifyNowBot`...`")
             return
         if response.text.startswith("You're"):
-            await event.edit("`You're not listening to anything on Spotify at the moment`")
-            await event.client.delete_messages(conv.chat_id,
-                                               [msg.id, response.id])
+            await event.edit(
+                "`You're not listening to anything on Spotify at the moment`"
+            )
+            await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
             return
         if response.text.startswith("Ads."):
             await event.edit("`You're listening to those annoying ads.`")
-            await event.client.delete_messages(conv.chat_id,
-                                               [msg.id, response.id])
+            await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
             return
         else:
             downloaded_file_name = await event.client.download_media(
-                response.media,
-                TEMP_DOWNLOAD_DIRECTORY
+                response.media, TEMP_DOWNLOAD_DIRECTORY
             )
             await event.client.send_file(
                 event.chat_id,
@@ -45,14 +45,15 @@ async def _(event):
                 force_document=False,
             )
             """ - cleanup chat after completed - """
-            await event.client.delete_messages(conv.chat_id,
-                                               [msg.id, response.id])
+            await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
     await event.delete()
     return os.remove(downloaded_file_name)
 
 
-CMD_HELP.update({
-    "spotifynow":
-    f"✘ **Plugin spotifynow** :\
+CMD_HELP.update(
+    {
+        "spotifynow": f"✘ **Plugin spotifynow** :\
 \n\n  •  **Perintah** : `{cmd}spotnow` \
-  \n  •  **Fungsi** : Tunjukkan apa yang Anda dengarkan di spotify."})
+  \n  •  **Fungsi** : Tunjukkan apa yang Anda dengarkan di spotify."
+    }
+)

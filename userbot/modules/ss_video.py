@@ -70,8 +70,10 @@ async def ssvideo(event):
         return await event.edit(f"{e}")
 
 
-CMD_HELP.update({
-    "ssvideo":
-    f"✘ **Plugin ssvideo** :\
+CMD_HELP.update(
+    {
+        "ssvideo": f"✘ **Plugin ssvideo** :\
 \n\n  •  **Perintah** : `{cmd}ssvideo` [nomer]\
-  \n  •  **Fungsi** :  ke ss bingkai video per bingkai."})
+  \n  •  **Fungsi** :  ke ss bingkai video per bingkai."
+    }
+)

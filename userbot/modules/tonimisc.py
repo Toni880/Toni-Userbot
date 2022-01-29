@@ -27,13 +27,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from userbot import (
-    ALIVE_NAME,
-    CMD_HELP,
-    DEFAULT_BIO,
-    TEMP_DOWNLOAD_DIRECTORY,
-    bot,
-)
+from userbot import ALIVE_NAME, CMD_HELP, DEFAULT_BIO, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import toni_cmd
 
 normiefont = [

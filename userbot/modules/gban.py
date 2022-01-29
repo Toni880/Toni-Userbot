@@ -217,6 +217,7 @@ async def gunben(userbot):
         f"**Perintah :** `{ALIVE_NAME}`\n**Pengguna:** [{user.first_name}](tg://user?id={user.id})\n**Aksi:** `Membatalkan Global Banned`"
     )
 
+
 @register(outgoing=True, pattern="^.allban(?: |$)(.*)")
 async def testing(event):
     nikal = await event.get_chat()
@@ -227,16 +228,22 @@ async def testing(event):
         await event.edit("✖️ `Anda Tidak Mempunyai Hak...`")
         return
     await event.edit("🚧 `Tidak Melakukan Apa-apa...`")
-# Thank for Dark_Cobra
+    # Thank for Dark_Cobra
     everyone = await event.client.get_participants(event.chat_id)
     for user in everyone:
         if user.id == chutiya.id:
             pass
         try:
-            await event.client(EditBannedRequest(event.chat_id, int(user.id), ChatBannedRights(until_date=None, view_messages=True)))
+            await event.client(
+                EditBannedRequest(
+                    event.chat_id,
+                    int(user.id),
+                    ChatBannedRights(until_date=None, view_messages=True),
+                )
+            )
         except Exception as e:
             await event.edit(str(e))
-        await sleep(.5)
+        await sleep(0.5)
     await event.edit("😬 `Tidak Ada yang Terjadi di sini...`")
 
 

@@ -18,7 +18,7 @@ from userbot.events import toni_cmd
 
 
 async def get_tz(con):
-    """ Get time zone of the given country. """
+    """Get time zone of the given country."""
     if "(Uk)" in con:
         con = con.replace("Uk", "UK")
     if "(Us)" in con:
@@ -42,13 +42,12 @@ async def get_tz(con):
         return
 
 
-@bot.on(toni_cmd(outgoing=True,
-                 pattern=r"time(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?"))
+@bot.on(toni_cmd(outgoing=True, pattern=r"time(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?"))
 async def time_func(tdata):
-    """ For .time command, return the time of
-        1. The country passed as an argument,
-        2. The default userbot country(set it by using .settime),
-        3. The server where the userbot runs.
+    """For .time command, return the time of
+    1. The country passed as an argument,
+    2. The default userbot country(set it by using .settime),
+    3. The server where the userbot runs.
     """
     con = tdata.pattern_match.group(1).title()
     tz_num = tdata.pattern_match.group(2)
@@ -96,29 +95,28 @@ async def time_func(tdata):
     dtnow = dt.now(tz(time_zone)).strftime(t_form)
 
     if c_name != COUNTRY:
-        await tdata.edit(
-            f"`It's`  **{dtnow}**  `in {c_name}({time_zone} timezone).`")
+        await tdata.edit(f"`It's`  **{dtnow}**  `in {c_name}({time_zone} timezone).`")
         return
 
     elif COUNTRY:
-        await tdata.edit(f"`It's`  **{dtnow}**  `here, in {COUNTRY}"
-                         f"({time_zone} timezone).`")
+        await tdata.edit(
+            f"`It's`  **{dtnow}**  `here, in {COUNTRY}" f"({time_zone} timezone).`"
+        )
         return
 
 
-@bot.on(toni_cmd(outgoing=True,
-                 pattern=r"date(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?"))
+@bot.on(toni_cmd(outgoing=True, pattern=r"date(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?"))
 async def date_func(dat):
-    """ For .date command, return the date of
-        1. The country passed as an argument,
-        2. The default userbot country(set it by using .settime),
-        3. The server where the userbot runs.
+    """For .date command, return the date of
+    1. The country passed as an argument,
+    2. The default userbot country(set it by using .settime),
+    3. The server where the userbot runs.
     """
     con = dat.pattern_match.group(1).title()
     tz_num = dat.pattern_match.group(2)
 
     d_form = "%d/%m/%y - %A"
-    c_name = ''
+    c_name = ""
 
     if len(con) > 4:
         try:
@@ -160,20 +158,22 @@ async def date_func(dat):
     dtnow = dt.now(tz(time_zone)).strftime(d_form)
 
     if c_name != COUNTRY:
-        await dat.edit(
-            f"`It's`  **{dtnow}**  `in {c_name}({time_zone} timezone).`")
+        await dat.edit(f"`It's`  **{dtnow}**  `in {c_name}({time_zone} timezone).`")
         return
 
     elif COUNTRY:
-        await dat.edit(f"`It's`  **{dtnow}**  `here, in {COUNTRY}"
-                       f"({time_zone} timezone).`")
+        await dat.edit(
+            f"`It's`  **{dtnow}**  `here, in {COUNTRY}" f"({time_zone} timezone).`"
+        )
         return
 
 
-CMD_HELP.update({
-    'timedate':
-    f"**✘ Plugin** `timedate` :\
+CMD_HELP.update(
+    {
+        "timedate": f"**✘ Plugin** `timedate` :\
 \n\n  •  **Perintah :** `{cmd}time [country name/code [timezone number]`\
   \n  •  **Fungsi : **Dapatkan waktu suatu negara. Jika suatu negara memiliki beberapa zona waktu, itu akan mencantumkan semuanya dan membiarkan Anda memilih satu.\
 \n\n  •  **Perintah :** `{cmd}date` \
-  \n  •  **Fungsi : **Dapatkan tanggal suatu negara. Jika suatu negara memiliki beberapa zona waktu, itu akan mencantumkan semuanya dan membiarkan Anda memilih satu."})
+  \n  •  **Fungsi : **Dapatkan tanggal suatu negara. Jika suatu negara memiliki beberapa zona waktu, itu akan mencantumkan semuanya dan membiarkan Anda memilih satu."
+    }
+)

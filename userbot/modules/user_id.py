@@ -1,8 +1,9 @@
-from userbot import bot, CMD_HELP
-from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import toni_cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"id(?: |$)(.*)"))
@@ -25,9 +26,8 @@ async def _(event):
     async with bot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=186675376))
+                events.NewMessage(incoming=True, from_users=186675376)
+            )
             jemboed = await bot.forward_messages(chat, reply_message)
             response = await response
         except YouBlockedUserError:
@@ -37,12 +37,13 @@ async def _(event):
             await event.edit("`Profil Buriq Tidak Punya ID...`")
         else:
             await event.edit(f"{response.message.message}")
-            await event.client.delete_messages(conv.chat_id,
-                                               [jemboed.id, response.id])
+            await event.client.delete_messages(conv.chat_id, [jemboed.id, response.id])
 
 
-CMD_HELP.update({
-    "getid":
-    f"✘ Plugin getid :\
+CMD_HELP.update(
+    {
+        "getid": f"✘ Plugin getid :\
 \n\n  •  Perintah : `{cmd}getid` [Membalas Pengguna]\
-  \n  •  Fungsi : Balas Dipesan Untuk Mendapatkan Id pengguna."})
+  \n  •  Fungsi : Balas Dipesan Untuk Mendapatkan Id pengguna."
+    }
+)

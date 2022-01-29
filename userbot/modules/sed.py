@@ -9,21 +9,25 @@
 
 import re
 from sre_constants import error as sre_err
-from userbot import CMD_HELP, bot
+
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
 from userbot.events import toni_cmd
 
 DELIMITERS = ("/", ":", "|", "_")
 
 
 async def separate_sed(sed_string):
-    """ Separate sed arguments. """
+    """Separate sed arguments."""
 
     if len(sed_string) < 2:
         return
 
-    if (len(sed_string) >= 2 and sed_string[2] in DELIMITERS
-            and sed_string.count(sed_string[2]) >= 2):
+    if (
+        len(sed_string) >= 2
+        and sed_string[2] in DELIMITERS
+        and sed_string.count(sed_string[2]) >= 2
+    ):
         delim = sed_string[2]
         start = counter = 3
         while counter < len(sed_string):
@@ -42,9 +46,12 @@ async def separate_sed(sed_string):
             return None
 
         while counter < len(sed_string):
-            if (sed_string[counter] == "\\" and counter + 1 < len(sed_string)
-                    and sed_string[counter + 1] == delim):
-                sed_string = sed_string[:counter] + sed_string[counter + 1:]
+            if (
+                sed_string[counter] == "\\"
+                and counter + 1 < len(sed_string)
+                and sed_string[counter + 1] == delim
+            ):
+                sed_string = sed_string[:counter] + sed_string[counter + 1 :]
 
             elif sed_string[counter] == delim:
                 replace_with = sed_string[start:counter]
@@ -64,7 +71,7 @@ async def separate_sed(sed_string):
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"s(?: |$)(.*)"))
 async def sed(command):
-    """ For sed command, use sed on Telegram. """
+    """For sed command, use sed on Telegram."""
     sed_result = await separate_sed(command.text)
     textx = await command.get_reply_message()
     if sed_result:
@@ -72,13 +79,15 @@ async def sed(command):
             to_fix = textx.text
         else:
             return await command.edit(
-                "`Master, I don't have brains. Well you too don't I guess.`")
+                "`Master, I don't have brains. Well you too don't I guess.`"
+            )
 
         repl, repl_with, flags = sed_result
 
         if not repl:
             return await command.edit(
-                "`Master, I don't have brains. Well you too don't I guess.`")
+                "`Master, I don't have brains. Well you too don't I guess.`"
+            )
 
         try:
             check = re.match(repl, to_fix, flags=re.IGNORECASE)
@@ -88,8 +97,7 @@ async def sed(command):
             if "i" in flags and "g" in flags:
                 text = re.sub(repl, repl_with, to_fix, flags=re.I).strip()
             elif "i" in flags:
-                text = re.sub(repl, repl_with, to_fix, count=1,
-                              flags=re.I).strip()
+                text = re.sub(repl, repl_with, to_fix, count=1, flags=re.I).strip()
             elif "g" in flags:
                 text = re.sub(repl, repl_with, to_fix).strip()
             else:
@@ -100,8 +108,10 @@ async def sed(command):
             await command.edit(f"Did you mean? \n\n{text}")
 
 
-CMD_HELP.update({
-    "sed":
-    f"✘ Plugin sed :\
+CMD_HELP.update(
+    {
+        "sed": f"✘ Plugin sed :\
 \n\n  •  Perintah : `{cmd}s`[delimiter><old word(s)><delimiter><new word(s)]\
-  \n  •  Fungsi : Mengganti kata atau kata menggunakan sed."})
+  \n  •  Fungsi : Mengganti kata atau kata menggunakan sed."
+    }
+)

@@ -4,13 +4,14 @@ from telethon.errors.rpcerrorlist import BotInlineDisabledError as noinline
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
-from userbot import BOT_USERNAME, bot
+from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
+from userbot import bot
 from userbot.events import toni_cmd
 
 logging.basicConfig(
-    format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s",
-    level=logging.WARNING)
+    format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
+)
 
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"helpme"))
@@ -18,14 +19,17 @@ async def yardim(event):
     tgbotusername = BOT_USERNAME
     if tgbotusername is not None:
         try:
-            results = await event.client.inline_query(tgbotusername, "@PrimeSupportGroup")
+            results = await event.client.inline_query(
+                tgbotusername, "@PrimeSupportGroup"
+            )
             await results[0].click(
                 event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
             )
             await event.delete()
         except noinline:
-            event = await event.edit("🚧 **Tombol inline Kamu Tidak Aktif**.\n» __Sedang Menyalakannya, Harap Tunggu Sebentar__...",
-                                     )
+            event = await event.edit(
+                "🚧 **Tombol inline Kamu Tidak Aktif**.\n» __Sedang Menyalakannya, Harap Tunggu Sebentar__...",
+            )
             async with bot.conversation("@BotFather") as conv:
                 try:
                     first = await conv.send_message("/setinline")

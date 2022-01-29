@@ -1,15 +1,15 @@
 import os
 import random
+
 import numpy as np
 from colour import Color
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from PIL import Image, ImageOps, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl.types import DocumentAttributeFilename
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import ton_cmd
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 
 bground = "black"
 
@@ -98,8 +98,7 @@ async def asciiart(IMG, color1, color2, bgcolor):
     img = np.sum(np.asarray(img), axis=2)
     img -= img.min()
     img = (1.0 - img / img.max()) ** 2.2 * (chars.size - 1)
-    lines = ("\n".join(("".join(r)
-                        for r in chars[img.astype(int)]))).split("\n")
+    lines = ("\n".join(("".join(r) for r in chars[img.astype(int)]))).split("\n")
     nbins = len(lines)
     colorRange = list(Color(color1).range_to(Color(color2), nbins))
     newImg_width = letter_width * widthByLetter
@@ -270,9 +269,9 @@ async def rotate(event):
     os.remove(Converted)
 
 
-CMD_HELP.update({
-    "transform":
-    f"**✘ Plugin** `transform` :\
+CMD_HELP.update(
+    {
+        "transform": f"**✘ Plugin** `transform` :\
 \n\n  •  **Perintah :** `{cmd}ghost` \
   \n  •  **Fungsi : **Tingkatkan citra Anda untuk menjadi hantu.\
 \n\n  •  **Perintah :** `{cmd}ascii`\
@@ -290,4 +289,6 @@ CMD_HELP.update({
 \n\n  • ** Perintah: ** `{cmd}poster`\
   \n  • ** Fungsi: **Untuk posterisasi gambar Anda.\
 \n\n  • ** Perintah: ** `{cmd}rotate` [value]\
-  \n  • ** Fungsi: **Untuk memutar gambar Anda Nilainya berkisar 1-360 jika tidak maka akan memberikan nilai default yaitu 90."})
+  \n  • ** Fungsi: **Untuk memutar gambar Anda Nilainya berkisar 1-360 jika tidak maka akan memberikan nilai default yaitu 90."
+    }
+)

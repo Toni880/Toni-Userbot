@@ -3,6 +3,7 @@
 # t.me/Rose_Userbot
 
 import random
+
 import redis
 
 from userbot import CMD_HELP
@@ -54,7 +55,6 @@ dare = [
     "Kirim pesan teks kepada orang yang Anda sukai dan beri tahu mereka betapa Anda menyukainya.",
     "Gunakan huruf nama pemain lain untuk mendeskripsikannya (mis. SAM : S = Konyol ; A = Menarik ; M = Merry)",
     "Ucapkan kata pertama yang muncul di benak Anda, dan rekamlah.",
-
 ]
 
 truth = [
@@ -187,6 +187,7 @@ async def redis(pong):
 async def redis(pong):
     await pong.reply(random.choice(truth))
 
+
 # dare
 
 
@@ -208,6 +209,7 @@ async def redis(pong):
 @register(outgoing=True, pattern="^D$")
 async def redis(pong):
     await pong.reply(random.choice(dare))
+
 
 CMD_HELP.update(
     {

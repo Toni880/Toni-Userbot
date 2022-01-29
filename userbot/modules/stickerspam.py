@@ -10,9 +10,10 @@ from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
-from userbot.events import toni_cmd
+from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
+from userbot import CMD_HELP, bot
+from userbot.events import toni_cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"sspam(?: |$)(.*)"))
@@ -20,15 +21,14 @@ async def stickerpack_spam(event):
     if event.fwd_from:
         return
     reply = await event.get_reply_message()
-    if not reply or media_type(
-            reply) is None or media_type(reply) != "Sticker":
-        return await event.edit("🚧 `Balas stiker apa pun untuk mengirim semua stiker dalam paket itu..`"
-                                )
+    if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
+        return await event.edit(
+            "🚧 `Balas stiker apa pun untuk mengirim semua stiker dalam paket itu..`"
+        )
     hmm = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     try:
         stickerset_attr = reply.document.attributes[1]
-        geez = await event.edit("`Fetching details of the sticker pack, please wait..`"
-                                )
+        geez = await event.edit("`Fetching details of the sticker pack, please wait..`")
     except BaseException:
         await event.edit("📛 `Ini bukan stiker. Membalas stiker...`", 5)
         return
@@ -42,8 +42,9 @@ async def stickerpack_spam(event):
             )
         )
     except Exception:
-        return await geez.edit("🚨 `Saya kira stiker ini bukan bagian dari paket apa pun jadi saya tidak bisa kang paket stiker ini coba kang untuk stiker ini...`",
-                               )
+        return await geez.edit(
+            "🚨 `Saya kira stiker ini bukan bagian dari paket apa pun jadi saya tidak bisa kang paket stiker ini coba kang untuk stiker ini...`",
+        )
     try:
         hmm = Get(hmm)
         await event.client(hmm)
@@ -75,8 +76,10 @@ async def stickerpack_spam(event):
         await event.client.send_file(BOTLOG_CHATID, reqd_sticker_set.documents[0])
 
 
-CMD_HELP.update({
-    "sspam":
-    f"✘ Plugin sspam :\
+CMD_HELP.update(
+    {
+        "sspam": f"✘ Plugin sspam :\
 \n\n  •  Perintah : `{cmd}sspam`\
-  \n  •  Fungsi : Balas ke sticker, Fungsi Spam Satu Pack."})
+  \n  •  Fungsi : Balas ke sticker, Fungsi Spam Satu Pack."
+    }
+)

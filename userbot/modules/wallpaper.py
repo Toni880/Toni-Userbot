@@ -10,9 +10,9 @@ from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"wall(?: |$)(.*)"))
@@ -30,7 +30,9 @@ async def _(event):
             except YouBlockedUserError:
                 return await event.reply("✖️ `Maaf Tidak Bisa...`")
             if r1.text.startswith("No"):
-                return await event.edit(f"✖️ `Saya Tidak Menemukan Wallpaper Yang Anda Cari...`")
+                return await event.edit(
+                    f"✖️ `Saya Tidak Menemukan Wallpaper Yang Anda Cari...`"
+                )
             else:
                 img = await event.client.download_media(r1)
                 img2 = await event.client.download_media(r2)
@@ -58,8 +60,10 @@ async def _(event):
         return await event.edit("✖️ `Saya Tidak Menemukan Wallpaper Yang Anda Cari...`")
 
 
-CMD_HELP.update({
-    "wallpaper":
-    f"**✘ Plugin wallpaper :\
+CMD_HELP.update(
+    {
+        "wallpaper": f"**✘ Plugin wallpaper :\
 \n\n  •  Perintah : `{cmd}wall` [query]\
-  \n  •  Fungsi : Mencari Wallpaper Keren."})
+  \n  •  Fungsi : Mencari Wallpaper Keren."
+    }
+)

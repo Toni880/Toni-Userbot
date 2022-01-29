@@ -149,6 +149,7 @@ async def autobot():
         )
         sys.exit(1)
 
+
 def load_module(shortname):
     if shortname.startswith("__"):
         pass

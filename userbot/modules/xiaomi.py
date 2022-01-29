@@ -2,9 +2,10 @@
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern="firmware(?: |$)(.*)"))
@@ -17,13 +18,14 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{firmware} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{firmware} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
@@ -40,13 +42,14 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{fboot} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{fboot} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
@@ -63,13 +66,14 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{recovery} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{recovery} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
@@ -86,13 +90,14 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{pitch} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{pitch} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
@@ -109,13 +114,14 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{ofox} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{ofox} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
@@ -132,13 +138,14 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{eu} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{eu} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf {ALIVE_NAME} Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf {ALIVE_NAME} Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
@@ -155,13 +162,14 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{vendor} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{vendor} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
@@ -178,22 +186,23 @@ async def _(event):
     async with bot.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
-                events.NewMessage(
-                    incoming=True,
-                    from_users=774181428))
-            await conv.send_message(f'/{specs} {link}')
+                events.NewMessage(incoming=True, from_users=774181428)
+            )
+            await conv.send_message(f"/{specs} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`")
+            await event.reply(
+                "✖️ `Maaf Kamu Sudah Menghapus Bot @XiaomiGeeksBot , Buka Kembali Bot Nya !`"
+            )
             return
         else:
             await event.delete()
             await bot.forward_messages(event.chat_id, response.message)
 
 
-CMD_HELP.update({
-    "xiaomi":
-    f"**✘ Plugin** `xiaomi` :\
+CMD_HELP.update(
+    {
+        "xiaomi": f"**✘ Plugin** `xiaomi` :\
 \n\n  •  **Perintah :** `{cmd}firmware` [**Nama Kode**]\
   \n  •  **Fungsi : **Dapatkan Firmware terbaru.\
 \n\n  •  **Perintah :** `{cmd}pb` [**Nama Kode**]\
@@ -209,4 +218,6 @@ CMD_HELP.update({
 \n\n  • ** Perintah: ** `{cmd}vendor` [**Nama Kode**]\
   \n  • ** Fungsi: **Mengambil Vendor Terbaru.\
 \n\n  • ** Perintah: ** `{cmd}of` [**Nama Kode**]\
-  \n  • ** Fungsi: **Dapatkan Pemulihan ORangeFox terbaru."})
+  \n  • ** Fungsi: **Dapatkan Pemulihan ORangeFox terbaru."
+    }
+)

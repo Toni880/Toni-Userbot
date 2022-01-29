@@ -71,6 +71,7 @@ async def get_user_from_event(
         await edit_delete(roseevent, "__Couldn't fetch user to proceed further__")
     return None, None
 
+
 async def checking():
     gocheck = str(pybase64.b64decode("QEx1bmF0aWMwZGU="))[2:13]
     checker = str(pybase64.b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]

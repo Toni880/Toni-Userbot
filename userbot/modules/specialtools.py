@@ -7,9 +7,9 @@ import os
 
 import moviepy.editor as m
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern=r"getaudio(?: |$)(.*)"))
@@ -55,10 +55,12 @@ async def _(event):
     await xx.delete()
 
 
-CMD_HELP.update({
-    "specialtools":
-    f"✘ **Plugin specialtools** :\
+CMD_HELP.update(
+    {
+        "specialtools": f"✘ **Plugin specialtools** :\
 \n\n  •  **Perintah** : `{cmd}getaudio` \
   \n  •  **Fungsi** : Unduh Audio Untuk memasukkan Video/Gif yang Anda inginkan.\
 \n\n  •  **Perintah** : `{cmd}addaudio` \
-  \n  •  **Fungsi** : akan menempatkan audio di atas ke video/gif yang dibalas."})
+  \n  •  **Fungsi** : akan menempatkan audio di atas ke video/gif yang dibalas."
+    }
+)

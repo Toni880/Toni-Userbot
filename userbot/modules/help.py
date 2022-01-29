@@ -6,10 +6,10 @@
 """ Userbot help command """
 
 import asyncio
+from platform import uname
+
 from userbot import ALIVE_NAME, CMD_HELP, bot
 from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
-from platform import uname
 
 modules = CMD_HELP
 
