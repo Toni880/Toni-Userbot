@@ -1,18 +1,16 @@
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from userbot import bot, CMD_HELP
+from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
 
-
-@register(outgoing=True, pattern="^.tiktok(?: |$)(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"tiktok(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     d_link = event.pattern_match.group(1)
     if ".com" not in d_link:
-        await event.edit(
-            "`Mohon Maaf, Saya Membutuhkan Link Video Tiktok Untuk Mendownload Nya`"
-        )
+        await event.edit("`Mohon Maaf, Saya Membutuhkan Link Video Tiktok Untuk Mendownload Nya`")
     else:
         await event.edit("```Video Sedang Diproses.....```")
     chat = "@ttsavebot"
@@ -26,20 +24,16 @@ async def _(event):
             """ - don't spam notif - """
             await bot.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await event.edit(
-                "**Kesalahan:** `Mohon Buka Blokir` @ttsavebot `Dan Coba Lagi !`"
-            )
+            await event.edit("**Kesalahan:** `Mohon Buka Blokir` @ttsavebot `Dan Coba Lagi !`")
             return
         await bot.send_file(event.chat_id, video)
-        await event.client.delete_messages(
-            conv.chat_id, [msg_start.id, r.id, msg.id, details.id, video.id]
-        )
+        await event.client.delete_messages(conv.chat_id,
+                                           [msg_start.id, r.id, msg.id, details.id, video.id])
         await event.delete()
 
 
-CMD_HELP.update(
-    {
-        "tiktok": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tiktok <Link tiktok>`"
-        "\n• : Download Video Tiktok Tanpa Watermark"
-    }
-)
+CMD_HELP.update({
+    "tiktok":
+    f"✘ Plugin tiktok :\
+\n\n  •  Perintah : `{cmd}tiktok` [link]\
+  \n  •  Fungsi : Download Video Tiktok Tanpa Watermark."})
