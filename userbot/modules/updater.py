@@ -18,7 +18,8 @@ from userbot import (
     UPSTREAM_REPO_BRANCH,
     UPSTREAM_REPO_URL,
 )
-from userbot.events import register
+from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd
 
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
@@ -143,7 +144,7 @@ async def update(event, repo, ups_rem, ac_br):
     return
 
 
-@register(outgoing=True, pattern=r"^.update(?: |$)(now|deploy)?")
+@bot.on(toni_cmd(outgoing=True, pattern=r"^.update(?: |$)(now|deploy)?"))
 async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
     await event.edit("**Mengecek Pembaruan, Silakan Menunggu....**")
@@ -248,11 +249,11 @@ async def upstream(event):
 
 CMD_HELP.update(
     {
-        "update": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.update`"
+        "update": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}update`"
         "\n• : Untuk Melihat Pembaruan Terbaru Tonic-Userbot."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.update now`"
+        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}update now`"
         "\n• : Memperbarui Tonic-Userbot."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.update deploy`"
+        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}update deploy`"
         "\n• : Memperbarui Tonic-Userbot Dengan Cara Men-Deploy Ulang."
     }
 )
