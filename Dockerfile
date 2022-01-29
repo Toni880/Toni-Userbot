@@ -3,7 +3,7 @@ FROM vckyouuu/geezprojects:buster
 #━━━━━ Userbot Telegram ━━━━━
 #━━━━━ By Tonic-Userbot ━━━━━
 
-RUN git clone -b Tonic-Userbot https://github.com/Ara-423/Ara-Userbot /root/userbot
+RUN git clone -b Tonic-Userbot https://github.com/Tonic990/Tonic-Userbot /root/userbot
 RUN mkdir /root/userbot/.bin
 RUN pip install --upgrade pip setuptools
 WORKDIR /root/userbot
