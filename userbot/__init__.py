@@ -187,7 +187,7 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
 # Untuk Perintah .skyzualive
-ROSE_TEKS_KUSTOM = os.environ.get("TONIC_TEKS_KUSTOM", "")
+TONIC_TEKS_KUSTOM = os.environ.get("TONIC_TEKS_KUSTOM", "")
 
 # Untuk Mengubah Pesan Welcome
 START_WELCOME = os.environ.get("START_WELCOME", None)
@@ -566,7 +566,7 @@ with bot:
             current_page_number = int(lockpage)
             buttons = paginate_help(current_page_number, plugins, "helpme")
             await event.edit(
-                file=roselogo,
+                file=toniclogo,
                 buttons=buttons,
                 link_preview=False,
             )
@@ -585,7 +585,7 @@ with bot:
                     f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [custom.Button.inline("ᴄʟᴏꜱᴇ", data="closed")],
@@ -606,7 +606,7 @@ with bot:
                     f"{DEFAULTUSER}Pilih dari opsi di bawah ini :")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [custom.Button.inline("ᴀʟɪᴠᴇ", data="alive")],
@@ -632,7 +632,7 @@ with bot:
                     f"Menu Lainnya ! Untuk {DEFAULTUSER}")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [custom.Button.inline("ᴜᴘᴅᴀᴛᴇ", data="pembaruan")],
@@ -663,7 +663,7 @@ with bot:
                     f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -693,7 +693,7 @@ with bot:
                     f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -723,7 +723,7 @@ with bot:
                     f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -751,7 +751,7 @@ with bot:
                     f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -781,7 +781,7 @@ with bot:
                     f"© @PrimeSupportChannel")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -809,7 +809,7 @@ with bot:
                     f"**PONG!!**\n `{ms}ms`")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -846,7 +846,7 @@ with bot:
                     f"© @PrimeSupportGroup")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -869,7 +869,7 @@ with bot:
                     f"**Restaring Tonic-Userbot**...")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -889,7 +889,7 @@ with bot:
                     f"Closed Menu!")
                 await event.edit(
                     text,
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
@@ -907,7 +907,7 @@ with bot:
                     ""):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.photo(
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=False,
                     text=f"✨ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ✨\n\n**🇲​🇦​🇮​🇳​ 🇲​🇪​🇳​🇺​**\n\n❥ **ʙᴏᴛ ᴏꜰ :** {DEFAULTUSER}\n❥ **ʙᴏᴛ ᴠᴇʀ :** 5.0\n❥ **ᴍᴏᴅᴜʟᴇꜱ :** {len(plugins)}\n❥ **ʙᴏᴛʏᴏᴜ :** @{BOT_USERNAME}".format(
                         len(dugmeler),
@@ -967,7 +967,7 @@ with bot:
             if event.query.user_id == uid:  # userbot
                 # https://t.me/TelethonChat/115200
                 await event.edit(
-                    file=roselogo,
+                    file=toniclogo,
                     link_preview=True,
                     buttons=[
                         [
