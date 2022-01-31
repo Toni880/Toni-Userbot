@@ -11,10 +11,10 @@ LOGS = logging.getLogger(__name__)
 
 
 async def get_user_from_event(
-    event, roseevent=None, secondgroup=None, nogroup=False, noedits=False
+    event, tonicevent=None, secondgroup=None, nogroup=False, noedits=False
 ):  # sourcery no-metrics
-    if roseevent is None:
-        roseevent = event
+    if tonicevent is None:
+        tonicevent = event
     if nogroup is False:
         if secondgroup:
             args = event.pattern_match.group(2).split(" ", 1)
@@ -62,13 +62,13 @@ async def get_user_from_event(
         elif not args:
             if not noedits:
                 await edit_delete(
-                    roseevent, "`Pass the user's username, id or reply!`", 5
+                    tonicevent, "`Pass the user's username, id or reply!`", 5
                 )
             return None, None
     except Exception as e:
         LOGS.error(str(e))
     if not noedits:
-        await edit_delete(roseevent, "__Couldn't fetch user to proceed further__")
+        await edit_delete(tonicevent, "__Couldn't fetch user to proceed further__")
     return None, None
 
 
