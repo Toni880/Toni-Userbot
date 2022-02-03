@@ -8,7 +8,7 @@ from userbot import bot
 from userbot.utils import edit_or_reply, toni_cmd
 
 
-@toni_cmd(pattern="helpme")
+@bot.on(toni_cmd(outgoing=True, pattern=r"helpme"))
 async def _(event):
     if event.fwd_from:
         return
