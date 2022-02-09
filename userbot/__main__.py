@@ -7,23 +7,22 @@ import requests
 from telethon.tl.functions.channels import InviteToChannelRequest
 
 from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
-from userbot import CMD_HANDLER as cmd
-from userbot import DEVS, LOGS, bot, branch
+from userbot import DEVS, LOGS, bot
 from userbot.modules import ALL_MODULES
-from userbot.utils import autobot, checking
+from userbot.utils import autobot, checking, startupmessage
 
 try:
     bot.start()
     user = bot.get_me()
-    blacklist = requests.get(
-        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
+    blacklistrose = requests.get(
+        "https://raw.githubusercontent.com/SendiAp/Remaining/master/blacklistrose.json"
     ).json()
-    if user.id in blacklist:
+    if user.id in blacklistrose:
         LOGS.warning(
             "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOTnya GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @Bukan_guudlooking"
         )
         sys.exit(1)
-    if 1416529201 not in DEVS:
+    if not DEVS:
         LOGS.warning(
             f"EOL\nTonic-UserBot v{BOT_VER}, Copyright © 2021-2022 Tonic-Userbot• <https://github.com/Tonic990>"
         )
@@ -36,7 +35,7 @@ for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
 
 LOGS.info(
-    f"Jika {user.first_name} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/PrimeSupportGroup"
+    f"Jika {user.first_name} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/Bukan_guudlooking"
 )
 
 LOGS.info(f"Tonic-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
@@ -45,10 +44,7 @@ LOGS.info(f"Tonic-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 async def rose_userbot_on():
     try:
         if BOTLOG_CHATID != 0:
-            await bot.send_message(
-                BOTLOG_CHATID,
-                f"🔥 **Tonic-UserBot Has Been Actived!!**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
-            )
+            await startupmessage()
     except Exception as e:
         LOGS.info(str(e))
     try:
