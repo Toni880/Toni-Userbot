@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from .start import startupmessage
 from .format import parse_pre
 from .chrome import chrome, options
 from .decorator import toni_cmd, toni_handler
