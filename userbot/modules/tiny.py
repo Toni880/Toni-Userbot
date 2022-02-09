@@ -4,12 +4,11 @@
 from PIL import Image
 import cv2
 import os
-from userbot.events import toni_cmd
-from userbot import CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 from userbot import CMD_HELP, bot
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="tiny(?: |$)(.*)"))
+@toni_cmd(pattern="tiny(?: |$)(.*)")
 async def _(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -17,7 +16,7 @@ async def _(event):
         return
     xx = await event.edit("`Memproses Tiny....`")
     ik = await bot.download_media(reply)
-    im1 = Image.open("resources/extras/geez.png")
+    im1 = Image.open("resources/sky_blank.png")
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "geez.tgs")
         os.system("lottie_convert.py geez.tgs json.json")
@@ -83,7 +82,5 @@ async def _(event):
 
 
 CMD_HELP.update({
-    "tiny":
-    f"✘ Plugin tiny :\
-\n\n  •  Perintah : `{cmd}tiny`\
-  \n  •  Fungsi : Untuk Memperkecil Sticker."})
+    f"tiny": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}tiny`\
+    \nUsage : Untuk Memperkecil Sticker."})
