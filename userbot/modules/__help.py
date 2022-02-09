@@ -1,23 +1,39 @@
+# Copyright (C) 2020 TeamDerUntergang.
+#
+# SedenUserBot is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SedenUserBot is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# @Qulec tarafından yazılmıştır.
+# Thanks @Spechide
+
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as noinline
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
-from userbot import BOT_USERNAME
+from userbot import BOT_USERNAME, bot
 from userbot import CMD_HANDLER as cmd
-from userbot import bot
 from userbot.utils import edit_or_reply, toni_cmd
 
+tgbotusername = BOT_USERNAME
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"helpme"))
-async def _(event):
+@toni_cmd(pattern="helpme$")
+async def yardim(event):
     if event.fwd_from:
         return
-    if BOT_USERNAME is not None:
+    if tgbotusername is not None:
         chat = "@Botfather"
         try:
-            results = await event.client.inline_query(
-                BOT_USERNAME, "@PrimeSupportGroup"
-            )
+            results = await event.client.inline_query(tgbotusername, "@RoseUserbot")
             await results[0].click(
                 event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
             )
@@ -25,7 +41,7 @@ async def _(event):
         except noinline:
             xx = await edit_or_reply(
                 event,
-                "🚧 **Tombol inline Kamu Tidak Aktif.**\n__Sedang Menyalakannya, Harap Tunggu Sebentar...__",
+                "**Inline Mode Tidak aktif.**\n__Sedang Menyalakannya, Harap Tunggu Sebentar...__",
             )
             async with bot.conversation(chat) as conv:
                 try:
@@ -54,6 +70,5 @@ async def _(event):
             )
     else:
         await edit_or_reply(
-            event,
             "**Silahkan Buat BOT di @BotFather dan Tambahkan Var** `BOT_TOKEN` & `BOT_USERNAME`",
         )
