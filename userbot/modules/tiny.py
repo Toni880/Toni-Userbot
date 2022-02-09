@@ -1,14 +1,12 @@
 # Ported By VCKYOU @VckyouuBitch
 # Fixes By Koala @Manusiarakitann
 
-import os
-
-import cv2
 from PIL import Image
-
+import cv2
+import os
+from userbot.events import toni_cmd
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
 
 
 @bot.on(toni_cmd(outgoing=True, pattern="tiny(?: |$)(.*)"))
@@ -84,10 +82,8 @@ async def _(event):
     os.remove(ik)
 
 
-CMD_HELP.update(
-    {
-        "tiny": f"✘ Plugin tiny :\
+CMD_HELP.update({
+    "tiny":
+    f"✘ Plugin tiny :\
 \n\n  •  Perintah : `{cmd}tiny`\
-  \n  •  Fungsi : Untuk Memperkecil Sticker."
-    }
-)
+  \n  •  Fungsi : Untuk Memperkecil Sticker."})
