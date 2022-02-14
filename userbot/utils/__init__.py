@@ -17,7 +17,7 @@ from .start import startupmessage
 from .format import parse_pre
 from . import format as _format
 from .chrome import chrome, options
-from .decorator import toni_cmd, toni_handler
+from .decorator import asst_cmd, callback, toni_cmd, toni_handler
 from .google_images_download import googleimagesdownload
 from .progress import progress, CancelProcess
 from .events import checking, get_user_from_event
