@@ -1,17 +1,21 @@
-import re
-import hashlib
 import asyncio
-import shlex
+import hashlib
 import os
-from os.path import basename
 import os.path
-from html_telegraph_poster import TelegraphPoster
+import re
+import shlex
+from os.path import basename
 from typing import Optional, Union
-from userbot import LOGS, SUDO_USERS, bot
 
+from html_telegraph_poster import TelegraphPoster
 from telethon.tl.functions.channels import GetParticipantRequest
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator, DocumentAttributeFilename
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantCreator,
+    DocumentAttributeFilename,
+)
 
+from userbot import LOGS, SUDO_USERS, bot
 
 async def md5(fname: str) -> str:
     hash_md5 = hashlib.md5()
@@ -106,15 +110,6 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
     if err:
         LOGS.error(err)
     return thumb_image_path if os.path.exists(thumb_image_path) else None
-
-
-async def reply_id(event):
-    reply_to_id = None
-    if event.sender_id in SUDO_USERS:
-        reply_to_id = event.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
-    return reply_to_id
 
 
 async def edit_or_reply(
@@ -228,8 +223,8 @@ async def run_cmd(cmd: list) -> tuple[bytes, bytes]:
 
 def post_to_telegraph(title, html_format_content):
     post_client = TelegraphPoster(use_api=True)
-    auth_name = "Tonic-Userbot"
-    auth_url = "https://github.com/Tonic990/Tonic-Userbot"
+    auth_name = "Tonic-UserBot"
+    auth_url = "https://github.com/Tonic990/Tonic-UserBot"
     post_client.create_api_token(auth_name)
     post_page = post_client.post(
         title=title,
@@ -259,3 +254,12 @@ async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None
         )
     await asyncio.sleep(time)
     return await newevent.delete()
+
+
+async def reply_id(event):
+    reply_to_id = None
+    if event.sender_id in SUDO_USERS:
+        reply_to_id = event.id
+    if event.reply_to_msg_id:
+        reply_to_id = event.reply_to_msg_id
+    return reply_to_id
