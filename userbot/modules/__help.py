@@ -26,14 +26,14 @@ from userbot.utils import edit_or_reply, toni_cmd
 
 tgbotusername = BOT_USERNAME
 
-@toni_cmd(pattern="helpme$")
-async def yardim(event):
+@toni_cmd(pattern="helpme")
+async def _(event):
     if event.fwd_from:
         return
-    if tgbotusername is not None:
+    if BOT_USERNAME is not None:
         chat = "@Botfather"
         try:
-            results = await event.client.inline_query(tgbotusername, "@TonicUserbot")
+            results = await event.client.inline_query(BOT_USERNAME, "@PrimeSupportGroup")
             await results[0].click(
                 event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
             )
@@ -70,5 +70,6 @@ async def yardim(event):
             )
     else:
         await edit_or_reply(
+            event,
             "**Silahkan Buat BOT di @BotFather dan Tambahkan Var** `BOT_TOKEN` & `BOT_USERNAME`",
         )
