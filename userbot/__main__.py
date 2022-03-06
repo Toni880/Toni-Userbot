@@ -6,7 +6,7 @@ from importlib import import_module
 import requests
 
 from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
-from userbot import DEVS, LOGS, bot, call_py
+from userbot import DEVS, LOGS, bot, call_py, toniblacklist
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
