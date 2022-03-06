@@ -3,6 +3,8 @@ FROM kyyex/kyy-userbot:buster
 #━━━━━ Userbot Telegram ━━━━━
 #━━━━━ By Tonic-Userbot ━━━━━
 
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install ffmpeg -y
 RUN git clone -b Tonic-Userbot https://github.com/Tonic990/Tonic-Userbot /root/userbot
 RUN mkdir /root/userbot/.bin
 RUN pip install --upgrade pip setuptools
