@@ -1,13 +1,16 @@
-import asyncio
-import hashlib
-import os
-import os.path
 import re
+import hashlib
+import asyncio
 import shlex
+import os
 from os.path import basename
-from typing import Optional, Union
-
+import os.path
 from html_telegraph_poster import TelegraphPoster
+from PIL import Image
+from yt_dlp import YoutubeDL
+from typing import Optional, Union
+from userbot import bot, LOGS, SUDO_USERS
+
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -15,14 +18,31 @@ from telethon.tl.types import (
     DocumentAttributeFilename,
 )
 
-from userbot import LOGS, SUDO_USERS, bot
-
 async def md5(fname: str) -> str:
     hash_md5 = hashlib.md5()
     with open(fname, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
+
+def media_type(message):
+    if message and message.photo:
+        return "Photo"
+    if message and message.audio:
+        return "Audio"
+    if message and message.voice:
+        return "Voice"
+    if message and message.video_note:
+        return "Round Video"
+    if message and message.gif:
+        return "Gif"
+    if message and message.sticker:
+        return "Sticker"
+    if message and message.video:
+        return "Video"
+    if message and message.document:
+        return "Document"
+    return None
 
 
 def humanbytes(size: Union[int, float]) -> str:
@@ -254,6 +274,61 @@ async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None
         )
     await asyncio.sleep(time)
     return await newevent.delete()
+
+eod = edit_delete
+
+
+async def media_to_pic(event, reply):
+    mediatype = media_type(reply)
+    if mediatype not in ["Photo", "Round Video", "Gif", "Sticker", "Video"]:
+        await edit_delete(
+            event,
+            "**Saya tidak dapat mengekstrak gambar untuk memproses lebih lanjut ke media yang tepat**",
+        )
+        return None
+    media = await reply.download_media(file="./temp")
+    event = await edit_or_reply(event, "`Transfiguration Time! Converting....`")
+    file = os.path.join("./temp/", "meme.png")
+    if mediatype == "Sticker":
+        if media.endswith(".tgs"):
+            await runcmd(
+                f"lottie_convert.py --frame 0 -if lottie -of png '{media}' '{file}'"
+            )
+        elif media.endswith(".webp"):
+            im = Image.open(media)
+            im.save(file)
+    elif mediatype in ["Round Video", "Video", "Gif"]:
+        extractMetadata(createParser(media))
+        await runcmd(f"rm -rf '{file}'")
+        await take_screen_shot(media, 0, file)
+        if not os.path.exists(file):
+            await edit_delete(
+                event,
+                f"**Maaf. Saya tidak dapat mengekstrak gambar dari ini {mediatype}**",
+            )
+            return None
+    else:
+        im = Image.open(media)
+        im.save(file)
+    await runcmd(f"rm -rf '{media}'")
+    return [event, file, mediatype]
+
+ydl_opts = {
+    "format": "bestaudio[ext=m4a]",
+    "geo-bypass": True,
+    "noprogress": True,
+    "user-agent": "Mozilla/5.0 (Linux; Android 7.0; k960n_mt6580_32_n) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36",
+    "extractor-args": "youtube:player_client=all",
+    "nocheckcertificate": True,
+    "outtmpl": "downloads/%(id)s.%(ext)s",
+}
+ydl = YoutubeDL(ydl_opts)
+
+
+def download_lagu(url: str) -> str:
+    info = ydl.extract_info(url, download=False)
+    ydl.download([url])
+    return os.path.join("downloads", f"{info['id']}.{info['ext']}")
 
 
 async def reply_id(event):
