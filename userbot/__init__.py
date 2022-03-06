@@ -112,7 +112,7 @@ while 0 < 6:
             continue
         DEVS = [1416529201]
         break
-    DEVS = _DEVS.json()
+    DEVS = _DEVS
     break
 
 del _DEVS
