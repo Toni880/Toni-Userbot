@@ -344,7 +344,7 @@ for binary, path in binaries.items():
 if STRING_SESSION:
     session = StringSession(str(STRING_SESSION))
 else:
-    session = "Tonic-Userbot"
+    session = "userbot"
 try:
     bot = TelegramClient(
         session=session,
