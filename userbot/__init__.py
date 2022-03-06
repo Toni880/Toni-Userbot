@@ -101,21 +101,16 @@ if CONFIG_CHECK:
         "Please remove the line mentioned in the first hashtag from the config.env file"
     )
     sys.exit(1)
-
-# DEVS
-while 0 < 6:
-    _DEVS = get(
-        "https://raw.githubusercontent.com/Tonic990/blacklist/master/DEVS.json"
-    )
-    if _DEVS.status_code != 200:
-        if 0 != 5:
-            continue
-        DEVS = [1416529201]
-        break
-    DEVS = _DEVS
-    break
-
-del _DEVS
+    
+# KALO NGEFORK/CLONE ID DEVS NYA GA USAH DI HAPUS YA KONTOLLLL 😡
+DEVS = (
+    1663258664,
+    1416529201,
+    2127265501,
+    955903284,
+    1977874449,
+    2130526178,
+)
 
 # Blacklist User for use Tonic-Userbot
 while 0 < 6:
