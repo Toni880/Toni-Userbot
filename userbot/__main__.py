@@ -14,8 +14,8 @@ from userbot.utils import autobot, checking, startupmessage
 try:
     bot.start()
     user = bot.get_me()
-    blacklistrose = requests.get(
-        "https://raw.githubusercontent.com/SendiAp/Remaining/master/blacklistrose.json"
+    blacklistgroup = requests.get(
+        "https://raw.githubusercontent.com/Tonic990/blacklist/master/toniblacklist.json"
     ).json()
     if user.id in blacklistrose:
         LOGS.warning(
@@ -41,14 +41,14 @@ LOGS.info(
 LOGS.info(f"Tonic-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
 
-async def rose_userbot_on():
+async def check_alive():
     try:
         if BOTLOG_CHATID != 0:
-            await startupmessage()
+            await bot.send_message(BOTLOG_CHATID, "✨ **Tonic Userbot Berhasil Diaktifkan**!!\n━━━━━━━━━━━━━━━\n➠ **Userbot Version** - 3.1.0@Tonic-Userbot\n➠ **Ketik** `.ping` **Untuk Mengecheck Bot**\n━━━━━━━━━━━━━━━\n➠ **Powered By:** @PrimeSupportGroup ")
     except Exception as e:
         LOGS.info(str(e))
     try:
-        await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+        await bot(Addbot(int(BOTLOG_CHATID), [BOT_USERNAME]))
     except BaseException:
         pass
 
