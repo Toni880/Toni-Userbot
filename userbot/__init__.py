@@ -135,13 +135,6 @@ BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
 API_KEY = int(os.environ.get("API_KEY") or None)
 API_HASH = str(os.environ.get("API_HASH") or None)
 
-# Userbot Session String
-STRING_SESSION = os.environ.get("STRING_SESSION", None)
-STRING_2 = os.environ.get("STRING_2", None)
-STRING_3 = os.environ.get("STRING_3", None)
-STRING_4 = os.environ.get("STRING_4", None)
-STRING_5 = os.environ.get("STRING_5", None)
-
 # Load or No Load modules
 LOAD = os.environ.get("LOAD", "").split()
 NO_LOAD = os.environ.get("NO_LOAD", "").split()
