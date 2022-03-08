@@ -25,7 +25,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
+from userbot import BOTLOG_CHATID, CMD_HELP
 from userbot.events import register, toni_cmd
 from userbot import CMD_HANDLER as cmd
 
