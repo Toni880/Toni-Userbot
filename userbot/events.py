@@ -13,7 +13,13 @@ from pathlib import Path
 from time import gmtime, strftime
 from traceback import format_exc
 from telethon import events
-from userbot import CMD_HANDLER, LOGSPAMMER, CMD_HELP, bot
+from userbot import (
+ CMD_HANDLER,
+ LOGSPAMMER,
+ CMD_HELP,
+ DEVS,
+ bot,
+)
 
 
 def toni_cmd(pattern=None, command=None, **args):
