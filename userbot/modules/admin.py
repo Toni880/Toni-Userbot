@@ -31,7 +31,8 @@ from telethon.tl.types import (
 )
 
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS
-from userbot.events import register
+from userbot.events import register, toni_cmd
+from userbot import CMD_HANDLER as cmd
 
 # =================== CONSTANT ===================
 PP_TOO_SMOL = "`Gambar Terlalu Kecil`"
@@ -77,7 +78,8 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 # ================================================
 
 
-@register(outgoing=True, pattern=r"^\.setgpic$")
+@toni_cmd(pattern="setgpic( -s| -d)$")
+@register(pattern=r"^\.csetgpic( -s| -d)$")
 async def set_group_photo(gpic):
     if not gpic.is_group:
         await gpic.edit("`Mohon Lakukan Perintah Ini Di Grup.`")
@@ -113,8 +115,8 @@ async def set_group_photo(gpic):
             await gpic.edit(PP_ERROR)
 
 
-@register(outgoing=True, pattern=r"^\.promote(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cpromote(?: |$)(.*)")
+@toni_cmd(pattern="promote(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cpromote(?:\s|$)([\s\S]*)")
 async def promote(promt):
     # Get targeted chat
     chat = await promt.get_chat()
@@ -164,8 +166,8 @@ async def promote(promt):
         )
 
 
-@register(outgoing=True, pattern=r"^\.demote(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cdemote(?: |$)(.*)")
+@toni_cmd(pattern="demote(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cdemote(?:\s|$)([\s\S]*)")
 async def demote(dmod):
     # Admin right check
     chat = await dmod.get_chat()
@@ -214,8 +216,8 @@ async def demote(dmod):
         )
 
 
-@register(outgoing=True, pattern=r"^\.ban(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cban(?: |$)(.*)")
+@toni_cmd(pattern="ban(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cban(?:\s|$)([\s\S]*)")
 async def ban(bon):
     # Here laying the sanity check
     chat = await bon.get_chat()
@@ -268,8 +270,8 @@ async def ban(bon):
         )
 
 
-@register(outgoing=True, pattern=r"^\.unban(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cunban(?: |$)(.*)")
+@toni_cmd(pattern="unban(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cunban(?:\s|$)([\s\S]*)")
 async def nothanos(unbon):
     # Here laying the sanity check
     chat = await unbon.get_chat()
@@ -305,8 +307,8 @@ async def nothanos(unbon):
         await unbon.edit("`Sepertinya Terjadi Kesalahan!`")
 
 
-@register(outgoing=True, pattern=r"^\.mute(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cmute(?: |$)(.*)")
+@toni_cmd(pattern=r"mute(?: |$)(.*)")
+@register(pattern=r"^\.cmute(?: |$)(.*)")
 async def spider(spdr):
     # Check if the function running under SQL mode
     try:
@@ -360,8 +362,8 @@ async def spider(spdr):
             return await spdr.edit("`Terjadi Kesalahan!`")
 
 
-@register(outgoing=True, pattern=r"^\.unmute(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cunmute(?: |$)(.*)")
+@toni_cmd(pattern=r"unmute(?: |$)(.*)")
+@register(pattern=r"^\.cunmute(?: |$)(.*)")
 async def unmoot(unmot):
     # Admin or creator check
     chat = await unmot.get_chat()
@@ -439,8 +441,8 @@ async def muter(moot):
             await moot.delete()
 
 
-@register(outgoing=True, pattern=r"^\.ungmute(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cungmute(?: |$)(.*)")
+@toni_cmd(pattern="ungmute(?: |$)(.*)")
+@register(pattern=r"^\.cungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
     # Admin or creator check
     chat = await un_gmute.get_chat()
@@ -482,7 +484,8 @@ async def ungmoot(un_gmute):
             )
 
 
-@register(outgoing=True, pattern=r"^\.gmute(?: |$)(.*)")
+@toni_cmd(pattern="gmute(?: |$)(.*)")
+@register(pattern=r"^\.cgmute(?: |$)(.*)")
 async def gspider(gspdr):
     # Admin or creator check
     chat = await gspdr.get_chat()
@@ -522,7 +525,7 @@ async def gspider(gspdr):
             )
 
 
-@register(outgoing=True, pattern=r"^\.zombies(?: |$)(.*)", groups_only=False)
+@toni_cmd(pattern="zombies(?: |$)(.*)")
 async def rm_deletedacc(show):
 
     con = show.pattern_match.group(1).lower()
@@ -591,71 +594,72 @@ async def rm_deletedacc(show):
         )
 
 
-@register(outgoing=True, pattern=r"^\.admins$")
+@toni_cmd(pattern="admins$")
 async def get_admin(show):
     info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
-    mentions = f"<b>✥ Daftar Admin Grup {title}:</b> \n"
+    title = info.title or "Grup Ini"
+    mentions = f"<b>👑 Daftar Admin Grup {title}:</b> \n"
     try:
         async for user in show.client.iter_participants(
             show.chat_id, filter=ChannelParticipantsAdmins
         ):
             if not user.deleted:
                 link = f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
-                mentions += f"\n➤ {link}"
+                mentions += f"\n⚜️ {link}"
             else:
-                mentions += f"\nAkun Terhapus <code>{user.id}</code>"
+                mentions += f"\n⚜ Akun Terhapus <code>{user.id}</code>"
     except ChatAdminRequiredError as err:
         mentions += " " + str(err) + "\n"
     await show.edit(mentions, parse_mode="html")
+    
 
-
-@register(outgoing=True, pattern=r"^\.pin(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cpin(?: |$)(.*)")
-async def pin(msg):
-    # Admin or creator check
-    chat = await msg.get_chat()
-    admin = chat.admin_rights
-    creator = chat.creator
-
-    # If not admin and not creator, return
-    if not admin and not creator:
-        return await msg.edit(NO_ADMIN)
-
-    to_pin = msg.reply_to_msg_id
-
+@toni_cmd(pattern="pin( loud|$)")
+@register(pattern=r"^\.cpin( loud|$)")
+async def pin(event):
+    to_pin = event.reply_to_msg_id
     if not to_pin:
-        return await msg.edit("`Mohon Balas Ke Pesan Untuk Melakukan Pin.`")
-
-    options = msg.pattern_match.group(1)
-
-    is_silent = True
-
-    if options.lower() == "loud":
-        is_silent = False
-
+        return await edit_delete(event, "`Reply Pesan untuk Melakukan Pin.`", 30)
+    options = event.pattern_match.group(1)
+    is_silent = bool(options)
     try:
-        await msg.client(UpdatePinnedMessageRequest(msg.to_id, to_pin, is_silent))
+        await event.client.pin_message(event.chat_id, to_pin, notify=is_silent)
     except BadRequestError:
-        return await msg.edit(NO_PERM)
-
-    await msg.edit("`Berhasil Melakukan Pinned!`")
-    await sleep(2)
-    await msg.delete()
-
-    user = await get_user_from_id(msg.from_id, msg)
-
-    if BOTLOG:
-        await msg.client.send_message(
-            BOTLOG_CHATID,
-            "#PIN\n"
-            f"ADMIN: [{user.first_name}](tg://user?id={user.id})\n"
-            f"GRUP: {msg.chat.title}(`{msg.chat_id}`)\n"
-            f"NOTIF: {not is_silent}",
+        return await edit_delete(event, NO_PERM, 5)
+    except Exception as e:
+        return await edit_delete(event, f"`{e}`", 5)
+    await edit_delete(event, "`Pinned Successfully!`")
+    
+@toni_cmd(pattern="unpin( all|$)")
+@register(pattern=r"^\.cunpin( all|$)")
+async def pin(event):
+    to_unpin = event.reply_to_msg_id
+    options = (event.pattern_match.group(1)).strip()
+    if not to_unpin and options != "all":
+        return await edit_delete(
+            event,
+            "**Reply ke Pesan untuk melepas Pin atau Gunakan** `.unpin all` **untuk melepas pin semua**",
+            45,
         )
+    try:
+        if to_unpin and not options:
+            await event.client.unpin_message(event.chat_id, to_unpin)
+        elif options == "all":
+            await event.client.unpin_message(event.chat_id)
+        else:
+            return await edit_delete(
+                event,
+                "**Reply ke Pesan untuk melepas pin atau gunakan** `.unpin all`",
+                45,
+            )
+    except BadRequestError:
+        return await edit_delete(event, NO_PERM, 5)
+    except Exception as e:
+        return await edit_delete(event, f"`{e}`", 5)
+    await edit_delete(event, "`Unpinned Successfully!`")
 
 
-@register(outgoing=True, pattern=r"^\.kick(?: |$)(.*)")
+@toni_cmd(pattern="kick(?: |$)(.*)")
+@register(pattern=r"^\.ckick(?: |$)(.*)")
 async def kick(usr):
     # Admin or creator check
     chat = await usr.get_chat()
@@ -698,256 +702,128 @@ async def kick(usr):
         )
 
 
-@register(outgoing=True, pattern=r"^\.users ?(.*)")
-async def get_users(show):
-    info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
-    mentions = "Pengguna Di {}: \n".format(title)
-    try:
-        if not show.pattern_match.group(1):
-            async for user in show.client.iter_participants(show.chat_id):
-                if not user.deleted:
-                    mentions += (
-                        f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
-                    )
-                else:
-                    mentions += f"\nAkun Terhapus `{user.id}`"
-        else:
-            searchq = show.pattern_match.group(1)
-            async for user in show.client.iter_participants(
-                show.chat_id, search=f"{searchq}"
-            ):
-                if not user.deleted:
-                    mentions += (
-                        f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
-                    )
-                else:
-                    mentions += f"\nAkun Terhapus `{user.id}`"
-    except ChatAdminRequiredError as err:
-        mentions += " " + str(err) + "\n"
-    try:
-        await show.edit(mentions)
-    except MessageTooLongError:
-        await show.edit(
-            "Grup Ini Terlalu Besar Mengunggah Daftar Pengguna Sebagai File."
-        )
-        file = open("daftarpengguna.txt", "w+")
-        file.write(mentions)
-        file.close()
-        await show.client.send_file(
-            show.chat_id,
-            "daftarpengguna.txt",
-            caption="Pengguna Dalam Grup {}".format(title),
-            reply_to=show.id,
-        )
-        remove("daftarpengguna.txt")
-
-
-async def get_user_from_event(event):
-    args = event.pattern_match.group(1).split(" ", 1)
-    extra = None
-    if event.reply_to_msg_id and len(args) != 2:
-        previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.from_id)
-        extra = event.pattern_match.group(1)
-    elif args:
-        user = args[0]
-        if len(args) == 2:
-            extra = args[1]
-
-        if user.isnumeric():
-            user = int(user)
-
-        if not user:
-            return await event.edit("`Ketik Username Atau Balas Ke Pengguna!`")
-
-        if event.message.entities is not None:
-            probable_user_mention_entity = event.message.entities[0]
-
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                user_id = probable_user_mention_entity.user_id
-                user_obj = await event.client.get_entity(user_id)
-                return user_obj
-        try:
-            user_obj = await event.client.get_entity(user)
-        except (TypeError, ValueError) as err:
-            return await event.edit(str(err))
-
-    return user_obj, extra
-
-
-async def get_user_from_id(user, event):
-    if isinstance(user, str):
-        user = int(user)
-
-    try:
-        user_obj = await event.client.get_entity(user)
-    except (TypeError, ValueError) as err:
-        return await event.edit(str(err))
-
-    return user_obj
-
-
-@register(outgoing=True, pattern=r"^\.usersdel ?(.*)")
-async def get_usersdel(show):
-    info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
-    mentions = "Akun Terhapus Di {}: \n".format(title)
-    try:
-        if not show.pattern_match.group(1):
-            async for user in show.client.iter_participants(show.chat_id):
-                if not user.deleted:
-                    mentions += (
-                        f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
-                    )
-        #       else:
-        #                mentions += f"\nAkun Terhapus `{user.id}`"
-        else:
-            searchq = show.pattern_match.group(1)
-            async for user in show.client.iter_participants(
-                show.chat_id, search=f"{searchq}"
-            ):
-                if not user.deleted:
-                    mentions += (
-                        f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
-                    )
-        #       else:
-    #              mentions += f"\nAkun Terhapus `{user.id}`"
-    except ChatAdminRequiredError as err:
-        mentions += " " + str(err) + "\n"
-    try:
-        await show.edit(mentions)
-    except MessageTooLongError:
-        await show.edit(
-            "Grup Ini Terlalu Besar, Mengunggah Daftar Akun Terhapus Sebagai File."
-        )
-        file = open("daftarpengguna.txt", "w+")
-        file.write(mentions)
-        file.close()
-        await show.client.send_file(
-            show.chat_id,
-            "daftarpengguna.txt",
-            caption="Daftar Pengguna {}".format(title),
-            reply_to=show.id,
-        )
-        remove("daftarpengguna.txt")
-
-
-async def get_userdel_from_event(event):
-    args = event.pattern_match.group(1).split(" ", 1)
-    extra = None
-    if event.reply_to_msg_id and len(args) != 2:
-        previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.from_id)
-        extra = event.pattern_match.group(1)
-    elif args:
-        user = args[0]
-        if len(args) == 2:
-            extra = args[1]
-
-        if user.isnumeric():
-            user = int(user)
-
-        if not user:
-            return await event.edit("`Ketik username Atau Reply Ke Pengguna!`")
-
-        if event.message.entities is not None:
-            probable_user_mention_entity = event.message.entities[0]
-
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                user_id = probable_user_mention_entity.user_id
-                user_obj = await event.client.get_entity(user_id)
-                return user_obj
-        try:
-            user_obj = await event.client.get_entity(user)
-        except (TypeError, ValueError) as err:
-            return await event.edit(str(err))
-
-    return user_obj, extra
-
-
-async def get_userdel_from_id(user, event):
-    if isinstance(user, str):
-        user = int(user)
-
-    try:
-        user_obj = await event.client.get_entity(user)
-    except (TypeError, ValueError) as err:
-        return await event.edit(str(err))
-
-    return user_obj
-
-
-@register(outgoing=True, pattern=r"^\.bots$", groups_only=True)
-async def get_bots(show):
-    info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
-    mentions = f"<b>Daftar Bot Di {title}:</b>\n"
-    try:
-        if isinstance(show.to_id, PeerChat):
-            return await show.edit(
-                "`Saya mendengar bahwa hanya Supergrup yang dapat memiliki bot`"
-            )
-        else:
-            async for user in show.client.iter_participants(
-                show.chat_id, filter=ChannelParticipantsBots
-            ):
-                if not user.deleted:
-                    link = f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
-                    userid = f"<code>{user.id}</code>"
-                    mentions += f"\n{link} {userid}"
-                else:
-                    mentions += f"\nBot Terhapus <code>{user.id}</code>"
-    except ChatAdminRequiredError as err:
-        mentions += " " + str(err) + "\n"
-    try:
-        await show.edit(mentions, parse_mode="html")
-    except MessageTooLongError:
-        await show.edit(
-            "Terlalu Banyak Bot Di Grup Ini, Mengunggah Daftar Bot Sebagai File."
-        )
-        file = open("botlist.txt", "w+")
-        file.write(mentions)
-        file.close()
-        await show.client.send_file(
-            show.chat_id,
-            "botlist.txt",
-            caption="Daftar Bot Di {}".format(title),
-            reply_to=show.id,
-        )
-        remove("botlist.txt")
+@toni_cmd(pattern=r"undlt( -u)?(?: |$)(\d*)?")
+async def _iundlt(event):
+    catevent = await edit_or_reply(event, "`Searching recent actions...`")
+    flag = event.pattern_match.group(1)
+    if event.pattern_match.group(2) != "":
+        lim = int(event.pattern_match.group(2))
+        if lim > 15:
+            lim = int(15)
+        if lim <= 0:
+            lim = int(1)
+    else:
+        lim = int(5)
+    adminlog = await event.client.get_admin_log(
+        event.chat_id, limit=lim, edit=False, delete=True
+    )
+    deleted_msg = f"**{lim} Pesan yang dihapus di grup ini:**"
+    if not flag:
+        for msg in adminlog:
+            ruser = (
+                await event.client(GetFullUserRequest(msg.old.from_id.user_id))
+            ).user
+            _media_type = media_type(msg.old)
+            if _media_type is None:
+                deleted_msg += f"\n☞ __{msg.old.message}__ **Dikirim oleh** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+            else:
+                deleted_msg += f"\n☞ __{_media_type}__ **Dikirim oleh** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+        await edit_or_reply(catevent, deleted_msg)
+    else:
+        main_msg = await edit_or_reply(catevent, deleted_msg)
+        for msg in adminlog:
+            ruser = (
+                await event.client(GetFullUserRequest(msg.old.from_id.user_id))
+            ).user
+            _media_type = media_type(msg.old)
+            if _media_type is None:
+                await main_msg.reply(
+                    f"{msg.old.message}\n**Dikirim oleh** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+                )
+            else:
+                await main_msg.reply(
+                    f"{msg.old.message}\n**Dikirim oleh** {_format.mentionuser(ruser.first_name ,ruser.id)}",
+                    file=msg.old.media,
+                )
 
 
 CMD_HELP.update(
     {
-        "admin": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.promote` <username/balas ke pesan> <nama title (optional)>"
-        "\n↳ : Mempromosikan member sebagai admin."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.demote` <username/balas ke pesan>"
-        "\n↳ : Menurunkan admin sebagai member."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ban` <username/balas ke pesan> <alasan (optional)>"
-        "\n↳ : Memblokir Seseorang."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.unban <username/reply>`"
-        "\n↳ : Menghapus Blokir."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.mute` <username/balas ke pesan> <alasan (optional)>"
-        "\n↳ : Membisukan Seseorang Di Grup, Bisa Ke Admin Juga."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.unmute` <username/balas ke pesan>"
-        "\n↳ : Membuka bisu orang yang dibisukan."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.gmute` <username/balas ke pesan> <alasan (optional)>"
-        "\n↳ : Membisukan ke semua grup yang kamu punya sebagai admin."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ungmute` <username/reply>"
-        "\n↳ : Reply someone's message with `.ungmute` to remove them from the gmuted list."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.zombies`"
-        "\n↳ : Untuk mencari akun terhapus dalam grup."
-        "Gunakan `.zombies clean` untuk menghapus Akun Terhapus dari grup."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.all`"
-        "\n↳ : Tag semua member dalam grup."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.admins`"
-        "\n↳ : Melihat daftar admin di grup."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.bots`"
-        "\n↳ : Melihat daftar bot dalam grup."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.users` Atau >`.users` <nama member>"
-        "\n↳ : Mendapatkan daftar pengguna daam grup."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.setgpic` <balas ke gambar>"
-        "\n↳ : Mengganti foto profil grup."
+        "admin": f"**Plugin : **`admin`\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}promote <username/reply> <nama title (optional)>`\
+        \n  ↳ : **Mempromosikan member sebagai admin.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}demote <username/balas ke pesan>`\
+        \n  ↳ : **Menurunkan admin sebagai member.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}ban <username/balas ke pesan> <alasan (optional)>`\
+        \n  ↳ : **Membanned Pengguna dari grup.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}unban <username/reply>`\
+        \n  ↳ : **Unbanned pengguna jadi bisa join grup lagi.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}mute <username/reply> <alasan (optional)>`\
+        \n  ↳ : **Membisukan Seseorang Di Grup, Bisa Ke Admin Juga.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}unmute <username/reply>`\
+        \n  ↳ : **Membuka bisu orang yang dibisukan.\
+        \n  ↳ : ** Membuka global mute orang yang dibisukan.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}all`\
+        \n  ↳ : **Tag semua member dalam grup.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}admins`\
+        \n  ↳ : **Melihat daftar admin di grup.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}setgpic <flags> <balas ke gambar>`\
+        \n  ↳ : **Untuk mengubah foto profil grup atau menghapus gambar foto profil grup.\
+        \n  •  **Flags :** `-s` = **Untuk mengubah foto grup** atau `-d` = **Untuk menghapus foto grup**\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "pin": f"**Plugin : **`pin`\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}pin` <reply chat>\
+        \n  ↳ : **Untuk menyematkan pesan dalam grup.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}pin loud` <reply chat>\
+        \n  ↳ : **Untuk menyematkan pesan dalam grup (tanpa notifikasi) / menyematkan secara diam diam.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}unpin` <reply chat>\
+        \n  ↳ : **Untuk melepaskan pin pesan dalam grup.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}unpin all`\
+        \n  ↳ : **Untuk melepaskan semua sematan pesan dalam grup.\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "undelete": f"**Plugin : **`undelete`\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}undlt` <jumlah chat>\
+        \n  ↳ : **Untuk mendapatkan pesan yang dihapus baru-baru ini di grup\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}undlt -u` <jumlah chat>\
+        \n  ↳ : **Untuk mendapatkan pesan media yang dihapus baru-baru ini di grup \
+        \n  •  **Flags :** `-u` = **Gunakan flags ini untuk mengunggah media.**\
+        \n\n  •  **NOTE : Membutuhkan Hak admin Grup** \
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "gmute": f"**Plugin : **`gmute`\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}gmute` <username/reply> <alasan (optional)>\
+        \n  ↳ : **Untuk Membisukan Pengguna di semua grup yang kamu admin.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}ungmute` <username/reply>\
+        \n  ↳ : **Untuk Membuka global mute Pengguna di semua grup yang kamu admin.\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "zombies": f"**Plugin : **`zombies`\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}zombies`\
+        \n  ↳ : **Untuk mencari akun terhapus dalam grup\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}zombies clean`\
+        \n  ↳ : **untuk menghapus Akun Terhapus dari grup.\
+    "
     }
 )
