@@ -8,7 +8,7 @@ import requests
 from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import DEVS, LOGS, bot, call_py, blacklistuser
 from userbot.modules import ALL_MODULES
-from userbot.utils import autobot, checking
+from userbot.utils import autobot
 
 try:
     bot.start()
