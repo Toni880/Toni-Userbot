@@ -17,7 +17,7 @@ try:
     blacklistuser = requests.get(
         "https://raw.githubusercontent.com/Tonic990/blacklist/master/toniblacklist.json"
     ).json()
-    if user.id in blacklistrose:
+    if user.id in blacklistuser:
         LOGS.warning(
             "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOTnya GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @Bukan_guudlooking"
         )
