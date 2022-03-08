@@ -6,7 +6,7 @@ from importlib import import_module
 import requests
 
 from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
-from userbot import DEVS, LOGS, bot, call_py, toniblacklist
+from userbot import DEVS, LOGS, bot, call_py, blacklistuser
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
@@ -14,7 +14,7 @@ try:
     bot.start()
     call_py.start()
     user = bot.get_me()
-    toniblacklist = requests.get(
+    blacklistuser = requests.get(
         "https://raw.githubusercontent.com/Tonic990/blacklist/master/toniblacklist.json"
     ).json()
     if user.id in blacklistrose:
