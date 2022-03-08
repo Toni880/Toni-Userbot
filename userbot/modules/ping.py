@@ -13,8 +13,14 @@ from datetime import datetime
 import redis
 from speedtest import Speedtest
 
-from userbot import ALIVE_NAME, CMD_HELP, DEVS, StartTime
-from userbot.events import register
+from userbot import (
+    ALIVE_NAME,
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    DEVS,
+    StartTime,
+)
+from userbot.events import register, toni_cmd
 
 absen = [
     "**Hadir ganteng** 🥵",
@@ -66,22 +72,22 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@register(incoming=True, from_users=DEVS, pattern=r"^.absen$")
+@register(incoming=True, from_users=DEVS, pattern=r"^.absen$", sudo=True)
 async def _(tonic):
     await tonic.reply(random.choice(absen))
 
 
-@register(incoming=True, from_users=DEVS, pattern=r"^.pacar$")
+@register(incoming=True, from_users=DEVS, pattern=r"^.pacar$", sudo=True)
 async def _(asadekontol):
     await asadekontol.reply(random.choice(pacar))
 
 
-@register(incoming=True, from_users=DEVS, pattern=r"^.cping$")
+@register(incoming=True, from_users=DEVS, pattern=r"^.cping$", sudo=True)
 async def _(tonic):
     await tonic.reply(random.choice(cping))
 
 
-@register(outgoing=True, pattern="^.sping$")
+@toni_cmd(pattern="sping$")
 async def redis(pong):
     """For .ping command, ping the userbot from any chat."""
     await get_readable_time((time.time() - StartTime))
@@ -119,7 +125,7 @@ async def redis(pong):
     )
 
 
-@register(outgoing=True, pattern="^.lping$")
+@toni_cmd(pattern=r"lping$")
 async def redis(pong):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -136,7 +142,7 @@ async def redis(pong):
     )
 
 
-@register(outgoing=True, pattern="^.xping$")
+@toni_cmd(pattern=r"xping$")
 async def redis(pong):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -186,7 +192,7 @@ async def redis(pong):
     )
 
 
-@register(outgoing=True, pattern="^.ping$")
+@toni_cmd(pattern="ping$")
 async def redis(pong):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -207,7 +213,7 @@ async def redis(pong):
     )
 
 
-@register(outgoing=True, pattern="^.kecepatan$")
+@toni_cmd(pattern="kecepatan$")
 async def speedtst(spd):
     """For .speed command, use SpeedTest to check server speeds."""
     await spd.edit("**Sedang Menjalankan Tes Kecepatan Jaringan,Mohon Tunggu...**")
@@ -249,7 +255,7 @@ def speed_convert(size):
     return f"{round(size, 2)} {units[zero]}"
 
 
-@register(outgoing=True, pattern="^.pong$")
+@toni_cmd(pattern="pong$")
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
     start = datetime.now()
@@ -266,7 +272,7 @@ async def pingme(pong):
     await pong.edit(f"**⚡Oᴡɴᴇʀ : {ALIVE_NAME}**\n📗 `%sms`" % (duration))
 
 
-@register(outgoing=True, pattern="^.pink$")
+@toni_cmd(pattern="pink$")
 async def redis(pong):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -297,7 +303,7 @@ async def redis(pong):
     )
 
 
-@register(outgoing=True, pattern=r"^\.fping$")
+@toni_cmd(pattern=r"fping$")
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
     await get_readable_time((time.time() - StartTime))
@@ -332,11 +338,11 @@ async def pingme(pong):
 
 CMD_HELP.update(
     {
-        "ping": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ping` | `.lping` | `.xping` | `.sinyal` | `.sping` | `.pink` | `.fping`\
+        "ping": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ping` | `{cmd}lping` | `{cmd}xping` | `{cmd}sinyal` | `{cmd}sping` | `{cmd}pink` | `{cmd}fping`\
          \n↳ : Untuk Menunjukkan Ping Bot Anda.\
-         \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.kecepatan`\
+         \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}kecepatan`\
          \n↳ : Untuk Menunjukkan Kecepatan Jaringan Anda.\
-         \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.pong`\
+         \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}pong`\
          \n↳ : Sama Seperti Perintah Ping."
     }
 )
