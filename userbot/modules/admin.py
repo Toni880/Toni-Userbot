@@ -142,7 +142,7 @@ async def promote(event):
         pin_messages=True,
     )
 
-    eventtoni = await edit_or_reply(event, "`Promosikan Pengguna Sebagai Admin... Mohon Menunggu`")
+    await edit_or_reply(event, "`Promosikan Pengguna Sebagai Admin... Mohon Menunggu`")
     user, rank = await get_user_from_event(event)
     if not rank:
         rank = "Admin"  # Just in case.
