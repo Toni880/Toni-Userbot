@@ -190,6 +190,11 @@ def register(**args):
 
     if "disable_edited" in args:
         del args['disable_edited']
+      
+    if "sudo" in args:
+        del args["sudo"]
+        args["incoming"] = True
+        args["from_users"] = DEVS
 
     if "ignore_unsafe" in args:
         del args['ignore_unsafe']
