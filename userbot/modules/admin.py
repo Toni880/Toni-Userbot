@@ -4,7 +4,6 @@
 # you may not use this file except in compliance with the License.
 
 from asyncio import sleep
-from os import remove
 
 from telethon.errors import (
     BadRequestError,
@@ -13,24 +12,20 @@ from telethon.errors import (
     PhotoCropSizeSmallError,
     UserAdminInvalidError,
 )
-from telethon.errors.rpcerrorlist import MessageTooLongError, UserIdInvalidError
+from telethon.errors.rpcerrorlist import UserIdInvalidError
 from telethon.tl.functions.channels import (
     EditAdminRequest,
     EditBannedRequest,
     EditPhotoRequest,
 )
-from telethon.tl.functions.messages import UpdatePinnedMessageRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
-    ChannelParticipantsBots,
     ChatAdminRights,
     ChatBannedRights,
-    MessageEntityMentionName,
     MessageMediaPhoto,
-    PeerChat,
 )
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS
+from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register, toni_cmd
 from userbot import CMD_HANDLER as cmd
 
