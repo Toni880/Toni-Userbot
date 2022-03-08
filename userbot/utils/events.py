@@ -12,7 +12,7 @@ LOGS = logging.getLogger(__name__)
 
 async def get_user_from_event(
     event, tonicevent=None, secondgroup=None, nogroup=False, noedits=False
-):  # sourcery no-metrics
+):
     if tonicevent is None:
         tonicevent = event
     if nogroup is False:
@@ -26,22 +26,19 @@ async def get_user_from_event(
             user = args[0]
             if len(args) > 1:
                 extra = "".join(args[1:])
-            if user.isnumeric() or (user.startswith("-")
-                                    and user[1:].isnumeric()):
+            if user.isnumeric() or (user.startswith("-") and user[1:].isnumeric()):
                 user = int(user)
             if event.message.entities:
                 probable_user_mention_entity = event.message.entities[0]
-                if isinstance(
-                        probable_user_mention_entity,
-                        MessageEntityMentionName):
+                if isinstance(probable_user_mention_entity, MessageEntityMentionName):
                     user_id = probable_user_mention_entity.user_id
                     user_obj = await event.client.get_entity(user_id)
                     return user_obj, extra
             if isinstance(user, int) or user.startswith("@"):
                 user_obj = await event.client.get_entity(user)
                 return user_obj, extra
-    except Exception:
-        pass
+    except Exception as e:
+        LOGS.error(str(e))
     try:
         if nogroup is False:
             if secondgroup:
@@ -55,31 +52,37 @@ async def get_user_from_event(
             previous_message = await event.get_reply_message()
             if previous_message.from_id is None:
                 if not noedits:
-                    await edit_delete(roseevent, "`Well that's an anonymous admin !`")
+                    await edit_delete(
+                        tonicevent, "**ERROR: Dia adalah anonymous admin!**", 60
+                    )
                 return None, None
             user_obj = await event.client.get_entity(previous_message.sender_id)
             return user_obj, extra
-        elif not args:
+        if not args:
             if not noedits:
                 await edit_delete(
-                    tonicevent, "`Pass the user's username, id or reply!`", 5
+                    tonicevent,
+                    "**Mohon Reply Pesan atau Berikan User ID/Username pengguna!**",
+                    60,
                 )
             return None, None
     except Exception as e:
         LOGS.error(str(e))
     if not noedits:
-        await edit_delete(tonicevent, "__Couldn't fetch user to proceed further__")
+        await edit_delete(
+            tonicevent,
+            "**Mohon Reply Pesan atau Berikan User ID/Username pengguna!**",
+            60,
+        )
     return None, None
 
 
 async def checking():
-    gocheck = str(pybase64.b64decode("QEx1bmF0aWMwZGU="))[2:13]
-    checker = str(pybase64.b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]
+    check = str(pybase64.b64decode("R2VlelByb2plY3Q="))[2:13]
+    checking = str(pybase64.b64decode("R2VlelN1cHBvcnQ="))[2:13]
     try:
-        await bot(Get(gocheck))
-    except BaseException:
-        pass
-    try:
-        await bot(Get(checker))
+        if bot:
+            await bot(Get(check))
+            await bot(Get(checking))
     except BaseException:
         pass
