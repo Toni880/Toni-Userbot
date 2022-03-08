@@ -372,15 +372,6 @@ async def checking():
     except BaseException:
         pass
 
-with bot:
-    try:
-        bot.loop.run_until_complete(checking())
-    except BaseException:
-        LOGS.info(
-            "Join Support Group @PrimeSupportGroup and Channel @PrimeSupportChannel to see the updates of userbot"
-            "Don't Leave")
-        quit(1)
-
 
 async def check_botlog_chatid():
     if not BOTLOG_CHATID and LOGSPAMMER:
