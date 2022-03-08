@@ -240,6 +240,17 @@ async def run_cmd(cmd: list) -> tuple[bytes, bytes]:
     e_resp = err.strip()
     return t_resp, e_resp
 
+async def bash(cmd):
+    process = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+    stdout, stderr = await process.communicate()
+    err = stderr.decode().strip()
+    out = stdout.decode().strip()
+    return out, err
+
 
 def post_to_telegraph(title, html_format_content):
     post_client = TelegraphPoster(use_api=True)
