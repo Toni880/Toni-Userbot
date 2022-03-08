@@ -227,11 +227,6 @@ def register(**args):
                 # Messages sent in channels can be edited by other users.
                 # Ignore edits that take place in channels.
                 return
-            if not LOGSPAMMER:
-                check.chat_id
-            else:
-                pass
-
             if not trigger_on_fwd and check.fwd_from:
                 return
 
@@ -245,14 +240,8 @@ def register(**args):
             try:
                 await func(check)
 
-            # Thanks to @kandnub for this HACK.
-            # Raise StopPropagation to Raise StopPropagation
-            # This needed for AFK to working properly
-
             except events.StopPropagation:
                 raise events.StopPropagation
-            # This is a gay exception and must be passed out. So that it doesnt
-            # spam chats
             except KeyboardInterrupt:
                 pass
             except BaseException:
