@@ -1,7 +1,6 @@
 from telethon import events
 
 from userbot import (
-    CMD_HANDLER as cmd,
     CMD_HELP,
     bot,
 )
