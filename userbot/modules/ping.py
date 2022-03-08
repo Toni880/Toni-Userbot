@@ -86,44 +86,6 @@ async def _(tonic):
     await tonic.reply(random.choice(cping))
 
 
-@toni_cmd(pattern="sping$")
-async def redis(pong):
-    """For .ping command, ping the userbot from any chat."""
-    await get_readable_time((time.time() - StartTime))
-    start = datetime.now()
-    await pong.edit("**🐖 ADA BABI🐖 **")
-    await pong.edit("**🐖🐖 ADA BABI 🐖🐖**")
-    await pong.edit("**🐖🐖🐖 ADA BABI 🐖🐖🐖**")
-    await pong.edit("**🐖🐖🐖🐖 LU BABI 🐖🐖🐖🐖**")
-    await pong.edit("**🐖🐖🐖🐖🐖 OINKK 🐖🐖🐖🐖🐖**")
-    await pong.edit("**🐖🐖🐖🐖🐖🐖 OINKK 🐖🐖🐖🐖🐖🐖**")
-    await pong.edit("**🐖🐖🐖🐖🐖🐖🐖 OINKK 🐖🐖🐖🐖🐖🐖🐖**")
-    await pong.edit("`.................🐖`")
-    await pong.edit("`................🐖.`")
-    await pong.edit("`...............🐖..`")
-    await pong.edit("`..............🐖...`")
-    await pong.edit("`.............🐖....`")
-    await pong.edit("`............🐖.....`")
-    await pong.edit("`...........🐖......`")
-    await pong.edit("`..........🐖.......`")
-    await pong.edit("`.........🐖........`")
-    await pong.edit("`........🐖.........`")
-    await pong.edit("`.......🐖..........`")
-    await pong.edit("`......🐖...........`")
-    await pong.edit("`.....🐖............`")
-    await pong.edit("`....🐖.............`")
-    await pong.edit("`...🐖..............`")
-    await pong.edit("`..🐖...............`")
-    await pong.edit("`.🐖................`")
-    end = datetime.now()
-    duration = (end - start).microseconds / 1000
-    await pong.edit(
-        f"**{ALIVE_NAME}**        \n"
-        f"**➾Kecepatan : ** %sms  \n"
-        f"**➾Branch : ** Tonic-Userbot \n" % (duration)
-    )
-
-
 @toni_cmd(pattern=r"lping$")
 async def redis(pong):
     """For .ping command, ping the userbot from any chat."""
