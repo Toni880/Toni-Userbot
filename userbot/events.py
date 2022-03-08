@@ -15,7 +15,6 @@ from traceback import format_exc
 from telethon import events
 from userbot import (
  CMD_HANDLER,
- LOGSPAMMER,
  CMD_HELP,
  DEVS,
  bot,
