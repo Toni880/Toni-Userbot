@@ -15,9 +15,8 @@ from speedtest import Speedtest
 
 from userbot import (
     ALIVE_NAME,
-    CMD_HANDLER as cmd,
-    CMD_HELP, 
-    DEVS,
+    CMD_HELP,
+    DEVS, 
     StartTime,
 )
 from userbot.events import register
