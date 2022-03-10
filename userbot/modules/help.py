@@ -8,37 +8,38 @@
 import asyncio
 from platform import uname
 
-from userbot import ALIVE_NAME, CMD_HELP, bot
+from userbot import (
+    CMD_HANDLER as cmd,
+    ICON_HELP,
+    CMD_HELP,
+    CHANNEL,
+)
 from userbot.events import toni_cmd
 
 modules = CMD_HELP
 
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
-
-
-@bot.on(toni_cmd(outgoing=True, pattern="^.help(?: |$)(.*)"))
+@toni_cmd(pattern="help(?: |$)(.*)")
 async def help(event):
-    """For .help command,"""
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
-            await event.edit(str(CMD_HELP[args]))
+            await edit_or_reply(event, str(CMD_HELP[args]))
         else:
-            await event.edit("`Command` **Tidak Valid**")
-            await asyncio.sleep(200)
-            await event.delete()
+            await edit_delete(event, f"`{args}` **Bukan Nama Modul yang Valid.**")
     else:
+        user = await event.client.get_me()
         string = ""
         for i in CMD_HELP:
             string += "`" + str(i)
-            string += "`\t ❉  "
-        await event.edit(
-            "**✨ ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ✨**\n\n"
-            f"**◉ Bᴏᴛ ᴏꜰ {DEFAULTUSER}**\n**◉ Mᴏᴅᴜʟᴇꜱ : {len(modules)}**\n\n"
-            "**• Mᴀɪɴ Mᴇɴᴜ :**\n"
-            f"◉ {string}◉\n\n✐ **ɴᴏᴛᴇꜱ :**  `.help animasi`"
+            string += f"`\t\t\t{ICON_HELP}\t\t\t"
+        await edit_or_reply(
+            event,
+            f"**✦ Daftar Perintah Untuk [Tonic-Userbot](https://github.com/Tonic990/Tonic-Userbot):**\n"
+            f"**✦ Jumlah** `{len(modules)}` **Modules**\n"
+            f"**✦ Owner:** [{user.first_name}](tg://user?id={user.id})\n\n"
+            f"{ICON_HELP}   {string}"
+            f"\n\nSupport @{CHANNEL}",
         )
-        await asyncio.sleep(1000)
-        await event.delete()
+        await event.reply(
+            f"\n**Contoh Ketik** `{cmd}help afk` **Untuk Melihat Informasi Module**"
+        )
