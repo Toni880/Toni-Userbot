@@ -5,7 +5,7 @@ from userbot import (
     CMD_HELP,
     bot,
 )
-from userbot.events import toni_cmd, edit_or_reply
+from userbot.utils import toni_cmd, edit_or_reply
 
 
 @toni_cmd(pattern="detect(?: |$)(.*)")
