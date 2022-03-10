@@ -1,23 +1,22 @@
 """ Userbot module for other small commands. """
-from userbot import ALIVE_NAME, CMD_HELP
-from userbot.events import register
+from userbot import ALIVE_NAME, CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern="^.lhelp$")
+@toni_cmd(pattern="lhelp$")
 async def usit(e):
     await e.edit(
-        f"**Halo {DEFAULTUSER} Jika Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
-        "\n[Telegram](t.me/pikyus1)"
-        "\n[Repo](https://github.com/S/Rose-UserBot)"
-        "\n[Instagram](instagram.com/ndiap04)"
+        f"**Halo {DEFAULTUSER} Jika Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `{cmd}help` Atau Bisa Minta Bantuan Ke:\n"
+        "\n[Telegram](t.me/Bukan_guudlooking)"
+        "\n[Repo](https://github.com/Tonic990/Tonic-UserBot)"
     )
 
 
-@register(outgoing=True, pattern="^.vars$")
+@toni_cmd(pattern="vars$")
 async def var(m):
     await m.edit(
         f"**Disini Daftar Vars Dari {DEFAULTUSER}:**\n"
@@ -27,9 +26,9 @@ async def var(m):
 
 CMD_HELP.update(
     {
-        "helper": "`.lhelp`\
-\nUsage: Bantuan Untuk Rose-Userbot.\
-\n`.vars`\
+        "helper": f"`{cmd}lhelp`\
+\nUsage: Bantuan Untuk Tonic-Userbot.\
+\n`{cmd}vars`\
 \nUsage: Melihat Daftar Vars."
     }
 )
