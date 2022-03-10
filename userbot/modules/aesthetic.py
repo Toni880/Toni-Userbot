@@ -1,6 +1,7 @@
 from telethon import events
 
 from userbot import (
+    CMD_HANDLER as cmd
     CMD_HELP,
     bot,
 )
@@ -31,7 +32,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "aeshtetic": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙`{cmd}ae <teks>`\
+        "aeshtetic": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙`{cmd}ae <teks>`\
     \n↳ : Mengubah fonts teks menjadi Aesthetic.\
     "
     }
