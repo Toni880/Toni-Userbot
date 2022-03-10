@@ -14,7 +14,7 @@ from userbot import (
     CMD_HELP,
     CHANNEL,
 )
-from userbot.events import toni_cmd
+from userbot.utils import toni_cmd
 
 modules = CMD_HELP
 
