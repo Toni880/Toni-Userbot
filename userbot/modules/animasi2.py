@@ -1568,16 +1568,6 @@ async def koc(e):
         await e.edit("8====D💦💦")
         await e.edit(choice(FACEREACTS))
 
-
-@toni_cmd(pattern=r"penis|dick)\s?(.)?")
-async def emoji_penis(e):
-    emoji = e.pattern_match.group(1)
-    titid = GAMBAR_TITIT
-    if emoji:
-        titid = titid.replace("🍆", emoji)
-    await edit_or_reply(e, titid)
-
-
 CMD_HELP.update(
     {
         "animasi2": f">`{cmd}cowsay`"
