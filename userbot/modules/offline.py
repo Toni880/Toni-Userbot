@@ -3,20 +3,18 @@
 # Recode by @Vckyouuu
 # FromVT-Userbot
 
-import asyncio
 import os
+import asyncio
 from datetime import datetime
-
 from telethon import events
 from telethon.tl import functions, types
-
-from userbot.events import register
 
 from userbot import (  # noqa pylint: disable=unused-import isort:skip
     AFKREASON,
     ALIVE_NAME,
     BOTLOG,
     BOTLOG_CHATID,
+    CMD_HANDLER as cmd,
     CMD_HELP,
     COUNT_MSG,
     ISAFK,
@@ -24,6 +22,7 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     USERS,
     bot,
 )
+from userbot.utils import toni_cmd
 
 global USER_AFK
 global afk_time
@@ -67,8 +66,7 @@ async def set_not_afk(event):
                 )
         except BaseException:
             shite = await bot.send_message(
-                event.chat_id,
-                f"`{ALIVE_NAME}` ᴋᴇᴍʙᴀʟɪ ᴏɴʟɪɴᴇ\n**ᴅᴀʀɪ ᴏꜰꜰʟɪɴᴇ :** `{total_afk_time}` **ʏᴀɴɢ ʟᴀʟᴜ**",
+                event.chat_id, f"`{ALIVE_NAME}` ᴋᴇᴍʙᴀʟɪ ᴏɴʟɪɴᴇ\n**ᴅᴀʀɪ ᴏꜰꜰʟɪɴᴇ :** `{total_afk_time}` **ʏᴀɴɢ ʟᴀʟᴜ**"
             )
 
         except BaseException:
@@ -89,9 +87,8 @@ async def set_not_afk(event):
         os.system("rm -rf *.jpg")
 
 
-@bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
-)
+@bot.on(events.NewMessage(incoming=True,
+                          func=lambda e: bool(e.mentioned or e.is_private)))
 async def on_afk(event):
     if event.fwd_from:
         return
@@ -112,8 +109,7 @@ async def on_afk(event):
         if reason:
             message_to_reply = (
                 f"𝙋𝙀𝙎𝘼𝙉 𝙊𝙏𝙊𝙈𝘼𝙏𝙄𝙎\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n"
-                f"**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈───────────┈"
-            )
+                f"**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈───────────┈")
         else:
             message_to_reply = f"𝙋𝙀𝙎𝘼𝙉 𝙊𝙏𝙊𝙈𝘼𝙏𝙄𝙎\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈───────────┈"
         try:
@@ -140,9 +136,7 @@ async def on_afk(event):
             pass
 
 
-@register(
-    outgoing=True, pattern="^.off(?: |$)(.*)", disable_errors=True
-)  # pylint:disable=E0602
+@toni_cmd(pattern="off(?: |$)(.*)")  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
@@ -179,84 +173,60 @@ async def _(event):
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(event.chat_id, file=pic)
                     await bot.send_message(
-                        event.chat_id,
-                        f"⚡OᖴᖴᒪIᑎE\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈",
+                        event.chat_id, f"✨ᴏꜰꜰʟɪɴᴇ\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈"
                     )
                 else:
                     await bot.send_message(
-                        event.chat_id,
-                        f"⚡OᖴᖴᒪIᑎE\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈",
-                        file=pic,
+                        event.chat_id, f"✨ᴏꜰꜰʟɪɴᴇ\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈", file=pic
                     )
             except BaseException:
                 await bot.send_message(
-                    event.chat_id,
-                    f"⚡OᖴᖴᒪIᑎE\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈",
+                    event.chat_id, f"✨ᴏꜰꜰʟɪɴᴇ\n\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈"
                 )
         else:
             try:
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(event.chat_id, file=pic)
                     await bot.send_message(
-                        event.chat_id,
-                        f"**⚡OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈",
+                        event.chat_id, f"**✨ᴏꜰꜰʟɪɴᴇ**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈"
                     )
                 else:
                     await bot.send_message(
-                        event.chat_id,
-                        f"**⚡OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈",
-                        file=pic,
+                        event.chat_id, f"**✨ᴏꜰꜰʟɪɴᴇ**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈", file=pic
                     )
             except BaseException:
-                await bot.send_message(
-                    event.chat_id,
-                    f"**OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈",
-                )
+                await bot.send_message(event.chat_id, f"**OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈")
         await event.delete()
         try:
             if reason and pic:
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(BOTLOG_CHATID, file=pic)
                     await bot.send_message(
-                        BOTLOG_CHATID,
-                        f"**⚡OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈",
+                        BOTLOG_CHATID, f"**✨ᴏꜰꜰʟɪɴᴇ**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈"
                     )
                 else:
                     await bot.send_message(
-                        BOTLOG_CHATID,
-                        f"**⚡OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈",
-                        file=pic,
+                        BOTLOG_CHATID, f"**✨ᴏꜰꜰʟɪɴᴇ**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈", file=pic
                     )
             elif reason:
                 await bot.send_message(
-                    BOTLOG_CHATID,
-                    f"\n**⚡OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈",
+                    BOTLOG_CHATID, f"\n**✨ᴏꜰꜰʟɪɴᴇ**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n**▸ ᴋᴀʀᴇɴᴀ :** `{reason}`\n╰┈──────────┈"
                 )
             elif pic:
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(BOTLOG_CHATID, file=pic)
-                    await bot.send_message(
-                        BOTLOG_CHATID,
-                        f"**⚡OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈",
-                    )
+                    await bot.send_message(BOTLOG_CHATID, f"**✨ᴏꜰꜰʟɪɴᴇ**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈")
                 else:
-                    await bot.send_message(
-                        BOTLOG_CHATID,
-                        f"**⚡OᖴᖴᒪIᑎE**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈",
-                        file=pic,
-                    )
+                    await bot.send_message(BOTLOG_CHATID, f"**✨ᴏꜰꜰʟɪɴᴇ**\n╭┈──────────────┈\n**▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ**\n╰┈──────────┈", file=pic)
             else:
-                await bot.send_message(
-                    BOTLOG_CHATID,
-                    f"**⚡OᖴᖴᒪIᑎE **\n╭┈──────────────┈\n **▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ **\n╰┈──────────┈",
-                )
+                await bot.send_message(BOTLOG_CHATID, f"**✨ᴏꜰꜰʟɪɴᴇ **\n╭┈──────────────┈\n **▸ {ALIVE_NAME} ꜱᴇᴅᴀɴɢ ᴏꜰꜰʟɪɴᴇ **\n╰┈──────────┈")
         except Exception as e:
             BOTLOG_CHATIDger.warn(str(e))
 
 
 CMD_HELP.update(
     {
-        "off": ".off (reason) atau balas media untuk itu "
-        "\nPenggunaan afk bisa dengan media keren ketika seseorang menandai atau membalas salah satu pesan atau chat pribadi Anda."
+        "off": f"{cmd}off (reason) atau balas media untuk itu "
+                 "\nPenggunaan afk bisa dengan media keren ketika seseorang menandai atau membalas salah satu pesan atau chat pribadi Anda."
     }
 )
