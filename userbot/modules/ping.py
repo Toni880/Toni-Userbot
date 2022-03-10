@@ -14,7 +14,7 @@ import redis
 from speedtest import Speedtest
 
 from userbot import (
-    CMD_HANDLER as cmd
+    CMD_HANDLER as cmd,
     ALIVE_NAME,
     CMD_HELP,
     DEVS, 
