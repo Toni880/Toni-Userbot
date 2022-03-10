@@ -4,11 +4,11 @@
 
 from time import sleep
 
-from userbot import CMD_HELP
+from userbot import CMD_HELP, CMD_HANDLER as cmd
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.adaerpe(?: |$)(.*)")
+@register(pattern="adaerpe(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**ER ERRR ERRPE ASUU WOKWOK KANG PAKE PP ORANG KOREA**")
@@ -62,7 +62,7 @@ async def typewriter(typew):
     await typew.edit("**Kasian Erpe Awokawokawok Makanya Jan Pake PP Orang KOREA**")
 
 
-@register(outgoing=True, pattern="^.erpe2(?: |$)(.*)")
+@register(pattern="erpe2(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await e.edit("HA ADA ERPE??")
@@ -99,10 +99,10 @@ async def typewriter(typew):
 
 CMD_HELP.update(
     {
-        "erpe": "**Modules** - `erpe`\
-        \n\n Cmd : `.adaerpe`\
+        "erpe": f"**Modules** - `erpe`\
+        \n\n Cmd : `{cmd}adaerpe`\
         \nUsage : ngatain anak erpe\
-        \n\n Cmd : `.erpe2`\
+        \n\n Cmd : `{cmd}erpe2`\
         \nUsage : ngetawain anak erpe\
     "
     }
