@@ -6,10 +6,9 @@ import time
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.types import Channel, Chat, User
-
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+ 
+from userbot import CMD_HANDLER as cmd, CMD_HELP, bot
+from userbot.utils import toni_cmd
 
 logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
@@ -17,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"stats(?: |$)(.*)"))
+@toni_cmd(pattern=r"stats(?: |$)(.*)"))
 async def stats(
     event: NewMessage.Event,
 ) -> None:  # pylint: disable = R0912, R0914, R0915
