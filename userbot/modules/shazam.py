@@ -13,7 +13,7 @@ from userbot import CMD_HELP, CMD_HANDLER as cmd
 from userbot.utils import toni_cmd
 
 
-@tonicmd(pattern="shazam(?: |$)(.*)")
+@toni_cmd(pattern="shazam(?: |$)(.*)")
 async def _(event):
     "To reverse search music by bot."
     if not event.reply_to_msg_id:
