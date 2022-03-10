@@ -9,7 +9,7 @@ from userbot import owner
 from telethon.tl.types import InputMessagesFilterVideo
 
 
-@kyy_cmd(pattern="asupan$")
+@toni_cmd(pattern="asupan$")
 async def _(event):
     try:
         asupannya = [
