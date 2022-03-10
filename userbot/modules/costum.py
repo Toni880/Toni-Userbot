@@ -9,8 +9,13 @@
 #
 """ Userbot module containing commands for keeping costum global notes. """
 
-from userbot import BOTLOG_CHATID, CMD_HELP
+from userbot import (
+    CMD_HANDLER as cmd,
+    BOTLOG_CHATID,
+    CMD_HELP,
+)
 from userbot.events import register
+from userbot.utils import toni_cmd
 
 
 @register(outgoing=True, pattern=r"\.\w*", ignore_unsafe=True, disable_errors=True)
@@ -44,7 +49,7 @@ async def on_snip(event):
             await event.delete()
 
 
-@register(outgoing=True, pattern=r"^\.costum (\w*)")
+@toni_cmd(pattern=r"costum (\w*)")
 async def on_snip_save(event):
     """For .costum command, saves costums for future use."""
     try:
@@ -85,7 +90,7 @@ async def on_snip_save(event):
         await event.edit(success.format("Berhasil", keyword))
 
 
-@register(outgoing=True, pattern=r"^\.costums$")
+@toni_cmd(pattern=r"costums$")
 async def on_snip_list(event):
     """For .costums command, lists costums saved by you."""
     try:
@@ -103,7 +108,7 @@ async def on_snip_list(event):
     await event.edit(message)
 
 
-@register(outgoing=True, pattern=r"^\.delcostum (\w*)")
+@toni_cmd(pattern=r"delcostum (\w*)")
 async def on_snip_delete(event):
     """For .delcostum command, deletes a costum."""
     try:
@@ -120,12 +125,12 @@ async def on_snip_delete(event):
 
 CMD_HELP.update(
     {
-        "costum": "**Plugin : **`costum`\
-        \n\n  •  **Syntax :** `.costum` <nama> <data> atau membalas pesan dengan .costum <nama>\
+        "costum": f"**Plugin : **`costum`\
+        \n\n  •  **Syntax :** `{cmd}costum` <nama> <data> atau membalas pesan dengan {cmd}costum <nama>\
         \n  •  **Function : **Menyimpan pesan costum (catatan global) dengan nama. (bisa dengan gambar, docs, dan stickers!)\
-        \n\n  •  **Syntax :** `.costums`\
+        \n\n  •  **Syntax :** `{cmd}costums`\
         \n  •  **Function : **Mendapat semua costums yang disimpan.\
-        \n\n  •  **Syntax :** `.delcostum` <nama_costum>\
+        \n\n  •  **Syntax :** `{cmd}delcostum` <nama_costum>\
         \n  •  **Function : **Menghapus costum yang ditentukan.\
     "
     }
