@@ -3,11 +3,11 @@
 
 from telethon.tl.types import InputMediaDice
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.events import toni_cmd
 
 
-@register(outgoing=True, pattern="^.dice(?: |$)(.*)")
+@toni_cmd(pattern="dice(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -24,7 +24,7 @@ async def _(event):
             pass
 
 
-@register(outgoing=True, pattern="^.dart(?: |$)(.*)")
+@toni_cmd(pattern="dart(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -41,7 +41,7 @@ async def _(event):
             pass
 
 
-@register(outgoing=True, pattern="^.ball(?: |$)(.*)")
+@toni_cmd(pattern="ball(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -58,7 +58,7 @@ async def _(event):
             pass
 
 
-@register(outgoing=True, pattern="^.dadu(?: |$)(.*)")
+@toni_cmd(pattern="dadu(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -75,7 +75,7 @@ async def _(event):
             pass
 
 
-@register(outgoing=True, pattern="^.petir(?: |$)(.*)")
+@toni_cmd(pattern="petir(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -94,7 +94,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "emojigames": "`.dice` 1-6 or `.dart`1-6 or `.ball`1-5 `.dadu`1-5 `.petir`1-5\
+        "emojigames": f"`{cmd}dice` 1-6 or `{cmd}dart`1-6 or `{cmd}ball`1-5 `{cmd}dadu`1-5 `{cmd}petir`1-5\
 \nUsage: hahaha just a magic.\nWarning:`Don't use any other values or bot will crash`"
     }
 )
