@@ -30,10 +30,8 @@ async def _(event):
     raise events.StopPropagation
 
 
-CMD_HELP.update(
-    {
-        "aeshtetic": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙`{cmd}ae <teks>`\
-    \n↳ : Mengubah fonts teks menjadi Aesthetic.\
-    "
-    }
-)
+CMD_HELP.update({
+    "aeshtetic":
+    f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙`{cmd}ae <teks>`\
+    \n↳ : Mengubah fonts teks"
+})
