@@ -47,6 +47,7 @@ from userbot import (
     BOTLOG,
     BOTLOG_CHATID,
     CHROME_DRIVER,
+    CMD_HANDLER as cmd,
     CMD_HELP,
     GOOGLE_CHROME_BIN,
     LOGS,
@@ -55,8 +56,7 @@ from userbot import (
     TEMP_DOWNLOAD_DIRECTORY,
     bot,
 )
-from userbot.events import register
-from userbot.utils import chrome, googleimagesdownload, options, progress
+from userbot.utils import chrome, googleimagesdownload, options, progress, toni_cmd
 
 CARBONLANG = "auto"
 TTS_LANG = "id"
@@ -98,14 +98,14 @@ DOGBIN_URL = "https://del.dog/"
 NEKOBIN_URL = "https://nekobin.com/"
 
 
-@register(outgoing=True, pattern="^.crblangg (.*)")
+@toni_cmd(pattern="crblangg (.*)")
 async def setlang(prog):
     global CARBONLANG
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
 
 
-@register(outgoing=True, pattern="^.carbond")
+@toni_cmd(pattern="carbond")
 async def carbon_api(e):
     """A Wrapper for carbon.now.sh"""
     await e.edit("`Processing..`")
@@ -169,7 +169,7 @@ async def carbon_api(e):
     await e.delete()  # Deleting msg
 
 
-@register(outgoing=True, pattern="^.images (.*)")
+@toni_cmd(pattern="images (.*)")
 async def img_sampler(event):
     """For .img command, search and return images matching the query."""
     await event.edit("Mencari Gambar...")
@@ -201,7 +201,7 @@ async def img_sampler(event):
     await event.delete()
 
 
-@register(outgoing=True, pattern=r"^\.currency (.*)")
+@toni_cmd(pattern=r"currency (.*)")
 async def moni(event):
     input_str = event.pattern_match.group(1)
     input_sgra = input_str.split(" ")
@@ -230,7 +230,7 @@ async def moni(event):
         return await event.edit("`Invalid syntax.`")
 
 
-@register(outgoing=True, pattern=r"^\.google (.*)")
+@toni_cmd(pattern=r"google (.*)")
 async def gsearch(q_event):
     man = await edit_or_reply(q_event, "`Processing...`")
     match = q_event.pattern_match.group(1)
@@ -286,7 +286,7 @@ async def gsearch(q_event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.wiki (.*)")
+@toni_cmd(pattern=r"wiki (.*)")
 async def wiki(wiki_q):
     match = wiki_q.pattern_match.group(1)
     try:
@@ -315,7 +315,7 @@ async def wiki(wiki_q):
         )
 
 
-@register(outgoing=True, pattern=r"^\.ud (.*)")
+@toni_cmd(pattern=r"ud (.*)")
 async def urban_dict(ud_e):
     await ud_e.edit("Processing...")
     query = ud_e.pattern_match.group(1)
@@ -367,7 +367,7 @@ async def urban_dict(ud_e):
         await ud_e.edit("No result found for **" + query + "**")
 
 
-@register(outgoing=True, pattern=r"^\.tts(?: |$)([\s\S]*)")
+@toni_cmd(pattern=r"tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     textx = await query.get_reply_message()
     message = query.pattern_match.group(1)
@@ -410,7 +410,7 @@ async def text_to_speech(query):
 
 
 # kanged from Blank-x ;---;
-@register(outgoing=True, pattern=r"^\.imdb (.*)")
+@toni_cmd(pattern=r"imdb (.*)")
 async def imdb(e):
     try:
         movie_name = e.pattern_match.group(1)
@@ -502,7 +502,7 @@ async def imdb(e):
         await cs.edit("Plox enter **Valid movie name** kthx")
 
 
-@register(outgoing=True, pattern=r"^\.tr(?: |$)([\s\S]*)")
+@toni_cmd(pattern=r"tr(?: |$)([\s\S]*)")
 async def translateme(trans):
     translator = Translator()
     textx = await trans.get_reply_message()
@@ -531,7 +531,7 @@ async def translateme(trans):
         )
 
 
-@register(pattern=r"^\.lang (tr|tts) (.*)", outgoing=True)
+@toni_cmd(pattern=r"lang (tr|tts) (.*)", outgoing=True)
 async def lang(value):
     util = value.pattern_match.group(1).lower()
     if util == "tr":
@@ -563,7 +563,7 @@ async def lang(value):
         )
 
 
-@register(outgoing=True, pattern=r"^\.wolfram (.*)")
+@toni_cmd(pattern=r"wolfram (.*)")
 async def wolfram(wvent):
     if WOLFRAM_ID is None:
         await wvent.edit(
@@ -584,7 +584,7 @@ async def wolfram(wvent):
         )
 
 
-@register(outgoing=True, pattern=r"^\.ytsearch (.*)")
+@toni_cmd(pattern=r"tsearch (.*)")
 async def yt_search(video_q):
     query = video_q.pattern_match.group(1)
     if not query:
@@ -602,7 +602,7 @@ async def yt_search(video_q):
     await video_q.edit(output, link_preview=False)
 
 
-@register(outgoing=True, pattern=r"\.(aud|vid) (.*)")
+@toni_cmd(pattern=r"(aud|vid) (.*)")
 async def download_video(v_url):
     url = v_url.pattern_match.group(2)
     url = v_url.pattern_match.group(1).lower()
@@ -714,7 +714,7 @@ def deEmojify(inputString):
     return get_emoji_regexp().sub("", inputString)
 
 
-@register(pattern=r".ocr (.*)", outgoing=True)
+@toni_cmd(pattern=r"ocr (.*)")
 async def ocr(event):
     if not OCR_SPACE_API_KEY:
         return await event.edit(
@@ -737,7 +737,7 @@ async def ocr(event):
     os.remove(downloaded_file_name)
 
 
-@register(pattern="^.ss (.*)", outgoing=True)
+@toni_cmd(pattern="ss (.*)")
 async def capture(url):
     """For .ss command, capture a website's screenshot and send the photo."""
     await url.edit("`Processing...`")
@@ -791,7 +791,7 @@ async def capture(url):
         await url.delete()
 
 
-@register(outgoing=True, pattern=r"^\.nekko(?: |$)([\s\S]*)")
+@toni_cmd(pattern=r"nekko(?: |$)([\s\S]*)")
 async def neko(nekobin):
     """For .paste command, pastes the text directly to dogbin."""
     nekobin_final_url = ""
@@ -844,7 +844,7 @@ async def neko(nekobin):
         )
 
 
-@register(outgoing=True, pattern=r"^\.neko(?: |$)([\s\S]*)")
+@toni_cmd(pattern=r"neko(?: |$)([\s\S]*)")
 async def neko(nekobin):
     """For .paste command, pastes the text directly to dogbin."""
     nekobin_final_url = ""
@@ -892,7 +892,7 @@ async def neko(nekobin):
     await nekobin.edit(reply_text)
 
 
-@register(outgoing=True, pattern=r"^\.getpaste(?: |$)(.*)")
+@toni_cmd(pattern=r"getpaste(?: |$)(.*)")
 async def get_dogbin_content(dog_url):
     textx = await dog_url.get_reply_message()
     message = dog_url.pattern_match.group(1)
@@ -944,7 +944,7 @@ async def get_dogbin_content(dog_url):
         )
 
 
-@register(outgoing=True, pattern="^.removebg(?: |$)(.*)")
+@toni_cmd(pattern="removebg(?: |$)(.*)")
 async def kbg(remob):
     """For .rbg command, Remove Image Background."""
     if REM_BG_API_KEY is None:
@@ -1037,7 +1037,7 @@ async def ReTrieveURL(input_url):
     return r
 
 
-@register(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
+@toni_cmd(pattern=r"direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
     """direct links generator"""
     await request.edit("`Processing...`")
@@ -1341,7 +1341,7 @@ def useragent():
     return user_agent.text
 
 
-@register(pattern=r"^.decode$", outgoing=True)
+@toni_cmd(pattern=r"decode$")
 async def parseqr(qr_e):
     """For .decode command, get QR Code/BarCode content from the replied photo."""
     downloaded_file_name = await qr_e.client.download_media(
@@ -1376,7 +1376,7 @@ async def parseqr(qr_e):
     await qr_e.edit(qr_contents)
 
 
-@register(pattern=r".barcode(?: |$)([\s\S]*)", outgoing=True)
+@toni_cmd(pattern=r"barcode(?: |$)([\s\S]*)")
 async def bq(event):
     """For .barcode command, genrate a barcode containing the given content."""
     await event.edit("`Processing..`")
@@ -1413,7 +1413,7 @@ async def bq(event):
     await event.delete()
 
 
-@register(pattern=r".makeqr(?: |$)([\s\S]*)", outgoing=True)
+@toni_cmd(pattern=r"makeqr(?: |$)([\s\S]*)")
 async def make_qr(makeqr):
     """For .makeqr command, make a QR Code containing the given content."""
     input_str = makeqr.pattern_match.group(1)
@@ -1455,107 +1455,107 @@ async def make_qr(makeqr):
 
 CMD_HELP.update(
     {
-        "images": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.images <search_query>`\
+        "images": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}images <search_query>`\
          \n↳ : Does an image search on Google and shows 5 images."
     }
 )
 CMD_HELP.update(
     {
-        "currency": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.currency <amount> <from> <to>`\
+        "currency": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}currency <amount> <from> <to>`\
          \n↳ : Converts various currencies for you."
     }
 )
 CMD_HELP.update(
     {
-        "carbon2": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.carbon <text> [or reply messages]`\
+        "carbon2": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}carbon <text> [or reply messages]`\
          \n↳ : Beautify your code using carbon.now.sh\
-         \n**How to Use** > `.crblang` <text> to set language for your code."
+         \n**How to Use** > `{cmd}crblang` <text> to set language for your code."
     }
 )
 CMD_HELP.update(
     {
-        "google": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.google <query>`\
+        "google": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}google <query>`\
          \n↳ : Does a search on Google."
     }
 )
 CMD_HELP.update(
     {
-        "wiki": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.wiki <query>`\
+        "wiki": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}wiki <query>`\
          \n↳ : Does a search on Wikipedia."
     }
 )
 CMD_HELP.update(
     {
-        "ud": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ud <query>`\
+        "ud": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ud <query>`\
          \n↳ : Does a search on Urban Dictionary."
     }
 )
 CMD_HELP.update(
     {
-        "tts": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tts <text> [or reply]`\
+        "tts": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}tts <text> [or reply]`\
          \n↳ : Translates text to speech for the language which is set.\
-         \n**How to Use** > `.lang tts <language code>` to set language for tts. (Default is English.)"
+         \n**How to Use** > `{cmd}lang tts <language code>` to set language for tts. (Default is English.)"
     }
 )
 CMD_HELP.update(
     {
-        "translate": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tr` <text> [or reply]\
+        "translate": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}tr` <text> [or reply]\
          \n↳ : Translates text to the language which is set.\
-         \n**How to Use** > `.lang tr` <language code> to set language for tr. (Default is English)"
+         \n**How to Use** > `{cmd}lang tr` <language code> to set language for tr. (Default is English)"
     }
 )
 CMD_HELP.update(
     {
-        "imdb": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.imdb <movie-name>`\
+        "imdb": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}imdb <movie-name>`\
          \n↳ : Shows movie info and other stuff."
     }
 )
 CMD_HELP.update(
     {
-        "wolfram": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.wolfram` <query>\
+        "wolfram": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}wolfram` <query>\
          \n↳ : Get answers to questions using WolframAlpha Spoken Results API."
     }
 )
 CMD_HELP.update(
     {
-        "screenshot": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ss <url>`\
+        "screenshot": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ss <url>`\
          \n↳ : Takes a screenshot of a website and sends the screenshot.\
          \n**Example of a valid URL** : `https://www.google.com`"
     }
 )
 CMD_HELP.update(
     {
-        "nekobin": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.neko` <text/reply>\
+        "nekobin": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}neko` <text/reply>\
          \n↳ : Create a paste or a shortened url using dogbin"
     }
 )
 CMD_HELP.update(
     {
-        "getpaste": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.getpaste` <text/reply>\
+        "getpaste": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}getpaste` <text/reply>\
          \n↳ : Create a paste or a shortened url using dogbin"
     }
 )
 CMD_HELP.update(
     {
-        "removebg": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.rbg` <Link to Image> atau reply ke file gambar (Peringatan: ini tidak akan bekerja untuk sticker.)\
+        "removebg":f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}rbg` <Link to Image> atau reply ke file gambar (Peringatan: ini tidak akan bekerja untuk sticker.)\
          \n↳ : Manghapus latar belakang gambar."
     }
 )
 CMD_HELP.update(
     {
-        "ocr": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ocr` <language/bahasa>\
+        "ocr": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ocr` <language/bahasa>\
          \n↳ : Reply to an image or sticker to extract text from it."
     }
 )
 CMD_HELP.update(
     {
-        "direct": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙`.direct` <url>\
+        "direct": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}direct` <url>\
          \n↳ : Reply to a link or paste a URL to generate a direct download link.\n**Supported Urls** : `Google Drive` - `Cloud Mail` - `Yandex.Disk` - `AFH` - `ZippyShare` - `MediaFire` - `SourceForge` - `OSDN` - `GitHub`"
     }
 )
 CMD_HELP.update(
     {
-        "rcode": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.makeqr <content>`\
+        "rcode": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}makeqr <content>`\
          \n↳ : Make a QR Code from the given content.\nExample: .makeqr www.google.com\nNote: use .decode <reply to barcode/qrcode> to get decoded content."
     }
 )
@@ -1563,11 +1563,11 @@ CMD_HELP.update({"barcode": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙 `.barcode` <content>"}
 
 CMD_HELP.update(
     {
-        "youtube": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `.aud <link yt>`\
+        "youtube": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}aud <link yt>`\
     \n↳ : Downloads the AUDIO from the given link\
-    \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `.vid <link yt>`\
+    \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}vid <link yt>`\
     \n↳ : Downloads the VIDEO from the given link\
-    \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `.ytsearch <search>`\
+    \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}ytsearch <search>`\
     \n↳ : Does a Youtube Search."
     }
 )
