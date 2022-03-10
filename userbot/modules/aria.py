@@ -11,13 +11,23 @@ from subprocess import PIPE, Popen
 import aria2p
 from requests import get
 
-from userbot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import (
+    TEMP_DOWNLOAD_DIRECTORY,
+    CMD_HANDLER as cmd,
+    CMD_HELP, 
+    LOGS,
+)
+from userbot.utils import toni_cmd
 from userbot.utils import humanbytes
 
 
 def subprocess_run(cmd):
-    subproc = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
+    subproc = Popen(
+        cmd,
+        stdout=PIPE,
+        stderr=PIPE,
+        shell=True,
+        universal_newlines=True)
     talk = subproc.communicate()
     exitCode = subproc.returncode
     if exitCode != 0:
@@ -52,12 +62,16 @@ if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
     os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
 download_path = os.getcwd() + TEMP_DOWNLOAD_DIRECTORY.strip(".")
 
-aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=8210, secret=""))
+aria2 = aria2p.API(
+    aria2p.Client(
+        host="http://localhost",
+        port=8210,
+        secret=""))
 
 aria2.set_global_options({"dir": download_path})
 
 
-@register(outgoing=True, pattern=r"^\.amag(?: |$)(.*)")
+@toni_cmd(pattern="amag(?: |$)(.*)")
 async def magnet_download(event):
     magnet_uri = event.pattern_match.group(1)
     # Add Magnet URI Into Queue
@@ -73,7 +87,7 @@ async def magnet_download(event):
     await check_progress_for_dl(gid=new_gid, event=event, previous=None)
 
 
-@register(outgoing=True, pattern=r"^\.ator(?: |$)(.*)")
+@toni_cmd(pattern="ator(?: |$)(.*)")
 async def torrent_download(event):
     torrent_file_path = event.pattern_match.group(1)
     # Add Torrent Into Queue
@@ -87,7 +101,7 @@ async def torrent_download(event):
     await check_progress_for_dl(gid=gid, event=event, previous=None)
 
 
-@register(outgoing=True, pattern=r"^\.aurl(?: |$)(.*)")
+@toni_cmd(pattern="aurl(?: |$)(.*)")
 async def aurl_download(event):
     uri = [event.pattern_match.group(1)]
     try:  # Add URL Into Queue
@@ -103,7 +117,7 @@ async def aurl_download(event):
         await check_progress_for_dl(gid=new_gid, event=event, previous=None)
 
 
-@register(outgoing=True, pattern=r"^\.aclear(?: |$)(.*)")
+@toni_cmd(pattern="aclear(?: |$)(.*)")
 async def remove_all(event):
     try:
         removed = aria2.remove_all(force=True)
@@ -118,7 +132,7 @@ async def remove_all(event):
     await sleep(2.5)
 
 
-@register(outgoing=True, pattern=r"^\.apause(?: |$)(.*)")
+@toni_cmd(pattern="apause(?: |$)(.*)")
 async def pause_all(event):
     # Pause ALL Currently Running Downloads.
     await event.edit("`Pausing downloads...`")
@@ -128,7 +142,7 @@ async def pause_all(event):
     await sleep(2.5)
 
 
-@register(outgoing=True, pattern=r"^\.aresume(?: |$)(.*)")
+@toni_cmd(pattern="aresume(?: |$)(.*)")
 async def resume_all(event):
     await event.edit("`Resuming downloads...`")
     aria2.resume_all()
@@ -138,7 +152,7 @@ async def resume_all(event):
     await event.delete()
 
 
-@register(outgoing=True, pattern=r"^\.ashow(?: |$)(.*)")
+@toni_cmd(pattern="ashow(?: |$)(.*)")
 async def show_all(event):
     downloads = aria2.get_downloads()
     msg = ""
@@ -197,8 +211,17 @@ async def check_progress_for_dl(gid, event, previous):
                 percentage = int(file.progress)
                 downloaded = percentage * int(file.total_length) / 100
                 prog_str = "[{0}{1}] `{2}`".format(
-                    "".join("█" for i in range(math.floor(percentage / 10))),
-                    "".join("░" for i in range(10 - math.floor(percentage / 10))),
+                    "".join(
+                        "█" for i in range(
+                            math.floor(
+                                percentage /
+                                10))),
+                    "".join(
+                        "░" for i in range(
+                            10 -
+                            math.floor(
+                                percentage /
+                                10))),
                     file.progress_string(),
                 )
                 msg = (
@@ -206,8 +229,7 @@ async def check_progress_for_dl(gid, event, previous):
                     f"{prog_str}\n"
                     f"`Size:` {humanbytes(downloaded)} of {file.total_length_string()}\n"
                     f"`Speed:` {file.download_speed_string()}\n"
-                    f"`ETA:` {file.eta_string()}\n"
-                )
+                    f"`ETA:` {file.eta_string()}\n")
                 if msg != previous:
                     await event.edit(msg)
                     msg = previous
@@ -240,13 +262,11 @@ async def check_progress_for_dl(gid, event, previous):
 
 CMD_HELP.update(
     {
-        "aria": ">`.aurl [URL]` (or) >`.amag [Magnet Link]` (or) >`.ator [path to torrent file]`"
+        "aria": f">`{cmd}aurl [URL]` (or) >`{cmd}=amag [Magnet Link]` (or) >`{cmd}ator [path to torrent file]`"
         "\nUsage: Downloads the file into your userbot server storage."
-        "\n\n>`.apause (or) .aresume`"
+        f"\n\n>`{cmd}apause (or) .aresume`"
         "\nUsage: Pauses/resumes on-going downloads."
-        "\n\n>`.aclear`"
+        f"\n\n>`{cmd}aclear`"
         "\nUsage: Clears the download queue, deleting all on-going downloads."
-        "\n\n>`.ashow`"
-        "\nUsage: Shows progress of the on-going downloads."
-    }
-)
+        f"\n\n>`{cmd}ashow`"
+        "\nUsage: Shows progress of the on-going downloads."})
