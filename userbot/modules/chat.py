@@ -520,9 +520,9 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        f"chat": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}getid`\
+        "chat": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}getid`\
 \n↳ : Dapatkan ID dari media Telegram mana pun, atau pengguna mana pun\
-\n\n: `.getbot`\
+\n\n: `{cmd}getbot`\
 \n↳ : Dapatkan Bot dalam obrolan apa pun.\
 \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}logit`\
 \n↳ : Meneruskan pesan yang telah Anda balas di grup log bot Anda.\
