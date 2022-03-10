@@ -11,13 +11,17 @@ from hachoir.parser import createParser
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import DocumentAttributeFilename
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    bot,
+)
+from userbot.utils import toni_cmd
 
 bground = "black"
 
 
-@register(outgoing=True, pattern=r"^\.(ascii|asciis)$")
+@toni_cmd(pattern="(ascii|asciis)$")
 async def ascii(event):
     if not event.reply_to_msg_id:
         await event.edit("`Mohon Balas Ke Media..`")
@@ -95,7 +99,8 @@ async def asciiart(IMG, color1, color2, bgcolor):
     img = np.sum(np.asarray(img), axis=2)
     img -= img.min()
     img = (1.0 - img / img.max()) ** 2.2 * (chars.size - 1)
-    lines = ("\n".join(("".join(r) for r in chars[img.astype(int)]))).split("\n")
+    lines = ("\n".join(("".join(r)
+                        for r in chars[img.astype(int)]))).split("\n")
     nbins = len(lines)
     colorRange = list(Color(color1).range_to(Color(color2), nbins))
     newImg_width = letter_width * widthByLetter
@@ -123,7 +128,7 @@ async def random_color():
     return color
 
 
-@register(outgoing=True, pattern=r"^\.asciibg(?: |$)(.*)")
+@toni_cmd(pattern="asciibg(?: |$)(.*)")
 async def _(event):
     BG = event.pattern_match.group(1)
     if BG.isnumeric():
@@ -138,11 +143,11 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "ascii": "`.ascii`\n"
+        "ascii": f"`{cmd}ascii`\n"
         "Usage: Buat Ascii Art Dari Media\n\n"
-        "`.asciis`\n"
+        f"`{cmd}asciis`\n"
         "Usage: Sama Tapi Unggah Hasilnya Sebagai Sticker\n\n"
-        "`.asciibg <color>`\n"
+        f"`{cmd}asciibg <color>`\n"
         "Usage: Untuk Mengubah Warna Background Dari Modul Ascii Contoh `.asciibg black`"
     }
 )
