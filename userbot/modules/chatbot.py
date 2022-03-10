@@ -6,8 +6,13 @@ from googletrans import Translator
 from telethon import events
 from telethon.tl.types import User
 
-from userbot import CMD_HELP, LOGS, bot
-from userbot.utils import toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    LOGS,
+    bot,
+)
+from userbot.utils import edit_or_reply, toni_cmd
 from userbot.modules.sql_helper.tede_chatbot_sql import is_tede, rem_tede, set_tede
 
 translator = Translator()
@@ -34,15 +39,15 @@ async def chat_bot_toggle(event):
     if status == "on":
         if not is_tede(chat_id):
             set_tede(chat_id)
-            return await event.edit("ChatBot Diaktifkan!")
+            return await edit_or_reply(event, "ChatBot Diaktifkan!")
         await event.edit("ChatBot Sudah Diaktifkan.")
     elif status == "off":
         if is_tede(chat_id):
             rem_tede(chat_id)
-            return await event.edit("ChatBot Dinonaktifkan!")
+            return await edit_or_reply(event, "ChatBot Dinonaktifkan!")
         await event.edit("ChatBot Sudah Dinonaktifkan.")
     else:
-        await event.edit("**Usage:** `.chatbot` <on/off>")
+        await edit_or_reply(event, "**Usage:** `.chatbot` <on/off>")
 
 
 @toni_cmd(pattern="chatbot(?: |$)(.*)")
@@ -73,8 +78,8 @@ async def tede_chatbot(event):
 
 CMD_HELP.update(
     {
-        "chatbot": "**Plugin : **`chatbot`\
-      \n\n  •  **Syntax :** `.chatbot` <on/off>\
+        "chatbot": f"**Plugin : **`chatbot`\
+      \n\n  •  **Syntax :** `{cmd}chatbot` <on/off>\
       \n  •  **Function :** Untuk membalas chat dengan chatbot AI.\
       "
     }
