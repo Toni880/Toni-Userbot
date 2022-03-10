@@ -8,11 +8,13 @@ from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot.events import register
+from userbot.utils import toni_cmd
 
 from userbot import (  # noqa pylint: disable=unused-import isort:skip
     AFKREASON,
     BOTLOG,
     BOTLOG_CHATID,
+    CMD_HANDLER as cmd,
     CMD_HELP,
     ALIVE_NAME,
     COUNT_MSG,
@@ -43,7 +45,7 @@ afk_start = {}
 # =================================================================
 
 
-@register(outgoing=True, pattern="^.afk(?: |$)(.*)", disable_errors=True)
+@toni_cmd(pattern="afk(?: |$)(.*)")
 async def set_afk(afk_e):
     """For .afk command, allows you to inform people that you are afk when they message you"""
     message = afk_e.text  # pylint:disable=E0602
