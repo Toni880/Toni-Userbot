@@ -25,7 +25,14 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location, pack_bot_file_id
 
-from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
+from userbot import (
+    ALIVE_NAME,
+    BOTLOG,
+    BOTLOG_CHATID,
+    CMD_HELP,
+    CMD_HANDLER as cmd,
+    bot,
+)
 from userbot.utils import toni_cmd
 from userbot.events import register
 from userbot.modules.admin import get_user_from_event
