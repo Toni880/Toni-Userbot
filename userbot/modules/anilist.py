@@ -11,24 +11,8 @@ import re
 import requests
 
 from userbot import bot
-from userbot.events import register
-
-
-def time_formatter(milliseconds: int) -> str:
-    """Inputs time in milliseconds, to get beautified time,
-    as string"""
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
-    minutes, seconds = divmod(seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    days, hours = divmod(hours, 24)
-    tmp = (
-        ((str(days) + " day(s), ") if days else "")
-        + ((str(hours) + " hour(s), ") if hours else "")
-        + ((str(minutes) + " minute(s), ") if minutes else "")
-        + ((str(seconds) + " second(s), ") if seconds else "")
-        + ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
-    )
-    return tmp[:-2]
+from userbot.utils import toni_cmd
+from userbot.utils import time_formatter
 
 
 def shorten(description, info="anilist.co"):
@@ -195,7 +179,7 @@ async def formatJSON(outData):
     link = f"https://anilist.co/anime/{jsonData['id']}"
     msg += f"[{title}]({link})"
     msg += f"\n\n**Type** : {jsonData['format']}"
-    msg += f"\n**Genres** : "
+    msg += "\n**Genres** : "
     for g in jsonData["genres"]:
         msg += g + " "
     msg += f"\n**Status** : {jsonData['status']}"
@@ -212,7 +196,7 @@ async def formatJSON(outData):
 url = "https://graphql.anilist.co"
 
 
-@register(outgoing=True, pattern=r"^\.anichar ?(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"anichar ?(.*)"))
 async def anilist(event):
     search = event.pattern_match.group(1)
     reply_to_id = event.message.id
@@ -242,7 +226,7 @@ async def anilist(event):
         await event.edit("Sorry, No such results")
 
 
-@register(outgoing=True, pattern=r"^\.airing ?(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"airing ?(.*)"))
 async def anilist(event):
     search = event.pattern_match.group(1)
     variables = {"search": search}
@@ -259,7 +243,7 @@ async def anilist(event):
     await event.edit(ms_g)
 
 
-@register(outgoing=True, pattern=r"^\.animanga ?(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"animanga ?(.*)"))
 async def anilist(event):
     search = event.pattern_match.group(1)
     reply_to_id = event.message.id
@@ -320,7 +304,7 @@ async def anilist(event):
             await event.edit(ms_g)
 
 
-@register(outgoing=True, pattern=r"^\.anilist ?(.*)")
+@bot.on(toni_cmd(outgoing=True, pattern=r"anilist ?(.*)"))
 async def anilist(event):
     input_str = event.pattern_match.group(1)
     event = await event.edit("Searching...")
