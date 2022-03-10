@@ -1,13 +1,26 @@
+# Copyright (C) 2019 The Raphielscape Company LLC.
+#
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
+# you may not use this file except in compliance with the License.
+#
+"""Userbot module containing commands for interacting with dogbin(https://del.dog)"""
+
 import os
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
-from userbot.utils import edit_delete, edit_or_reply
+from userbot import (
+    TEMP_DOWNLOAD_DIRECTORY,
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+)
+from userbot.utils import (
+    edit_delete,
+    edit_or_reply,
+    toni_cmd,
+)
 from userbot.utils.pastebin import PasteBin
 
 
-@register(pattern="paste(?: (-d|-n|-h|-k)|$)?(?: ([\\s\\S]+)|$)")
+@toni_cmd(pattern="paste(?: (-d|-n|-h|-k|-s)|$)?(?: ([\\s\\S]+)|$)")
 async def paste(pstl):
     """For .paste command, pastes the text directly to a pastebin."""
     service = pstl.pattern_match.group(1)
@@ -38,7 +51,7 @@ async def paste(pstl):
     async with PasteBin(message) as client:
         if service:
             service = service.strip()
-            if service not in ["-d", "-n", "-h", "-k"]:
+            if service not in ["-d", "-n", "-k", "-s", "-h"]:
                 return await xxnx.edit("Invalid flag")
             await client(client.service_match[service])
         else:
@@ -60,8 +73,8 @@ CMD_HELP.update(
     {
         "paste": f"**Plugin : **`paste`\
         \n\n  •  **Syntax :** `{cmd}paste` <text/reply>\
-        \n  •  **Function : **Untuk Menyimpan text ke ke layanan pastebin gunakan flags [`-d`, `-n`, `-h`]\
-        \n\n  •  **NOTE :** `-d` = **Dogbin** atau `-n` = **Nekobin** atau `-h` = **Hastebin** atau `-k` = **katbin**\
+        \n  •  **Function : **Untuk Menyimpan text ke ke layanan pastebin gunakan flags [`-d`, `-n`, `-h`, `-s`, `-k`]\
+        \n\n  •  **NOTE :** `-d` = **Dogbin** atau `-n` = **Nekobin** atau `-h` = **Hastebin** atau `-k` = **katbin** atau `-s` = **spacebin**\
     "
     }
 )
