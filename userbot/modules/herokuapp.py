@@ -10,14 +10,15 @@ import aiohttp
 import heroku3
 
 from userbot import (
-    ALIVE_NAME,
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    HEROKU_API_KEY,
-    HEROKU_APP_NAME,
+   ALIVE_NAME,
+   BOTLOG,
+   BOTLOG_CHATID,
+   CMD_HELP,
+   HEROKU_API_KEY,
+   HEROKU_APP_NAME,
+   CMD_HANDLER as cmd,
 )
-from userbot.events import register
+from userbot.utils import edit_or_reply, toni_cmd
 
 heroku_api = "https://api.heroku.com"
 if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
@@ -33,14 +34,15 @@ else:
 """
 
 
-@register(outgoing=True, pattern=r"^.(get|del) var(?: |$)(\w*)")
+@toni_cmd(pattern=r"(get|del) var(?: |$)(\w*)")
 async def variable(var):
     exe = var.pattern_match.group(1)
     if app is None:
-        await var.edit("`[HEROKU]" "\nHarap Siapkan`  **HEROKU_APP_NAME**.")
+        await edit_or_reply(var, "`[HEROKU]"
+                            "\nHarap Siapkan`  **HEROKU_APP_NAME**.")
         return False
     if exe == "get":
-        await var.edit("`Mendapatkan Informasi...`")
+        xx = await edit_or_reply(var, "`Mendapatkan Informasi...`")
         variable = var.pattern_match.group(2)
         if variable != "":
             if variable in heroku_var:
@@ -74,7 +76,7 @@ async def variable(var):
                 await var.edit("`Mohon Ubah BOTLOG Ke True`")
                 return False
     elif exe == "del":
-        await var.edit("`Menghapus Config Vars...`")
+        xx = await edit_or_reply(var, "`Menghapus Config Vars...`")
         variable = var.pattern_match.group(2)
         if variable == "":
             await var.edit("`Mohon Tentukan Config Vars Yang Mau Anda Hapus`")
@@ -96,9 +98,9 @@ async def variable(var):
             return True
 
 
-@register(outgoing=True, pattern=r"^.set var (\w*) ([\s\S]*)")
+@toni_cmd(pattern=r"set var (\w*) ([\s\S]*)")
 async def set_var(var):
-    await var.edit("`Sedang Menyetel Config Vars ヅ`")
+    xx = await edit_or_reply(var, "`Sedang Menyetel Config Vars ヅ`")
     variable = var.pattern_match.group(1)
     value = var.pattern_match.group(2)
     if variable in heroku_var:
@@ -127,13 +129,13 @@ async def set_var(var):
 """
 
 
-@register(outgoing=True, pattern=r"^.usage(?: |$)")
+@toni_cmd(pattern=r"usage(?: |$)")
 async def dyno_usage(dyno):
     """
     Get your account Dyno Usage
     """
-    await dyno.edit("**Processing...**")
-    await asyncio.sleep(1)
+    xx = await edit_or_reply(dyno, "`Processing...`")
+    await asyncio.sleep(2)
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -191,7 +193,7 @@ async def dyno_usage(dyno):
             return True
 
 
-@register(outgoing=True, pattern=r"^\.logs")
+@toni_cmd(pattern=r"logs")
 async def _(dyno):
     try:
         Heroku = heroku3.from_key(HEROKU_API_KEY)
@@ -200,7 +202,7 @@ async def _(dyno):
         return await dyno.reply(
             "`Please make sure your Heroku API Key, Your App name are configured correctly in the heroku var.`"
         )
-    await dyno.edit("`Sedang Mengambil Logs Anda`")
+    xx = await edit_or_reply(dyno, "`Sedang Mengambil Logs Anda`")
     with open("logs.txt", "w") as log:
         log.write(app.get_log())
     await dyno.delete()
@@ -212,18 +214,16 @@ async def _(dyno):
     return os.remove("logs.txt")
 
 
-CMD_HELP.update(
-    {
-        "herokuapp": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.usage`"
-        "\n↳ : Check Quota Dyno Heroku"
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.set var <NEW VAR> <VALUE>`"
-        "\n↳ : Tambahkan Variabel Baru Atau Memperbarui Variabel"
-        "\nSetelah Menyetel Variabel Tersebut, Rose-Userbot Akan Di Restart."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.get var atau .get var <VAR>`"
-        "\n↳ : Dapatkan Variabel Yang Ada, !!PERINGATAN!! Gunakanlah Di Grup Privasi Anda."
-        "\nIni Mengembalikan Semua Informasi Pribadi Anda, Harap berhati-hati."
-        "\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.del var <VAR>`"
-        "\n↳ : Menghapus Variabel Yang Ada"
-        "\nSetelah Menghapus Variabel, Bot Akan Di Restart."
-    }
-)
+CMD_HELP.update({"herokuapp": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}usage`"
+                 "\n↳ : Check Quota Dyno Heroku"
+                 f"\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}logs`"
+                 "\n↳ : Melihat Logs Heroku Anda"
+                 f"\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}set var <NEW VAR> <VALUE>`"
+                 "\n↳ : Tambahkan Variabel Baru Atau Memperbarui Variabel"
+                 "\nSetelah Menyetel Variabel Tersebut, Rose-Userbot Akan Di Restart."
+                 f"\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}get var atau .get var <VAR>`"
+                 "\n↳ : Dapatkan Variabel Yang Ada, !!PERINGATAN!! Gunakanlah Di Grup Privasi Anda."
+                 "\nIni Mengembalikan Semua Informasi Pribadi Anda, Harap berhati-hati."
+                 f"\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}del var <VAR>`"
+                 "\n↳ : Menghapus Variabel Yang Ada"
+                 "\nSetelah Menghapus Variabel, Bot Akan Di Restart."})
