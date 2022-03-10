@@ -3,12 +3,14 @@ import io
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+)
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="itos$"))
+@toni_cmd(pattern="itos$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -42,7 +44,7 @@ async def _(event):
             await event.client.delete_message(event.chat_id, [msg.id, response.id])
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="get$"))
+@toni_cmd(pattern="get$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -91,7 +93,7 @@ async def _(event):
         await bot.send_read_acknowledge(conv.chat_id)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="stoi$"))
+@toni_cmd(pattern="stoi$"))
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
         await sticker.edit("`NULL information to feftch...`")
