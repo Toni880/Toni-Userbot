@@ -4,10 +4,10 @@
 from telethon.tl.types import InputMediaDice
 
 from userbot import CMD_HELP, CMD_HANDLER as cmd
-from userbot.events import toni_cmd
+from userbot.events import register
 
 
-@toni_cmd(pattern="dice(?: |$)(.*)")
+@register(pattern="dice(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -24,7 +24,7 @@ async def _(event):
             pass
 
 
-@toni_cmd(pattern="dart(?: |$)(.*)")
+@register(pattern="dart(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -41,7 +41,7 @@ async def _(event):
             pass
 
 
-@toni_cmd(pattern="ball(?: |$)(.*)")
+@register(pattern="ball(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -58,7 +58,7 @@ async def _(event):
             pass
 
 
-@toni_cmd(pattern="dadu(?: |$)(.*)")
+@register(pattern="dadu(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -75,7 +75,7 @@ async def _(event):
             pass
 
 
-@toni_cmd(pattern="petir(?: |$)(.*)")
+@register(pattern="petir(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
