@@ -1,15 +1,20 @@
 from platform import uname
 from time import sleep
 
-from userbot import ALIVE_NAME, CMD_HELP, WEATHER_DEFCITY
-from userbot.events import register
+from userbot import (
+    CMD_HANDLER as cmd,
+    ALIVE_NAME, 
+    CMD_HELP,
+    WEATHER_DEFCITY,
+)
+from userbot.utils import toni_cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern="^.g(?: |$)(.*)")
+@toni_cmd(pattern="g(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(f"**JAKA SEMBUNG BAWA GOLOK**")
@@ -20,7 +25,7 @@ async def typewriter(typew):
 # Pantun
 
 
-@register(outgoing=True, pattern="^.p(?: |$)(.*)")
+@toni_cmd(pattern="p(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`Salam Dulu Biar Sopan...`")
@@ -31,7 +36,7 @@ async def typewriter(typew):
 # Salam
 
 
-@register(outgoing=True, pattern="^.l(?: |$)(.*)")
+@toni_cmd(pattern="l(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`Kalo Orang Salam Itu Dijawab...`")
@@ -42,7 +47,7 @@ async def typewriter(typew):
 # Menjawab Salam
 
 
-@register(outgoing=True, pattern="^.kenalin(?: |$)(.*)")
+@toni_cmd(pattern="kenalin(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("☑️ `putra wibu`")
@@ -73,7 +78,7 @@ async def typewriter(typew):
 # King Userbot Support
 
 
-@register(outgoing=True, pattern="^.istigfar(?: |$)(.*)")
+@toni_cmd(pattern="istigfar(?: |$)(.*)")
 async def perkenalan(event):
     event.pattern_match.group(1)
     await event.edit(f"`Heh Kamu Gaboleh Begitu...`")
@@ -84,7 +89,7 @@ async def perkenalan(event):
 # Istigfar
 
 
-@register(outgoing=True, pattern="^.alay(?: |$)(.*)")
+@toni_cmd(pattern="alay(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**Halo kak**")
@@ -109,7 +114,7 @@ async def typewriter(typew):
 # Alay maen bot mulu ngentot!
 
 
-@register(outgoing=True, pattern=r"^\.virtual(?: |$)(.*)")
+@toni_cmd(pattern=r"virtual(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**OOOO**")
@@ -131,7 +136,7 @@ async def typewriter(typew):
     await typew.edit("**KASIAN MANA MASIH MUDA**")
 
 
-@register(outgoing=True, pattern="^.perkenalkan(?: |$)(.*)")
+@toni_cmd(pattern="perkenalkan(?: |$)(.*)")
 async def perkenalan(event):
     event.pattern_match.group(1)
     await event.edit(f"`Hai Guys , Perkenalkan Nama Gw {DEFAULTUSER}`")
@@ -146,7 +151,7 @@ async def perkenalan(event):
 # Perkenalan
 
 
-@register(outgoing=True, pattern="^Tonic(?: |$)(.*)")
+@toni_cmd(pattern="Tonic(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -176,22 +181,22 @@ async def typewriter(typew):
 
 CMD_HELP.update(
     {
-        "gabut": "**Modules** - `Gabut`\
-        \n\n Cmd : `.l`\
+        "gabut": f"**Modules** - `Gabut`\
+        \n\n Cmd : `{cmd}l`\
         \nUsage : Untuk Menjawab Salam\
-        \n\n Cmd : `.perkenalkan`\
+        \n\n Cmd : `{cmd}perkenalkan`\
         \nUsage : Memperkenalkan Diri\
-        \n\n Cmd : `.alay`\
+        \n\n Cmd : `{cmd}alay`\
         \nUsage : ngeledek orang baru pasang bot\
-        \n\n Cmd : `.virtual`\
+        \n\n Cmd : `{cmd}virtual`\
         \nUsage : ngeledek orang yang virtual\
-        \n\n Cmd : `.g`\
+        \n\n Cmd : `{cmd}g`\
         \nUsage : Member Goblok\
-        \n\n Cmd : `.kenalin`\
+        \n\n Cmd : `{cmd}kenalin`\
         \nUsage : Awokwok\
         \n\n Cmd : `Tonic`\
         \nUsage : buat ngeledek Tonic\
-        \n\n Cmd : `.p`\
+        \n\n Cmd : `{cmd}p`\
         \nUsage : Untuk Memberi Salam\
     "
     }
