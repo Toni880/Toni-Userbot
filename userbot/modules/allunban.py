@@ -4,6 +4,7 @@ from telethon.tl.types import ChannelParticipantsKicked
 
 from userbot import (
     CMD_HELP,
+    CMD_HANDLER as cmd,
 )
 from userbot.utils import edit_or_reply, toni_cmd
 
