@@ -10,13 +10,16 @@ from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
-from userbot import BOTLOG, BOTLOG_CHATID
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    BOTLOG_CHATID,
+    CMD_HELP,
+    BOTLOG, 
+)
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"sspam(?: |$)(.*)"))
+@toni_cmd(pattern=r"sspam(?: |$)(.*)"))
 async def stickerpack_spam(event):
     if event.fwd_from:
         return
