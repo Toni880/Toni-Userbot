@@ -3,7 +3,9 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import MessageEntityMentionName
 
 from userbot import ALIVE_NAME, CMD_HELP, DEVS, bot
+from userbot import CMD_HANDLER as cmd
 from userbot.events import register
+from userbot.utils import edit_or_reply, toni_cmd
 
 
 async def get_full_user(event):
@@ -24,7 +26,9 @@ async def get_full_user(event):
             return
         if event.message.entities is not None:
             probable_user_mention_entity = event.message.entities[0]
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
+            if isinstance(
+                    probable_user_mention_entity,
+                    MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
                 user_obj = await event.client.get_entity(user_id)
                 return user_obj
@@ -32,7 +36,7 @@ async def get_full_user(event):
             user_obj = await event.client.get_entity(user)
         except Exception as err:
             return await event.edit(
-                "`Terjadi Kesalahan... Mohon Lapor Ke Grup` @zeusspam", str(err)
+                "`Terjadi Kesalahan... Mohon Lapor Ke` @IDnyaKosong", str(err)
             )
     return user_obj, extra
 
@@ -78,18 +82,18 @@ async def handler(tele):
                             return
 
 
-@register(outgoing=True, pattern="^.gban(?: |$)(.*)")
+@toni_cmd(pattern="gban(?: |$)(.*)")
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cgban(?: |$)(.*)")
 async def gben(userbot):
     dc = userbot
     sender = await dc.get_sender()
     me = await dc.client.get_me()
     if not sender.id == me.id:
-        dark = await dc.reply("`Ingin Mengaktifkan Perintah Global Banned!`")
+        gbun = await dc.reply("`Ingin Mengaktifkan Perintah Global Banned!`")
     else:
-        dark = await dc.edit("`Memproses Global Banned Pengguna Ini!!`")
+        gbun = await edit_or_reply(userbot, "`Memproses Global Banned Pengguna Ini!!`")
     me = await userbot.client.get_me()
-    await dark.edit(f"`Global Banned Akan Segera Aktif Tuan!!!`")
+    await gbun.edit(f"`Global Banned Akan Segera Aktif!!!`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
@@ -107,11 +111,11 @@ async def gben(userbot):
         if not reason:
             reason = "Private"
     except BaseException:
-        return await dark.edit(f"`Terjadi Kesalahan`")
+        return await gbun.edit(f"`Terjadi Kesalahan`")
     if user:
         if user.id in DEVS:
-            return await dark.edit(
-                f"`Anda Tidak Bisa Melakukan Global Banned, Karena dia pembuatku 🤪`"
+            return await gbun.edit(
+                f"`Anda Tidak Bisa Melakukan Global Banned, Karena dia pembuatku🤪`"
             )
         try:
             from userbot.modules.sql_helper.gmute_sql import gmute
@@ -130,36 +134,36 @@ async def gben(userbot):
             try:
                 await userbot.client.edit_permissions(i, user, view_messages=False)
                 a += 1
-                await dark.edit(f"`Global Banned Si Jamet Aktif Tuan✅`")
+                await gbun.edit(f"`Global Banned Aktif ✅`")
             except BaseException:
                 b += 1
     else:
-        await dark.edit(f"`Mohon Balas Ke Pesan`")
+        await gbun.edit(f"`Mohon Balas Ke Pesan`")
     try:
         if gmute(user.id) is False:
-            return await dark.edit(
+            return await gbun.edit(
                 f"**Kesalahan! Pengguna Ini Sudah Kena Perintah Global Banned.**"
             )
     except BaseException:
         pass
-    return await dark.edit(
+    return await gbun.edit(
         f"**Perintah:** `{ALIVE_NAME}`\n**Pengguna:** [{user.first_name}](tg://user?id={user.id})\n**Aksi:** `Global Banned`"
     )
 
 
-@register(outgoing=True, pattern="^.ungban(?: |$)(.*)")
+@toni_cmd(pattern="ungban(?: |$)(.*)")
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cungban(?: |$)(.*)")
 async def gunben(userbot):
     dc = userbot
     sender = await dc.get_sender()
     me = await dc.client.get_me()
     if not sender.id == me.id:
-        dark = await dc.reply("`Membatalkan Perintah Global Banned Pengguna Ini`")
+        ungbun = await dc.reply("`Membatalkan Perintah Global Banned Pengguna Ini`")
     else:
-        dark = await dc.edit("`Membatalkan Perintah Global Banned`")
+        ungbun = await edit_or_reply(userbot, "`Membatalkan Perintah Global Banned`")
     me = await userbot.client.get_me()
-    await dark.edit(
-        f"`Memulai Membatalkan Perintah Global Banned, Jangan Jadi Jamet Lagi Ya!!!`"
+    await ungbun.edit(
+        f"`Memulai Membatalkan Perintah Global Banned, Pengguna Ini Akan Dapat Bergabung Ke Grup Anda`"
     )
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     f"@{me.username}" if me.username else my_mention
@@ -178,11 +182,11 @@ async def gunben(userbot):
         if not reason:
             reason = "Private"
     except BaseException:
-        return await dark.edit("`Terjadi Kesalahan`")
+        return await ungbun.edit("`Terjadi Kesalahan`")
     if user:
         if user.id in DEVS:
-            return await dark.edit(
-                "**Pengguna Ini tidak bisa di Blacklist, Karna Dia adalah pembuatku** 🤪"
+            return await ungbun.edit(
+                "**Pengguna Ini tidak bisa di Blacklist, Karna Dia adalah pembuatku🤪**"
             )
         try:
             from userbot.modules.sql_helper.gmute_sql import ungmute
@@ -201,61 +205,30 @@ async def gunben(userbot):
             try:
                 await userbot.client.edit_permissions(i, user, send_messages=True)
                 a += 1
-                await dark.edit(f"`Membatalkan Global Banned... Memproses... `")
+                await ungbun.edit(f"`Membatalkan Global Banned... Memproses... `")
             except BaseException:
                 b += 1
     else:
-        await dark.edit("`Harap Balas Ke Pesan Pengguna`")
+        await ungbun.edit("`Harap Balas Ke Pesan Pengguna`")
     try:
         if ungmute(user.id) is False:
-            return await dark.edit(
+            return await ungbun.edit(
                 "**Kesalahan! Pengguna Sedang Tidak Di Global Banned.**"
             )
     except BaseException:
         pass
-    return await dark.edit(
+    return await ungbun.edit(
         f"**Perintah :** `{ALIVE_NAME}`\n**Pengguna:** [{user.first_name}](tg://user?id={user.id})\n**Aksi:** `Membatalkan Global Banned`"
     )
 
 
-@register(outgoing=True, pattern="^.allban(?: |$)(.*)")
-async def testing(event):
-    nikal = await event.get_chat()
-    chutiya = await event.client.get_me()
-    admin = nikal.admin_rights
-    creator = nikal.creator
-    if not admin and not creator:
-        await event.edit("✖️ `Anda Tidak Mempunyai Hak...`")
-        return
-    await event.edit("🚧 `Tidak Melakukan Apa-apa...`")
-    # Thank for Dark_Cobra
-    everyone = await event.client.get_participants(event.chat_id)
-    for user in everyone:
-        if user.id == chutiya.id:
-            pass
-        try:
-            await event.client(
-                EditBannedRequest(
-                    event.chat_id,
-                    int(user.id),
-                    ChatBannedRights(until_date=None, view_messages=True),
-                )
-            )
-        except Exception as e:
-            await event.edit(str(e))
-        await sleep(0.5)
-    await event.edit("😬 `Tidak Ada yang Terjadi di sini...`")
-
-
 CMD_HELP.update(
     {
-        "gban": "**✘ Plugin** `gban` :\
-        \n\n  •  **Perintah :** `.gban`\
-        \n  •  **Fungsi : **Melakukan Banned Secara Global Ke Semua Grup Dimana Anda Sebagai Admin.\
-        \n\n  •  **Perintah :** `.ungban` \
-        \n  •  **Fungsi : **Membatalkan Global Banned.\
-        \n\n  •  **Perintah :** `.allban` \
-        \n  •  **Fungsi : **Blokir semua anggota dalam Satu Perintah.\
-    "
+        "gban": f"**Plugin : **`gban`\
+      \n\n  •  **Syntax :** `{cmd}gban`\
+      \n  •  **Function :** Melakukan Banned Secara Global Ke Semua Grup Dimana Anda Sebagai Admin.\
+      \n\n  •  **Syntax :** `{cmd}ungban`\
+      \n  •  **Function :** membatalkan global banned.\
+      "
     }
 )
