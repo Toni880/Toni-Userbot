@@ -4,10 +4,13 @@
 # you may not use this file except in compliance with the License.
 """ Userbot module containing commands for keeping global notes. """
 
-from userbot import BOTLOG_CHATID
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import register, toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    BOTLOG_CHATID,
+)
+from userbot.events import register
+from userbot.utils import toni_cmd
 
 
 @register(outgoing=True, pattern=r"\$\w*", ignore_unsafe=True, disable_errors=True)
@@ -37,7 +40,7 @@ async def on_snip(event):
         await event.delete()
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="snip (.*)"))
+@toni_cmd(pattern="snip (.*)"))
 async def on_snip_save(event):
     """For .snip command, saves snips for future use."""
     try:
@@ -76,7 +79,7 @@ async def on_snip_save(event):
         await event.edit(success.format("saved", keyword))
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="snips (.*)"))
+@toni_cmd(pattern="snips (.*)"))
 async def on_snip_list(event):
     """For .snips command, lists snips saved by you."""
     try:
@@ -97,7 +100,7 @@ async def on_snip_list(event):
     await event.edit(message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="remsnip (.*)"))
+@toni_cmd(pattern="remsnip (.*)"))
 async def on_snip_delete(event):
     """For .remsnip command, deletes a snip."""
     try:
