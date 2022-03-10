@@ -12,8 +12,20 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 
-from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID, CMD_HELP, UPSTREAM_REPO_URL, bot
-from userbot.events import register
+from userbot import (
+    ALIVE_NAME,
+    BOTLOG,
+    BOTLOG_CHATID,
+    CMD_HELP,
+    UPSTREAM_REPO_URL,
+    bot,
+    CMD_HANDLER as cmd,
+)
+from userbot.utils import (
+    toni_cmd,
+    edit_or_reply, 
+    edit_delete,
+)
 from userbot.utils import time_formatter
 
 # ================= CONSTANT =================
@@ -21,7 +33,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 REPOLINK = (
     str(UPSTREAM_REPO_URL)
     if UPSTREAM_REPO_URL
-    else "https://github.com/Tonic/Tonic-User"
+    else "https://github.com/Tonic/Tonic-Userbot"
 )
 # ============================================
 
@@ -30,9 +42,9 @@ useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) 
 opener.addheaders = [("User-agent", useragent)]
 
 
-@register(outgoing=True, pattern="^.random")
+@toni_cmd(pattern="random")
 async def randomise(items):
-    """For .random command, get a random item from the list of items."""
+    """ For .random command, get a random item from the list of items. """
     itemo = (items.text[8:]).split()
     if len(itemo) < 2:
         await items.edit(
@@ -40,16 +52,15 @@ async def randomise(items):
         )
         return
     index = randint(1, len(itemo) - 1)
-    await items.edit(
-        "**Query: **\n`" + items.text[8:] + "`\n**Output: **\n`" + itemo[index] + "`"
-    )
+    await items.edit("**Query: **\n`" + items.text[8:] + "`\n**Output: **\n`" +
+                     itemo[index] + "`")
 
 
-@register(outgoing=True, pattern="^.sleep ([0-9]+)$")
+@toni_cmd(pattern="sleep ([0-9]+)$")
 async def sleepybot(time):
-    """For .sleep command, let the userbot snooze for a few second."""
+    """ For .sleep command, let the userbot snooze for a few second. """
     counter = int(time.pattern_match.group(1))
-    await time.edit("`I am sulking and snoozing...`")
+    xx = await edit_or_reply(time, "`I am sulking and snoozing...`")
     if BOTLOG:
         str_counter = time_formatter(counter)
         await time.client.send_message(
@@ -57,51 +68,55 @@ async def sleepybot(time):
             f"You put the bot to sleep for {str_counter}.",
         )
     sleep(counter)
-    await time.edit("`OK, I'm awake now.`")
+    await xx.edit("`OK, I'm awake now.`")
+    
+@toni_cmd(pattern="string$")
+async def repo_is_here(wannasee):
+    """For .repo command, just returns the repo URL."""
+    await edit_or_reply(wannasee,
+                        f"➣ **GET STRING SESSION VIA REPLIT :** [KLIK DISINI](https://replit.com/@Tonic990/StringSession#main.py)\n"
+                        f"➣ **GET STRING SESSION VIA BOT    :** [KLIK DISINI](https://t.me/PrimeStringBot?start)\n"
+                        )
 
 
-@register(outgoing=True, pattern="^.shutdown$")
+@toni_cmd(pattern="shutdown$")
 async def killdabot(event):
-    """For .shutdown command, shut the bot down."""
-    await event.edit("**Mematikan Tonic-Userbot....**")
+    """ For .shutdown command, shut the bot down."""
+    await edit_or_reply(event, "`Mematikan Tonic-Userbot....`")
     await asyncio.sleep(7)
     await event.delete()
     if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, "#SHUTDOWN \n" "`Userbot Telah Dimatikan`"
-        )
+        await event.client.send_message(BOTLOG_CHATID, "#SHUTDOWN \n"
+                                        "`Userbot Telah Dimatikan`")
     await bot.disconnect()
 
 
-@register(outgoing=True, pattern="^.restart$")
+@toni_cmd(pattern="restart$")
 async def killdabot(event):
-    await event.edit("**Restarting Tonic-Userbot...**")
+    await edit_or_reply(event, "`Restarting Tonic-Userbot...`")
     await asyncio.sleep(10)
     await event.delete()
     if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, "#RESTARTBOT \n" "`Userbot Telah Di Restart`"
-        )
-    await bot.disconnect()
+        await event.client.send_message(BOTLOG_CHATID, "#RESTARTBOT \n"
+                                        "`Userbot Telah Di Restart`")
     # Spin a new instance of bot
-    execl(sys.executable, sys.executable, *sys.argv)
-    # Shut the existing one down
-    exit()
+    args = [sys.executable, "-m", "userbot"]
+    execle(sys.executable, *args, environ)
 
-
-@register(outgoing=True, pattern="^.readme$")
+    
+@toni_cmd(pattern="readme$")
 async def reedme(e):
-    await e.edit(
+    await edit_or_reply(e,
         "Here's Something for You to Read :\n"
-        "\n[✨ Tonic-UserBot Repo](https://github.com/Tonic990/Tonic-User/blob/Skyzuu-UserBot/README.md)"
+        "\n[✨ Tonic-UserBot Repo](https://github.com/Tonic990/Tonic-User/blob/Tonic-UserBot/README.md)"
         "\n[Setup Guide - Basic](https://telegra.ph/How-to-host-a-Telegram-Userbot-11-02)"
         "\n[Special - Note](https://telegra.ph/Special-Note-11-02)"
     )
 
 
-@register(outgoing=True, pattern="^.repeat (.*)")
+@toni_cmd(pattern="repeat (.*)")
 async def repeat(rep):
-    cnt, txt = rep.pattern_match.group(1).split(" ", 1)
+    cnt, txt = rep.pattern_match.group(1).split(' ', 1)
     replyCount = int(cnt)
     toBeRepeated = txt
 
@@ -113,10 +128,10 @@ async def repeat(rep):
     await rep.edit(replyText)
 
 
-@register(outgoing=True, pattern="^.repo$")
+@toni_cmd(pattern="^.repo$")
 async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
-    await wannasee.edit(
+    await edit_or_reply(wannasee,
         "✨ ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ✨ \n"
         "✰ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Github](https://github.com/Tonic990/Tonic-User)\n"
         "✰ **ᴏᴡɴᴇʀ ʙᴏᴛ :** [『TØNIC』 乂 ₭ILLΣR](t.me/Bukan_guudlooking)\n"
@@ -125,7 +140,7 @@ async def repo_is_here(wannasee):
     )
 
 
-@register(outgoing=True, pattern="^.raw$")
+@toni_cmd(pattern="raw$")
 async def raw(event):
     the_real_message = None
     reply_to_id = None
@@ -138,20 +153,20 @@ async def raw(event):
         reply_to_id = event.message.id
     with io.BytesIO(str.encode(the_real_message)) as out_file:
         out_file.name = "raw_message_data.txt"
-        await event.edit("`Check the userbot log for the decoded message data !!`")
+        await event.edit(
+            "`Check the userbot log for the decoded message data !!`")
         await event.client.send_file(
             BOTLOG_CHATID,
             out_file,
             force_document=True,
             allow_cache=False,
             reply_to=reply_to_id,
-            caption="`Here's the decoded message data !!`",
-        )
+            caption="`Here's the decoded message data !!`")
 
 
-@register(outgoing=True, pattern=r"^.reverse(?: |$)(\d*)")
+@toni_cmd(pattern="reverse(?: |$)(\\d*)")
 async def okgoogle(img):
-    """For .reverse command, Google search images and stickers."""
+    """ For .reverse command, Google search images and stickers. """
     if os.path.isfile("okgoogle.png"):
         os.remove("okgoogle.png")
 
@@ -160,43 +175,47 @@ async def okgoogle(img):
         photo = io.BytesIO()
         await bot.download_media(message, photo)
     else:
-        await img.edit("`Harap Reply Di Gambar...`")
+        await edit_delete(img, "`Harap Reply Di Gambar...`")
         return
 
     if photo:
-        await img.edit("`Processing...`")
+        xx = await edit_or_reply(img, "`Processing...`")
         try:
             image = Image.open(photo)
         except OSError:
-            await img.edit("`Gambar tidak di dukung`")
+            await edit_delete(img, '`Gambar tidak di dukung`')
             return
         name = "okgoogle.png"
         image.save(name, "PNG")
         image.close()
         # https://stackoverflow.com/questions/23270175/google-reverse-image-search-using-post-request#28792943
-        searchUrl = "https://www.google.com/searchbyimage/upload"
-        multipart = {"encoded_image": (name, open(name, "rb")), "image_content": ""}
-        response = requests.post(searchUrl, files=multipart, allow_redirects=False)
-        fetchUrl = response.headers["Location"]
+        searchUrl = 'https://www.google.com/searchbyimage/upload'
+        multipart = {
+            'encoded_image': (name, open(name, 'rb')),
+            'image_content': ''
+        }
+        response = requests.post(searchUrl,
+                                 files=multipart,
+                                 allow_redirects=False)
+        fetchUrl = response.headers['Location']
 
         if response != 400:
-            await img.edit(
-                "`Image successfully uploaded to Google. Maybe.`"
-                "\n`Parsing source now. Maybe.`"
-            )
+            await xx.edit("`Image successfully uploaded to Google. Maybe.`"
+                          "\n`Parsing source now. Maybe.`")
         else:
-            await img.edit("`Google told me to fuck off.`")
+            await xx.edit("`Google told me to fuck off.`")
             return
 
         os.remove(name)
-        match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
-        guess = match["best_guess"]
-        imgspage = match["similar_images"]
+        match = await ParseSauce(fetchUrl +
+                                 "&preferences?hl=en&fg=1#languages")
+        guess = match['best_guess']
+        imgspage = match['similar_images']
 
         if guess and imgspage:
-            await img.edit(f"[{guess}]({fetchUrl})\n\n`Looking for images...`")
+            await xx.edit(f"[{guess}]({fetchUrl})\n\n`Looking for images...`")
         else:
-            await img.edit("`Couldn't find anything for your uglyass.`")
+            await xx.edit("`Couldn't find anything for your uglyass.`")
             return
 
         if img.pattern_match.group(1):
@@ -209,50 +228,48 @@ async def okgoogle(img):
             k = requests.get(i)
             yeet.append(k.content)
         try:
-            await img.client.send_file(
-                entity=await img.client.get_input_entity(img.chat_id),
-                file=yeet,
-                reply_to=img,
-            )
+            await img.client.send_file(entity=await
+                                       img.client.get_input_entity(img.chat_id
+                                                                   ),
+                                       file=yeet,
+                                       reply_to=img)
         except TypeError:
             pass
-        await img.edit(
-            f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})"
-        )
+        await xx.edit(
+            f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
 
 
 async def ParseSauce(googleurl):
     """Parse/Scrape the HTML code for the info we want."""
 
     source = opener.open(googleurl).read()
-    soup = BeautifulSoup(source, "html.parser")
+    soup = BeautifulSoup(source, 'html.parser')
 
-    results = {"similar_images": "", "best_guess": ""}
+    results = {'similar_images': '', 'best_guess': ''}
 
     try:
-        for similar_image in soup.findAll("input", {"class": "gLFyf"}):
-            url = "https://www.google.com/search?tbm=isch&q=" + urllib.parse.quote_plus(
-                similar_image.get("value")
-            )
-            results["similar_images"] = url
+        for similar_image in soup.findAll('input', {'class': 'gLFyf'}):
+            url = 'https://www.google.com/search?tbm=isch&q=' + \
+                urllib.parse.quote_plus(similar_image.get('value'))
+            results['similar_images'] = url
     except BaseException:
         pass
 
-    for best_guess in soup.findAll("div", attrs={"class": "r5a77d"}):
-        results["best_guess"] = best_guess.get_text()
+    for best_guess in soup.findAll('div', attrs={'class': 'r5a77d'}):
+        results['best_guess'] = best_guess.get_text()
 
     return results
 
 
 async def scam(results, lim):
 
-    single = opener.open(results["similar_images"]).read()
-    decoded = single.decode("utf-8")
+    single = opener.open(results['similar_images']).read()
+    decoded = single.decode('utf-8')
 
     imglinks = []
     counter = 0
 
-    pattern = r"^,\[\"(.*[.png|.jpg|.jpeg])\",[0-9]+,[0-9]+\]$"
+    pattern = r'^,\[\"(.*[.png|.jpg|.jpeg])\",[0-9]+,[0-9]+\]$'
     oboi = re.findall(pattern, decoded, re.I | re.M)
 
     for imglink in oboi:
@@ -265,23 +282,24 @@ async def scam(results, lim):
     return imglinks
 
 
-CMD_HELP.update(
-    {
-        "random": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.random <item1> <item2> ... <itemN>`\
-    \n↳ : Get a random item from the list of items.",
-        "sleep": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.sleep <seconds>`\
-    \n↳ : Let yours snooze for a few seconds.",
-        "shutdown": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.shutdown`\
-    \n↳ : Shutdown bot",
-        "repo": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.repo`\
-    \n↳ : Github Repo of this bot",
-        "readme": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙 `.readme`\
-    \n↳ : Provide links to setup the userbot and it's modules.",
-        "repeat": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.repeat <no> <text>`\
-    \n↳ : Repeats the text for a number of times. Don't confuse this with spam tho.",
-        "restart": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.restart`\
-    \n↳ : Restarts the bot !!",
-        "raw": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.raw`\
-    \n↳ : Get detailed JSON-like formatted data about replied message.",
-    }
-)
+CMD_HELP.update({
+    "random": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}random <item1> <item2> ... <itemN>`\
+    \n↳ : Dapatkan item acak dari daftar item.",
+    "sleep": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}sleep <seconds>`\
+    \n↳ : `{cmd}sleep`\
+    \n  •  **Function : Biarkan Tonic-Userbot tidur selama beberapa detik.",
+    "shutdown": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}shutdown`\
+    \n↳ : Mematikan bot",
+    "repo": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}repo`\
+    \n↳ : Menampilan link Repository Tonic-Userbot.",
+    "string": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}string`\
+    \n↳: Menampilkan link String Tonic-Userbot",
+    "readme": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙 `{cmd}readme`\
+    \n↳ : Menyediakan tautan untuk mengatur userbot dan modulnya.",
+    "repeat": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}repeat <no> <text>`\
+    \n↳ : Mengulangi teks untuk beberapa kali. Jangan bingung ini dengan spam tho.",
+    "restart": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}restart`\
+    \n↳ : Merestart bot",
+    "raw": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}raw`\
+    \n↳ : Dapatkan data berformat seperti JSON terperinci tentang pesan yang dibalas.",
+})
