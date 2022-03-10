@@ -4,12 +4,12 @@ import os
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import toni_cmd
+from userbot import 
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"spotnow(:? |$)(.*)?"))
+@toni_cmd(pattern=r"spotnow(:? |$)(.*)?"))
 async def _(event):
     if event.fwd_from:
         return
