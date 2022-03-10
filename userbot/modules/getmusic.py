@@ -15,8 +15,8 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import DocumentAttributeVideo
 
-from userbot import CMD_HELP, LASTFM_USERNAME, bot, lastfm
-from userbot.events import register
+from userbot import CMD_HELP, LASTFM_USERNAME, bot, lastfm, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 from userbot.utils import chrome, progress
 
 
@@ -33,7 +33,7 @@ async def getmusicvideo(cat):
     os.system(command)
 
 
-@register(outgoing=True, pattern=r"^\.songn (?:(now)|(.*) - (.*))")
+@toni_cmd(pattern="songn (?:(now)|(.*) - (.*))")
 async def _(event):
     if event.fwd_from:
         return
@@ -74,7 +74,7 @@ async def _(event):
         return await event.edit("`Error: `@WooMaiBot` is not responding!.`")
 
 
-@register(outgoing=True, pattern=r"^\.songl(?: |$)(.*)")
+@toni_cmd(pattern="songl(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -106,7 +106,7 @@ async def _(event):
         return await event.edit("`Error: `@MusicsHunterBot` is not responding!.`")
 
 
-@register(outgoing=True, pattern=r"^\.songf (?:(now)|(.*) - (.*))")
+@toni_cmd(pattern="songf (?:(now)|(.*) - (.*))")
 async def _(event):
     if event.fwd_from:
         return
@@ -150,7 +150,7 @@ async def _(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.vsong(?: |$)(.*)")
+@toni_cmd(pattern="vsong(?: |$)(.*)")
 async def _(event):
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
@@ -219,19 +219,15 @@ async def _(event):
         return
 
 
-CMD_HELP.update(
-    {
-        "getmusic": ">`.songn <Artist - Song Title>`"
-        "\nUsage: Download music by name (@WooMaiBot)"
-        "\n\n>`.songl <Spotify/Deezer Link>`"
-        "\nUsage: Download music by link (@MusicsHunterBot)"
-        "\n\n>`.songf <Artist - Song Title>`"
-        "\nUsage: Download music by name (@SpotifyMusicDownloaderBot)"
-        "\n\n>`.songn now`"
-        "\nUsage: Download current LastFM scrobble with @WooMaiBot"
-        "\n\n>`.songf now`"
-        "\nUsage: Download current LastFM scrobble with @SpotifyMusicDownloaderBot"
-        "\n\n>`.vsong` <Artist - Song Title>"
-        "\nUsage: Finding and uploading videoclip.\n"
-    }
-)
+CMD_HELP.update({"getmusic": f">`.songn <Artist - Song Title>`"
+                 "\nUsage: Download music by name (@WooMaiBot)"
+                 f"\n\n>`{cmd}songl <Spotify/Deezer Link>`"
+                 "\nUsage: Download music by link (@MusicsHunterBot)"
+                 f"\n\n>`{cmd}songf <Artist - Song Title>`"
+                 "\nUsage: Download music by name (@SpotifyMusicDownloaderBot)"
+                 f"\n\n>`{cmd}songn now`"
+                 "\nUsage: Download current LastFM scrobble with @WooMaiBot"
+                 f"\n\n>`{cmd}songf now`"
+                 "\nUsage: Download current LastFM scrobble with @SpotifyMusicDownloaderBot"
+                 f"\n\n>`{cmd}vsong` <Artist - Song Title>"
+                 "\nUsage: Finding and uploading videoclip.\n"})
