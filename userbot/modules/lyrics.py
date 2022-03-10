@@ -5,27 +5,35 @@
 #
 
 import os
-
 import lyricsgenius
-from pylast import User
 
-from userbot import CMD_HELP, GENIUS, LASTFM_USERNAME, lastfm
-from userbot.events import register
+from userbot.utils import toni_cmd
+from userbot import (
+    CMD_HELP,
+    GENIUS,
+    lastfm,
+    LASTFM_USERNAME,
+    CMD_HANDLER as cmd,
+)
+from pylast import User
 
 if GENIUS is not None:
     genius = lyricsgenius.Genius(GENIUS)
 
 
-@register(outgoing=True, pattern="^.lyrics (?:(now)|(.*) - (.*))")
+@toni_cmd(pattern="lyrics (?:(now)|(.*) - (.*))")
 async def lyrics(lyric):
     await lyric.edit("`Getting information...`")
     if GENIUS is None:
-        await lyric.edit("`Provide genius access token to Heroku ConfigVars...`")
+        await lyric.edit(
+            "`Provide genius access token to Heroku ConfigVars...`")
         return False
     if lyric.pattern_match.group(1) == "now":
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
         if playing is None:
-            await lyric.edit("`No information current lastfm scrobbling...`")
+            await lyric.edit(
+                "`No information current lastfm scrobbling...`"
+            )
             return False
         artist = playing.get_artist()
         song = playing.get_title()
@@ -50,16 +58,16 @@ async def lyrics(lyric):
         return True
     else:
         await lyric.edit(
-            f"**Search query**:\n`{artist}` - `{song}`" f"\n\n```{songs.lyrics}```"
+            f"**Search query**:\n`{artist}` - `{song}`"
+            f"\n\n```{songs.lyrics}```"
         )
         return True
 
 
-CMD_HELP.update(
-    {
-        "lyrics": "`.lyrics` **<artist name> - <song name>**"
-        "\nUsage: Get lyrics matched artist and song."
-        "\n\n`.lyrics now`"
-        "\nUsage: Get lyrics artist and song from current lastfm scrobbling."
-    }
-)
+CMD_HELP.update({
+    "lyrics":
+    f"`{cmd}lyrics` **<artist name> - <song name>**"
+    "\nUsage: Get lyrics matched artist and song."
+    f"\n\n`{cmd}lyrics now`"
+    "\nUsage: Get lyrics artist and song from current lastfm scrobbling."
+})
