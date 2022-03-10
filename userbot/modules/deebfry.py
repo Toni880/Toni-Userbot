@@ -38,10 +38,10 @@ from PIL import Image, ImageEnhance, ImageOps
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HELP, CMD_HANDLER as cmd
-from userbot.events import toni_cmd
+from userbot.events import register
 
 
-@toni_cmd(pattern="deepfry(?: |$)(.*)")
+@register(pattern="deepfry(?: |$)(.*)")
 async def deepfryer(event):
     try:
         frycount = int(event.pattern_match.group(1))
