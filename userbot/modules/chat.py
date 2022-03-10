@@ -518,9 +518,9 @@ async def _(event):
             await event.edit("`Berhasil Menambahkan Jamet Ke Obrolan`")
 
 
-CMD_HELP.update(
-    {
-        "chat": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}getid`\
+CMD_HELP.update({
+    "chat":
+    f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}getid`\
 \n↳ : Dapatkan ID dari media Telegram mana pun, atau pengguna mana pun\
 \n\n: `{cmd}getbot`\
 \n↳ : Dapatkan Bot dalam obrolan apa pun.\
@@ -541,5 +541,4 @@ CMD_HELP.update(
 \n↳ : Mendapatkan info obrolan. Beberapa info mungkin dibatasi karena izin yang hilang..\
 \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}invite` \
 \n↳ : Menambahkan pengguna ke obrolan, bukan ke pesan pribadi. "
-    }
-)
+})
