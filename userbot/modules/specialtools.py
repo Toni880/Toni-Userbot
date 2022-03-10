@@ -7,12 +7,11 @@ import os
 
 import moviepy.editor as m
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"getaudio(?: |$)(.*)"))
+@toni_cmd(pattern="getaudio(?: |$)(.*)")
 async def _(event):
     ureply = await event.get_reply_message()
     if not (ureply and ("audio" in ureply.document.mime_type)):
@@ -25,7 +24,7 @@ async def _(event):
     await event.edit("`Done.. Now reply to video In which u want to add that Audio`")
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"addaudio(?: |$)(.*)"))
+@toni_cmd(pattern="addaudio(?: |$)(.*)")
 async def _(event):
     ureply = await event.get_reply_message()
     if not (ureply and ("video" in ureply.document.mime_type)):
@@ -54,13 +53,11 @@ async def _(event):
     os.remove(ultt)
     await xx.delete()
 
-
 CMD_HELP.update(
     {
-        "specialtools": f"✘ **Plugin specialtools** :\
-\n\n  •  **Perintah** : `{cmd}getaudio` \
-  \n  •  **Fungsi** : Unduh Audio Untuk memasukkan Video/Gif yang Anda inginkan.\
-\n\n  •  **Perintah** : `{cmd}addaudio` \
-  \n  •  **Fungsi** : akan menempatkan audio di atas ke video/gif yang dibalas."
+        "specialtools": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}getaudio`\
+         \n↳ : Download Audio To put in ur Desired Video/Gif..\
+         \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}addaudio`\
+         \n↳ : It will put the above audio to the replied video/gif.."
     }
 )
