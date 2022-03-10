@@ -48,7 +48,7 @@ from youtube_search import YoutubeSearch
 from userbot import (
     BOTLOG,
     BOTLOG_CHATID,
-    CMD_HANDLER as cmd
+    CMD_HANDLER as cmd,
     CMD_HELP,
     TEMP_DOWNLOAD_DIRECTORY,
     LOGS,
