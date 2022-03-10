@@ -13,7 +13,7 @@ import requests
 from cowpy import cow
 
 from userbot import CMD_HELP, CMD_HANDLER as cmd
-from userbot.utils import toni_cmd
+from userbot.utils import edit_or_reply, toni_cmd
 from userbot.modules.admin import get_user_from_event
 
 # ================= CONSTANT =================
@@ -803,12 +803,12 @@ AENJEAYE = """
 # ===========================================
 
 
-@toni_cmd(pattern=r"anjay$")
+@toni_cmd(pattern=r"^\.anjay$")
 async def anjay(njay):
-    await njay.edit(AENJEAYE)
+    await edit_or_reply(njay, AENJEAYE)
 
 
-@toni_cmd(pattern=r"(\w+)say (.*)")
+@toni_cmd(pattern=r"^\.(\w+)say (.*)")
 async def univsaye(cowmsg):
     arg = cowmsg.pattern_match.group(1).lower()
     text = cowmsg.pattern_match.group(2)
@@ -916,7 +916,7 @@ async def llol(lel):
         await lel.edit(okay)
 
 
-@toni_cmd(pattern=r"(yes|no|maybe|decide)$")
+@toni_cmd(pattern=r"^\.(yes|no|maybe|decide)$")
 async def decide(event):
     decision = event.pattern_match.group(1).lower()
     message_id = event.reply_to_msg_id if event.reply_to_msg_id else None
@@ -938,22 +938,22 @@ async def fun(e):
         await e.edit(t)
 
 
-@toni_cmd(pattern=r"fp$")
+@toni_cmd(pattern=r"^\.fp$")
 async def facepalm(e):
     await e.edit("🤦‍♂")
 
 
-@toni_cmd(pattern=r"cry$")
+@toni_cmd(pattern=r"^\.cry$")
 async def cry(e):
     await e.edit(choice(CRI))
 
 
-@toni_cmd(pattern=r"insult$")
+@toni_cmd(pattern=r"^\.insult$")
 async def insult(e):
     await e.edit(choice(INSULT_STRINGS))
 
 
-@toni_cmd(pattern=r"cp(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.cp(?: |$)(.*)")
 async def copypasta(cp_e):
     textx = await cp_e.get_reply_message()
     message = cp_e.pattern_match.group(1)
@@ -982,7 +982,7 @@ async def copypasta(cp_e):
     await cp_e.edit(reply_text)
 
 
-@toni_cmd(pattern=r"apor(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.vapor(?: |$)(.*)")
 async def vapor(vpr):
     reply_text = []
     textx = await vpr.get_reply_message()
@@ -1005,7 +1005,7 @@ async def vapor(vpr):
     await vpr.edit("".join(reply_text))
 
 
-@toni_cmd(pattern=r"str(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.str(?: |$)(.*)")
 async def stretch(stret):
     textx = await stret.get_reply_message()
     message = stret.text
@@ -1018,11 +1018,14 @@ async def stretch(stret):
         return await stret.edit("`GiiiiiiiB sooooooomeeeeeee teeeeeeext!`")
 
     count = randint(3, 10)
-    reply_text = sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message)
+    reply_text = sub(
+        r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])",
+        (r"\1" * count),
+        message)
     await stret.edit(reply_text)
 
 
-@toni_cmd(pattern=r"zal(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.zal(?: |$)(.*)")
 async def zal(zgfy):
     reply_text = []
     textx = await zgfy.get_reply_message()
@@ -1056,12 +1059,12 @@ async def zal(zgfy):
     await zgfy.edit("".join(reply_text))
 
 
-@toni_cmd(pattern=r"hello$")
+@toni_cmd(pattern=r"^\.hello$")
 async def hoi(hello):
     await hello.edit(choice(HELLOSTR))
 
 
-@toni_cmd(pattern=r"owo(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.owo(?: |$)(.*)")
 async def focos(owo):
     textx = await owo.get_reply_message()
     message = owo.pattern_match.group(1)
@@ -1082,7 +1085,7 @@ async def focos(owo):
     await owo.edit(reply_text)
 
 
-@toni_cmd(pattern=r"ii(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.ii(?: |$)(.*)")
 async def faces(ii):
     textx = await ii.get_reply_message()
     message = ii.pattern_match.group(1)
@@ -1101,7 +1104,7 @@ async def faces(ii):
     await ii.edit(reply_text)
 
 
-@toni_cmd(pattern=r"hi$")
+@toni_cmd(pattern=r"^\.hi$")
 async def sayhi(e):
     await e.edit(
         "\n🙋🙋🙋🙋🙋🙋🙋🙋🙋🙋🙋🙋"
@@ -1116,32 +1119,32 @@ async def sayhi(e):
     )
 
 
-@toni_cmd(pattern=r"react$")
+@toni_cmd(pattern=r"^\.react$")
 async def react_meme(react):
     await react.edit(choice(FACEREACTS))
 
 
-@toni_cmd(pattern=r"shg$")
+@toni_cmd(pattern=r"^\.shg$")
 async def shrugger(shg):
     await shg.edit(choice(SHGS))
 
 
-@toni_cmd(pattern=r"chase$")
+@toni_cmd(pattern=r"^\.chase$")
 async def police(chase):
     await chase.edit(choice(CHASE_STR))
 
 
-@toni_cmd(pattern=r"run$")
+@toni_cmd(pattern=r"^\.run$")
 async def runner_lol(run):
     await run.edit(choice(RUNS_STR))
 
 
-@toni_cmd(pattern=r"metoo$")
+@toni_cmd(pattern=r"^\.metoo$")
 async def metoo(hahayes):
     await hahayes.edit(choice(METOOSTR))
 
 
-@toni_cmd(pattern="Oof$")
+@toni_cmd(pattern="^Oof$")
 async def Oof(e):
     t = "Oof"
     for _ in range(15):
@@ -1149,22 +1152,22 @@ async def Oof(e):
         await e.edit(t)
 
 
-@toni_cmd(pattern=r"10iq$")
+@toni_cmd(pattern=r"^\.10iq$")
 async def iqless(e):
     await e.edit("♿")
 
 
-@toni_cmd(pattern=r"fuck$")
+@toni_cmd(pattern=r"^\.fuck$")
 async def iqbot(e):
     await e.edit("🖕🖕🖕🖕🖕🖕🖕🖕\n🖕🖕🖕🖕🖕🖕🖕🖕\n🖕🖕\n🖕🖕\n🖕🖕\n🖕🖕🖕🖕🖕🖕\n🖕🖕🖕🖕🖕🖕\n🖕🖕\n🖕🖕\n🖕🖕\n🖕🖕\n🖕🖕")
 
 
-@toni_cmd(pattern=r"bye$")
+@toni_cmd(pattern=r"^\.bye$")
 async def iqboot(e):
     await e.edit("Kek thx bye")
 
 
-@toni_cmd(pattern=r"moon$")
+@toni_cmd(pattern=r"^\.moon$")
 async def moon(event):
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
     try:
@@ -1176,7 +1179,7 @@ async def moon(event):
         return
 
 
-@toni_cmd(pattern=r"earth$")
+@toni_cmd(pattern=r"^\.earth$")
 async def earth(event):
     deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
     try:
@@ -1188,7 +1191,7 @@ async def earth(event):
         return
 
 
-@toni_cmd(pattern=r"clock$")
+@toni_cmd(pattern=r"^\.clock$")
 async def clock(event):
     deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
     try:
@@ -1200,7 +1203,7 @@ async def clock(event):
         return
 
 
-@toni_cmd(pattern=r"rain$")
+@toni_cmd(pattern=r"^\.rain$")
 async def rain(event):
     deq = deque(list("☀️🌤⛅️🌥☁️🌧⛈"))
     try:
@@ -1212,7 +1215,7 @@ async def rain(event):
         return
 
 
-@toni_cmd(pattern=r"love$")
+@toni_cmd(pattern=r"^\.love$")
 async def love(event):
     deq = deque(list("❤️🧡💛💚💙💜🖤💕💞💓💗💖💘💝"))
     try:
@@ -1224,7 +1227,7 @@ async def love(event):
         return
 
 
-@toni_cmd(pattern=r"mock(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.mock(?: |$)(.*)")
 async def spongemocktext(mock):
     reply_text = []
     textx = await mock.get_reply_message()
@@ -1246,7 +1249,7 @@ async def spongemocktext(mock):
     await mock.edit("".join(reply_text))
 
 
-@toni_cmd(pattern=r"clap(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.clap(?: |$)(.*)")
 async def claptext(memereview):
     textx = await memereview.get_reply_message()
     message = memereview.pattern_match.group(1)
@@ -1262,7 +1265,7 @@ async def claptext(memereview):
     await memereview.edit(reply_text)
 
 
-@toni_cmd(pattern=r"bt$")
+@toni_cmd(pattern=r"^\.bt$")
 async def bluetext(bt_e):
     if await bt_e.get_reply_message() and bt_e.is_group:
         await bt_e.edit(
@@ -1271,7 +1274,7 @@ async def bluetext(bt_e):
         )
 
 
-@toni_cmd(pattern=r"f (.*)")
+@toni_cmd(pattern=r"^\.f (.*)")
 async def payf(event):
     paytext = event.pattern_match.group(1)
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
@@ -1291,7 +1294,7 @@ async def payf(event):
     await event.edit(pay)
 
 
-@toni_cmd(pattern=r"lfy (.*)")
+@toni_cmd(pattern=r"^\.lfy (.*)")
 async def let_me_google_that_for_you(lmgtfy_q):
     textx = await lmgtfy_q.get_reply_message()
     qry = lmgtfy_q.pattern_match.group(1)
@@ -1309,7 +1312,7 @@ async def let_me_google_that_for_you(lmgtfy_q):
     )
 
 
-@toni_cmd(pattern=r"scam(?: |$)(.*)")
+@toni_cmd(pattern=r"\.scam(?: |$)(.*)")
 async def scam(event):
     options = [
         "typing",
@@ -1350,7 +1353,7 @@ async def scam(event):
         return
 
 
-@toni_cmd(pattern=r"type(?: |$)(.*)")
+@toni_cmd(pattern=r"\.type(?: |$)(.*)")
 async def typewriter(typew):
     textx = await typew.get_reply_message()
     message = typew.pattern_match.group(1)
@@ -1374,35 +1377,35 @@ async def typewriter(typew):
         await sleep(sleep_time)
 
 
-@toni_cmd(pattern=r"leave$")
+@toni_cmd(pattern=r"^\.leave$")
 async def leave(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`You must Leaving dis Group kek!`")
+        await edit_or_reply(e, "`You must Leaving dis Group kek!`")
 
 
-@toni_cmd(pattern=r"fail$")
+@toni_cmd(pattern=r"^\.fail$")
 async def fail(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(
-            "`\n▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ `"
-            "`\n████▌▄▌▄▐▐▌█████ `"
-            "`\n████▌▄▌▄▐▐▌▀████ `"
-            "`\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ `"
-        )
+        await edit_or_reply(e,
+                            "`\n▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ `"
+                            "`\n████▌▄▌▄▐▐▌█████ `"
+                            "`\n████▌▄▌▄▐▐▌▀████ `"
+                            "`\n▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ `"
+                            )
 
 
-@toni_cmd(pattern=r"loll$")
+@toni_cmd(pattern=r"^\.lolz$")
 async def leol(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(
-            "`\n╱┏┓╱╱╱╭━━━╮┏┓╱╱╱╱ `"
-            "`\n╱┃┃╱╱╱┃╭━╮┃┃┃╱╱╱╱ `"
-            "`\n╱┃┗━━┓┃╰━╯┃┃┗━━┓╱ `"
-            "`\n╱┗━━━┛╰━━━╯┗━━━┛╱ `"
-        )
+        await edit_or_reply(e,
+                            "`\n╱┏┓╱╱╱╭━━━╮┏┓╱╱╱╱ `"
+                            "`\n╱┃┃╱╱╱┃╭━╮┃┃┃╱╱╱╱ `"
+                            "`\n╱┃┗━━┓┃╰━╯┃┃┗━━┓╱ `"
+                            "`\n╱┗━━━┛╰━━━╯┗━━━┛╱ `"
+                            )
 
 
-@toni_cmd(pattern=r"lool$")
+@toni_cmd(pattern=r"^\.lool$")
 async def lool(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1412,7 +1415,7 @@ async def lool(e):
         )
 
 
-@toni_cmd(pattern=r"stfu$")
+@toni_cmd(pattern=r"^\.stfu$")
 async def stfu(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1428,7 +1431,7 @@ async def stfu(e):
         )
 
 
-@toni_cmd(pattern=r"gtfo$")
+@toni_cmd(pattern=r"^\.gtfo$")
 async def gtfo(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1444,21 +1447,21 @@ async def gtfo(e):
         )
 
 
-@toni_cmd(pattern=r"nih$")
+@toni_cmd(pattern=r"^\.nih$")
 async def nih(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(
-            r"`(\_/)`"
-            "`\n(•_•)`"
-            "`\n >🌹 *ini buat kamu`"
-            "`\n`"
-            r"`(\_/)`"
-            "`\n(•_•)`\n"
-            r"`🌹<\ *tapi boong`"
-        )
+        await edit_or_reply(e,
+                            r"`(\_/)`"
+                            "`\n(•_•)`"
+                            "`\n >🌹 *ini buat kamu`"
+                            "`\n`"
+                            r"`(\_/)`"
+                            "`\n(•_•)`\n"
+                            r"`🌹<\ *tapi boong`"
+                            )
 
 
-@toni_cmd(pattern=r"fag$")
+@toni_cmd(pattern=r"^\.fag$")
 async def fgtfo(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1472,25 +1475,25 @@ async def fgtfo(e):
         )
 
 
-@toni_cmd(pattern=r"taco$")
+@toni_cmd(pattern=r"^\.taco$")
 async def taco(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(r"{\__/}" "\n(●_●)" "\n( >🌮 Want a taco?")
 
 
-@toni_cmd(pattern=r"paw$")
+@toni_cmd(pattern=r"^\.paw$")
 async def paw(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`(=ↀωↀ=)")
 
 
-@toni_cmd(pattern=r"tf$")
+@toni_cmd(pattern=r"^\.tf$")
 async def tf(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("(̿▀̿ ̿Ĺ̯̿̿▀̿ ̿)̄  ")
 
 
-@toni_cmd(pattern=r"gey$")
+@toni_cmd(pattern=r"^\.gey$")
 async def gey(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1501,18 +1504,18 @@ async def gey(e):
         )
 
 
-@toni_cmd(pattern=r"gay$")
+@toni_cmd(pattern=r"^\.gay$")
 async def ghey(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(
-            "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
-            "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
-            "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈BAPAQ U GAY`"
-            "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈"
-        )
+        await edit_or_reply(e,
+                            "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
+                            "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
+                            "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈BAPAQ U GAY`"
+                            "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈"
+                            )
 
 
-@toni_cmd(pattern=r"bot$")
+@toni_cmd(pattern=r"^\.bot$")
 async def bot(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1521,7 +1524,7 @@ async def bot(e):
         )
 
 
-@toni_cmd(pattern=r"hey$")
+@toni_cmd(pattern=r"^\.hey$")
 async def hey(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1531,7 +1534,7 @@ async def hey(e):
         )
 
 
-@toni_cmd(pattern=r"nou$")
+@toni_cmd(pattern=r"^\.nou$")
 async def nou(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1542,7 +1545,7 @@ async def nou(e):
         )
 
 
-@toni_cmd(pattern=r"koc$")
+@toni_cmd(pattern=r"^\.koc$")
 async def koc(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("8✊===D")
@@ -1572,7 +1575,7 @@ async def emoji_penis(e):
     titid = GAMBAR_TITIT
     if emoji:
         titid = titid.replace("🍆", emoji)
-    await e.edit(titid)
+    await edit_or_reply(e, titid)
 
 
 CMD_HELP.update(
@@ -1646,6 +1649,4 @@ CMD_HELP.update(
         f"\n{cmd}nou | {cmd}bot | {cmd}gey | {cmd}gay | {cmd}tf | {cmd}paw | {cmd}taco | {cmd}nih | {cmd}ii ;"
         f"\n{cmd}fag | {cmd}gtfo | {cmd}stfu | {cmd}lolz | {cmd}lool | {cmd}fail | {cmd}leave"
         f"\n{cmd}love | {cmd}rain | {cmd}earth | {cmd}fuck | {cmd}penis | {cmd}koc | {cmd}anjay"
-        "\n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for some of these."
-    }
-)
+        "\n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for some of these."})
