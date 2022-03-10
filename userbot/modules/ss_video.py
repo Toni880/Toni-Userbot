@@ -10,13 +10,11 @@ import time
 
 from telethon.tl.types import DocumentAttributeFilename
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
-from userbot.utils import progress
+from userbot import CMD_HELP, bot, CMD_HANDLER as cmd
+from userbot.utils import progress, toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"ssvideo(?: |$)(.*)"))
+@toni_cmd(pattern=r"ssvideo(?: |$)(.*)"))
 async def ssvideo(event):
     if not event.reply_to_msg_id:
         await event.edit("📛 `Balas ke media apa pun..`")
