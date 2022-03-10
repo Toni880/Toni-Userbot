@@ -14,18 +14,17 @@ import random
 
 from telethon.errors.rpcerrorlist import (
     UserAlreadyParticipantError,
-    UserNotMutualContactError,
     UserPrivacyRestrictedError,
+    UserNotMutualContactError
 )
+
+from userbot.utils import toni_cmd
+from userbot import CMD_HELP, CMD_HANDLER as cmd
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.types import InputPeerUser
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
 
-
-@bot.on(toni_cmd(outgoing=True, pattern=r"getmembl(?: |$)(.*)"))
+@toni_cmd(pattern="getmemb$")
 async def scrapmem(event):
     chat = event.chat_id
     await event.edit("`Mohon tunggu...`")
@@ -40,7 +39,7 @@ async def scrapmem(event):
     await event.edit("`Berhasil Mengumpulkan Member..`")
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"addmemb(?: |$)(.*)"))
+@toni_cmd(pattern="addmemb$")
 async def admem(event):
     await event.edit("`Proses Menambahkan 0 Member...`")
     chat = await event.get_chat()
@@ -50,7 +49,7 @@ async def admem(event):
         rows = csv.reader(f, delimiter=",", lineterminator="\n")
         next(rows, None)
         for row in rows:
-            user = {"id": int(row[0]), "hash": int(row[1])}
+            user = {'id': int(row[0]), 'hash': int(row[1])}
             users.append(user)
     n = 0
     for user in users:
@@ -59,7 +58,7 @@ async def admem(event):
             await event.edit(f"**Mencapai 30 anggota, tunggu selama {900/60} menit**")
             await asyncio.sleep(900)
         try:
-            userin = InputPeerUser(user["id"], user["hash"])
+            userin = InputPeerUser(user['id'], user['hash'])
             await event.client(InviteToChannelRequest(chat, [userin]))
             await asyncio.sleep(random.randrange(5, 7))
             await event.edit(f"`Prosess Menambahkan {n} Member...`")
@@ -79,11 +78,10 @@ async def admem(event):
 
 CMD_HELP.update(
     {
-        "scraper": f"✘ Plugin scraper :\
-\n\n  •  Perintah : `{cmd}getmemb`\
-  \n  •  Fungsi : Mengumpulkan Anggota dari Obrolan.\
-\n\n  •  Perintah : `{cmd}addmemb` \
-  \n  •  Fungsi : Menambahkan Anggota ke Obrolan.\
-\n\n  •  Tutorial : Tata Cara Menggunakannya  Pertama, Anda harus melakukan `{cmd}getmemb` terlebih dahulu dari Obrolan. Lalu buka grup Anda dan ketik `{cmd}addmemb` untuk menambahkan mereka ke grup Anda."
-    }
-)
+        "scraper":
+        f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}getmemb`\
+        \nUsage : Mengumpulkan Anggota dari Obrolan\
+        \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}addmemb`\
+        \nUsage : Menambahkan Anggota ke Obrolan\
+        \nTata Cara Menggunakannya:  Pertama, Anda harus melakukan {cmd}getmemb terlebih dahulu dari Obrolan. Lalu buka grup Anda dan ketik {cmd}addmemb untuk menambahkan mereka ke grup Anda."
+})
