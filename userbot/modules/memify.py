@@ -4,39 +4,51 @@ import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot import (
+    CMD_HELP,
+    TEMP_DOWNLOAD_DIRECTORY,
+    bot,
+    CMD_HANDLER as cmd,
+)
+from userbot.utils import (
+    edit_or_reply,
+    edit_delete,
+    toni_cmd,
+)
 
 THUMB_IMAGE_PATH = "./thumb_image.jpg"
 
 
-@register(outgoing=True, pattern=r"^\.mmf(?: |$)(.*)")
+@toni_cmd(pattern="mmf(?: |$)(.*)")
 async def mim(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit(
-            "Mohon Balas Ke Gambar Ketik `.mmf 'Teks Atas' ; 'Teks Bawah'` "
-        )
+        await edit_delete(event,
+                          "Mohon Balas Ke Gambar Ketik `.mmf 'Teks Atas' ; 'Teks Bawah'` "
+                          )
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("```Mohon Balas Ke Gambar/Sticker/Gif```")
+        await edit_delete(event, "```Mohon Balas Ke Gambar/Sticker/Gif```")
         return
     reply_message.sender
     await bot.download_file(reply_message.media)
     if reply_message.sender.bot:
-        await event.edit("```Balas ke pesan pengguna yang sebenarnya.```")
+        await edit_delete(event, "```Balas ke pesan pengguna yang sebenarnya.```")
         return
     else:
-        await event.edit("```Prosess Merubah Gambar Ini.. ```")
+        xx = await edit_or_reply(event,
+                                 "```Prosess Merubah Gambar Ini.. ```"
+                                 )
         await asyncio.sleep(5)
         text = event.pattern_match.group(1)
         if event.reply_to_msg_id:
             file_name = "meme.jpg"
             reply_message = await event.get_reply_message()
             to_download_directory = TEMP_DOWNLOAD_DIRECTORY
-            downloaded_file_name = os.path.join(to_download_directory, file_name)
+            downloaded_file_name = os.path.join(
+                to_download_directory, file_name)
             downloaded_file_name = await bot.download_media(
                 reply_message,
                 downloaded_file_name,
@@ -46,7 +58,7 @@ async def mim(event):
         await event.client.send_file(
             event.chat_id, webp_file, reply_to=event.reply_to_msg_id
         )
-        await event.delete()
+        await xx.delete()
         os.remove(webp_file)
 
 
@@ -55,7 +67,8 @@ async def draw_meme_text(image_path, text):
     os.remove(image_path)
     i_width, i_height = img.size
     m_font = ImageFont.truetype(
-        "userbot/utils/styles/GeezFont.otf", int((70 / 640) * i_width)
+        "userbot/utils/styles/GeezFont.otf", int(
+            (70 / 640) * i_width)
     )
     if ";" in text:
         upper_text, lower_text = text.split(";")
@@ -69,25 +82,29 @@ async def draw_meme_text(image_path, text):
             u_width, u_height = draw.textsize(u_text, font=m_font)
 
             draw.text(
-                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) - 1,
+                    int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) + 1,
+                    int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
+                xy=((i_width - u_width) / 2,
+                    int(((current_h / 640) * i_width)) - 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
+                xy=(((i_width - u_width) / 2),
+                    int(((current_h / 640) * i_width)) + 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
@@ -158,33 +175,36 @@ async def draw_meme_text(image_path, text):
     return webp_file
 
 
-@register(outgoing=True, pattern=r"^\.mmf2(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.mmf2(?: |$)(.*)")
 async def mim(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit(
-            "Mohon Balas Ke Gambar Ketik `.mmf2 'Teks Atas' ; 'Teks Bawah'` "
-        )
+        await edit_delete(event,
+                          "Mohon Balas Ke Gambar Ketik `.mmf2 'Teks Atas' ; 'Teks Bawah'` "
+                          )
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("```Mohon Balas Ke Gambar/Sticker/Gif```")
+        await edit_delete(event, "```Mohon Balas Ke Gambar/Sticker/Gif```")
         return
     reply_message.sender
     await bot.download_file(reply_message.media)
     if reply_message.sender.bot:
-        await event.edit("```Balas Ke Pesan Pengguna Yang Sebenarnya.```")
+        await edit_delete(event, "```Balas Ke Pesan Pengguna Yang Sebenarnya.```")
         return
     else:
-        await event.edit("```Mengubah Gambar Ini Saatnya Menulis```")
+        xx = await edit_or_reply(event,
+                                 "```Mengubah Gambar Ini Saatnya Menulis```"
+                                 )
         await asyncio.sleep(5)
         text = event.pattern_match.group(1)
         if event.reply_to_msg_id:
             file_name = "meme.jpg"
             reply_message = await event.get_reply_message()
             to_download_directory = TEMP_DOWNLOAD_DIRECTORY
-            downloaded_file_name = os.path.join(to_download_directory, file_name)
+            downloaded_file_name = os.path.join(
+                to_download_directory, file_name)
             downloaded_file_name = await bot.download_media(
                 reply_message,
                 downloaded_file_name,
@@ -194,7 +214,7 @@ async def mim(event):
         await event.client.send_file(
             event.chat_id, webp_file, reply_to=event.reply_to_msg_id
         )
-        await event.delete()
+        await xx.delete()
         os.remove(webp_file)
 
 
@@ -306,11 +326,10 @@ async def draw_meme_text(image_path, text):
     return webp_file
 
 
-CMD_HELP.update(
-    {
-        "memify": "`.mmf Teks Atas ; Teks Bawah`\
+CMD_HELP.update({
+    "memify":
+        f"`{cmd}mmf Teks Atas ; Teks Bawah`\
         \nUsage: Balas Ke Sticker/Gambar/Gif.\n"
-        "`.mmf2 Teks Atas ; Teks Bawah`\
+        f"`{cmd}mmf2 Teks Atas ; Teks Bawah`\
         \nUsage: Balas Ke Sticker/Gambar/Gif."
-    }
-)
+})
