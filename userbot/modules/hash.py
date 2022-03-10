@@ -9,13 +9,13 @@ from subprocess import run as runapp
 
 import pybase64
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 
-@register(outgoing=True, pattern=r"^\.hash (.*)")
+@toni_cmd(pattern="hash (.*)")
 async def gethash(hash_q):
-    """For .hash command, find the md5, sha1, sha256, sha512 of the string."""
+    """ For .hash command, find the md5, sha1, sha256, sha512 of the string. """
     hashtxt_ = hash_q.pattern_match.group(1)
     hashtxt = open("hashdis.txt", "w+")
     hashtxt.write(hashtxt_)
@@ -57,13 +57,12 @@ async def gethash(hash_q):
         await hash_q.reply(ans)
 
 
-@register(outgoing=True, pattern=r"^\.base64 (en|de) (.*)")
+@toni_cmd(pattern="base64 (en|de) (.*)")
 async def endecrypt(query):
-    """For .base64 command, find the base64 encoding of the given string."""
+    """ For .base64 command, find the base64 encoding of the given string. """
     if query.pattern_match.group(1) == "en":
-        lething = str(pybase64.b64encode(bytes(query.pattern_match.group(2), "utf-8")))[
-            2:
-        ]
+        lething = str(pybase64.b64encode(
+            bytes(query.pattern_match.group(2), "utf-8")))[2:]
         await query.reply("Encoded: `" + lething[:-1] + "`")
     else:
         lething = str(
@@ -76,9 +75,8 @@ async def endecrypt(query):
 
 CMD_HELP.update(
     {
-        "hash": ">`.hash`"
+        "hash": f">`{cmd}hash`"
         "\nUsage: Find the md5, sha1, sha256, sha512 of the string when written into a txt file.",
-        "base64": ">`.base64 [en or de]`"
+        "base64": f">`{cmd}base64 [en or de]`"
         "\nUsage: Find the base64 encoding of the given string or decode it.",
-    }
-)
+    })
