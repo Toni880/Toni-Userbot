@@ -228,6 +228,9 @@ YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", "AIzaSyACwFrVv-mlhICIOCvDQga
 # Untuk Perintah .tonialive
 TONIC_TEKS_KUSTOM = os.environ.get("TONIC_TEKS_KUSTOM") or "**Hi I'am Alive...**"
 
+# Custom icon HELP
+ICON_HELP = os.environ.get("ICON_HELP", "❉")
+
 # Default .alive Name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
