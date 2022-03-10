@@ -1,8 +1,3 @@
-# Thanks Full To Ultroid
-# Ported By @VckyouuBitch
-# Copyright (c) 2021 Geez - Projects
-# Geez - Projects https://github.com/Vckyou/Geez-UserBot
-
 import json
 import os
 import random
@@ -11,35 +6,31 @@ import time
 from lyrics_extractor import SongLyrics as sl
 from telethon.tl.types import DocumentAttributeAudio
 from youtube_dl import YoutubeDL
-from youtube_dl.utils import (
-    ContentTooShortError,
-    DownloadError,
-    ExtractorError,
-    GeoRestrictedError,
-    MaxDownloadsReached,
-    PostProcessingError,
-    UnavailableVideoError,
-    XAttrMetadataError,
-)
+from youtube_dl.utils import (ContentTooShortError, DownloadError,
+                              ExtractorError, GeoRestrictedError,
+                              MaxDownloadsReached, PostProcessingError,
+                              UnavailableVideoError, XAttrMetadataError)
 from youtubesearchpython import SearchVideos
 
-from userbot import ALIVE_NAME, CMD_HELP
-from userbot.events import register
+from userbot.utils import edit_or_reply, toni_cmd
+from userbot import (
+    CMD_HELP,
+    ALIVE_NAME,
+    CMD_HANDLER as cmd,
+)
 
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 
 
-@register(outgoing=True, pattern=r"^\.song (.*)")
+@toni_cmd(pattern="song (.*)")
 async def download_video(event):
     a = event.text
     if len(a) >= 5 and a[5] == "s":
         return
-    await event.edit("`Sedang Memproses Musik, Mohon Tunggu Sebentar...`")
+    xx = await edit_or_reply(event, "`Sedang Memproses Musik, Mohon Tunggu Sebentar...`")
     url = event.pattern_match.group(1)
     if not url:
-        return await event.edit(
-            "**List Error**\nCara Penggunaan : -`.musik <Judul Lagu>`"
-        )
+        return await event.edit("**List Error**\nCara Penggunaan : -`.musik <Judul Lagu>`")
     search = SearchVideos(url, offset=1, mode="json", max_results=1)
     test = search.result()
     p = json.loads(test)
@@ -47,9 +38,9 @@ async def download_video(event):
     try:
         url = q[0]["link"]
     except BaseException:
-        return await event.edit("`Tidak Dapat Menemukan Musik...`")
+        return await xx.edit("`Tidak Dapat Menemukan Musik...`")
     type = "audio"
-    await event.edit(f"`Persiapan Mendownload {url}...`")
+    await xx.edit(f"`Persiapan Mendownload {url}...`")
     if type == "audio":
         opts = {
             "format": "bestaudio",
@@ -70,36 +61,35 @@ async def download_video(event):
             "logtostderr": False,
         }
     try:
-        await event.edit("`Mendapatkan Info Musik...`")
+        await xx.edit("`Mendapatkan Info Musik...`")
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
-        await event.edit(f"`{str(DE)}`")
+        await xx.edit(f"`{str(DE)}`")
         return
     except ContentTooShortError:
-        await event.edit("`The download content was too short.`")
+        await xx.edit("`The download content was too short.`")
         return
     except GeoRestrictedError:
-        await event.edit(
-            "`Video is not available from your geographic location due to"
-            + " geographic restrictions imposed by a website.`"
-        )
+        await xx.edit("`Video is not available from your geographic location due to"
+                      + " geographic restrictions imposed by a website.`"
+                      )
         return
     except MaxDownloadsReached:
-        await event.edit("`Max-downloads limit has been reached.`")
+        await xx.edit("`Max-downloads limit has been reached.`")
         return
     except PostProcessingError:
-        await event.edit("`There was an error during post processing.`")
+        await xx.edit("`There was an error during post processing.`")
         return
     except UnavailableVideoError:
-        await event.edit("`Media is not available in the requested format.`")
+        await xx.edit("`Media is not available in the requested format.`")
         return
     except XAttrMetadataError as XAME:
-        return await event.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
+        return await xx.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
     except ExtractorError:
-        return await event.edit("`There was an error during info extraction.`")
+        return await xx.edit("`There was an error during info extraction.`")
     except Exception as e:
-        return await event.edit(f"{str(type(e)): {str(e)}}")
+        return await xx.edit(f"{str(type(e)): {str(e)}}")
     dir = os.listdir()
     if f"{rip_data['id']}.mp3.jpg" in dir:
         thumb = f"{rip_data['id']}.mp3.jpg"
@@ -114,7 +104,7 @@ Connected to server...
 """.format(
         rip_data["title"], rip_data["uploader"]
     )
-    await event.edit(f"`{upteload}`")
+    await xx.edit(f"`{upteload}`")
     CAPT = f"╭┈────────────────┈\n➥ {rip_data['title']}\n➥ Uploader - {rip_data['uploader']}\n╭┈────────────────┈╯\n➥ By : {DEFAULTUSER}\n╰┈────────────────┈➤"
     await event.client.send_file(
         event.chat_id,
@@ -130,7 +120,7 @@ Connected to server...
             )
         ],
     )
-    await event.delete()
+    await xx.delete()
     os.remove(f"{rip_data['id']}.mp3")
     try:
         os.remove(thumb)
@@ -138,9 +128,9 @@ Connected to server...
         pass
 
 
-@register(outgoing=True, pattern=r"^\.vsongs (.*)")
+@toni_cmd(pattern="vsongs (.*)")
 async def download_vsong(event):
-    x = await event.edit("Processing..")
+    x = await edit_or_reply(event, "Processing..")
     url = event.pattern_match.group(1)
     if not url:
         return await x.edit("**Error**\nUsage - `.vsong <song name>`")
@@ -213,14 +203,12 @@ async def download_vsong(event):
     await x.delete()
 
 
-@register(outgoing=True, pattern=r"^\.lirik (.*)")
+@toni_cmd(pattern="lirik (.*)")
 async def original(event):
     if not event.pattern_match.group(1):
-        return await event.edit(
-            "Beri Saya Sebuah Judul Lagu Untuk Mencari Lirik.\n**Contoh** : `.lirik` <Judul Lagu>"
-        )
-    geez = event.pattern_match.group(1)
-    event = await event.edit("`Sedang Mencari Lirik Lagu...`")
+        return await edit_or_reply(event, "Beri Saya Sebuah Judul Lagu Untuk Mencari Lirik.\n**Contoh** : `{cmd}lirik` <Judul Lagu>")
+    toni = event.pattern_match.group(1)
+    toni = await edit_or_reply(event, "`Sedang Mencari Lirik Lagu...`")
     dc = random.randrange(1, 3)
     if dc == 1:
         piki = "AIzaSyAyDBsY3WRtB5YPC6aB_w8JAy6ZdXNc6FU"
@@ -232,16 +220,13 @@ async def original(event):
     sh1vm = extract_lyrics.get_lyrics(f"{geez}")
     a7ul = sh1vm["lyrics"]
     await event.client.send_message(event.chat_id, a7ul, reply_to=event.reply_to_msg_id)
-    await event.delete()
+    await toni.delete()
 
 
 CMD_HELP.update(
-    {
-        "musikdownload": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.song <Penyanyi atau Band - Judul Lagu>`\
+    {"musikdownload": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}song <Penyanyi atau Band - Judul Lagu>`\
          \n↳ : Mengunduh Sebuah Lagu Yang Diinginkan.\
-         \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.vsong` `<judul lagu>`\
+         \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}vsong` `<judul lagu>`\
          \n↳ : `unggah video lagu.`\
-         \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.lirik` <Penyanyi atau Band - Judul Lagu>`\
-         \n↳ : Mencari Lirik Lagu Yang Diinginkan."
-    }
-)
+         \n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}lirik` <Penyanyi atau Band - Judul Lagu>`\
+         \n↳ : Mencari Lirik Lagu Yang Diinginkan."})
