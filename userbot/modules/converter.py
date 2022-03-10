@@ -1,119 +1,167 @@
-from platform import uname
+# Copyright (C) 2020 Yusuf Usta.
+#
+# Licensed under the  GPL-3.0 License;
+# you may not use this file except in compliance with the License.
+#
+# Ported by @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
+#
 
-from userbot import ALIVE_NAME, CMD_HELP
-from userbot.events import register
+import asyncio
+import io
+import os
 
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
+from PIL import Image
+from userbot import CMD_HANDLER as cmd, CMD_HELP
+from userbot.utils import (
+    edit_delete,
+    edit_or_reply,
+    toni_cmd,
+    runcmd,
+)
 
 
-@register(outgoing=True, pattern="^.convert(?: |$)(.*)")
-async def convert(event):
-    if event.fwd_from:
-        return
-    input_str = event.pattern_match.group(1)
-    reply_message = await event.get_reply_message()
-    if reply_message is None:
-        await event.edit(
-            "membalas media untuk menggunakan operasi `nfc`.\nTerinspirasi oleh @FileConverterBot"
-        )
-        return
-    await event.edit("mencoba mengunduh file media, ke lokal saya")
+@toni_cmd(pattern="convert ?(foto|audio|gif|voice|photo|mp3)? ?(.*)")
+async def cevir(event):
+    botman = event.pattern_match.group(1)
     try:
-        start = datetime.now()
-        c_time = time.time()
-        downloaded_file_name = await borg.download_media(
-            reply_message,
-            Config.TMP_DOWNLOAD_DIRECTORY,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, event, c_time, "trying to download")
-            ),
-        )
-    except Exception as e:  # pylint:disable=C0103,W0703
-        await edit_or_reply(event, str(e))
-    else:
-        end = datetime.now()
-        ms = (end - start).seconds
-        await event.edit(
-            "Diunduh ke `{}` dalam {} detik.".format(downloaded_file_name, ms)
-        )
-        new_required_file_name = ""
-        new_required_file_caption = ""
-        command_to_run = []
-        force_document = False
-        voice_note = False
-        supports_streaming = False
-        if input_str == "voice":
-            new_required_file_caption = "AUDIO" + str(round(time.time())) + ".opus"
-            new_required_file_name = (
-                Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
+        if len(botman) < 1:
+            await edit_delete(
+                event,
+                "**Perintah tidak diketahui! ketik** `.help convert` **bila butuh bantuan**",
+                30,
             )
-            command_to_run = [
-                "ffmpeg",
-                "-i",
-                downloaded_file_name,
-                "-map",
-                "0:a",
-                "-codec:a",
-                "libopus",
-                "-b:a",
-                "100k",
-                "-vbr",
-                "on",
-                new_required_file_name,
-            ]
-            voice_note = True
-            supports_streaming = True
-        elif input_str == "mp3":
-            new_required_file_caption = "AUDIO" + str(round(time.time())) + ".mp3"
-            new_required_file_name = (
-                Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
-            )
-            command_to_run = [
-                "ffmpeg",
-                "-i",
-                downloaded_file_name,
-                "-vn",
-                new_required_file_name,
-            ]
-            voice_note = False
-            supports_streaming = True
-        else:
-            await event.edit("not supported")
-            os.remove(downloaded_file_name)
             return
-        logger.info(command_to_run)
-        # TODO: re-write create_subprocess_exec 😉
-        process = await asyncio.create_subprocess_exec(
-            *command_to_run,
-            # stdout must a pipe to be accessible as process.stdout
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
+    except BaseException:
+        await edit_delete(
+            event,
+            "**Perintah tidak diketahui! ketik** `.help convert` **bila butuh bantuan**",
+            30,
         )
-        # Wait for the subprocess to finish
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-        os.remove(downloaded_file_name)
-        if os.path.exists(new_required_file_name):
-            end_two = datetime.now()
-            await borg.send_file(
-                entity=event.chat_id,
-                file=new_required_file_name,
-                caption=new_required_file_caption,
-                allow_cache=False,
-                silent=True,
-                force_document=force_document,
-                voice_note=voice_note,
-                supports_streaming=supports_streaming,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, event, c_time, "trying to upload")
-                ),
+        return
+    if botman in ["foto", "photo"]:
+        rep_msg = await event.get_reply_message()
+        if not event.is_reply or not rep_msg.sticker:
+            await edit_delete(event, "**Harap balas ke stiker.**")
+            return
+        xxnx = await edit_or_reply(event, "`Mengconvert ke foto...`")
+        foto = io.BytesIO()
+        foto = await event.client.download_media(rep_msg.sticker, foto)
+        im = Image.open(foto).convert("RGB")
+        im.save("sticker.png", "png")
+        await event.client.send_file(
+            event.chat_id,
+            "sticker.png",
+            reply_to=rep_msg,
+        )
+        await xxnx.delete()
+        os.remove("sticker.png")
+    elif botman in ["sound", "audio"]:
+        EFEKTLER = ["bengek", "robot", "jedug", "fast", "echo"]
+        efekt = event.pattern_match.group(2)
+        if len(efekt) < 1:
+            return await edit_delete(
+                event,
+                "**Efek yang Anda tentukan tidak ditemukan!**\n**Efek yang dapat Anda gunakan:** bengek/robot/jedug/fast/echo`",
+                30,
             )
-            (end_two - end).seconds
-            os.remove(new_required_file_name)
-            await event.edit("dikonversi dalam {ms_two} detik")
+        rep_msg = await event.get_reply_message()
+        if not event.is_reply or not (rep_msg.voice or rep_msg.audio):
+            return await edit_delete(event, "**Harap balas ke file Audio.**")
+        xxx = await edit_or_reply(event, "`Applying effect...`")
+        if efekt in EFEKTLER:
+            indir = await rep_msg.download_media()
+            KOMUT = {
+                "bengek": '-filter_complex "rubberband=pitch=1.5"',
+                "robot": "-filter_complex \"afftfilt=real='hypot(re,im)*sin(0)':imag='hypot(re,im)*cos(0)':win_size=512:overlap=0.75\"",
+                "jedug": '-filter_complex "acrusher=level_in=8:level_out=18:bits=8:mode=log:aa=1"',
+                "fast": "-filter_complex \"afftfilt=real='hypot(re,im)*cos((random(0)*2-1)*2*3.14)':imag='hypot(re,im)*sin((random(1)*2-1)*2*3.14)':win_size=128:overlap=0.8\"",
+                "echo": '-filter_complex "aecho=0.8:0.9:500|1000:0.2|0.1"',
+            }
+            ses = await asyncio.create_subprocess_shell(
+                f"ffmpeg -i '{indir}' {KOMUT[efekt]} output.mp3"
+            )
+            await ses.communicate()
+            await event.client.send_file(
+                event.chat_id,
+                "output.mp3",
+                thumb="userbot/resources/logo.jpg",
+                reply_to=rep_msg,
+            )
+            await xxx.delete()
+            os.remove(indir)
+            os.remove("output.mp3")
+        else:
+            await xxx.edit(
+                "**Efek yang Anda tentukan tidak ditemukan!**\n**Efek yang dapat Anda gunakan:** bengek/robot/jedug/fast/echo`"
+            )
+    elif botman == "mp3":
+        rep_msg = await event.get_reply_message()
+        if not event.is_reply or not rep_msg.video:
+            return await edit_delete(event, "**Harap balas ke Video!**")
+        xx = await edit_or_reply(event, "`Mengconvert ke sound...`")
+        video = io.BytesIO()
+        video = await event.client.download_media(rep_msg.video)
+        gif = await asyncio.create_subprocess_shell(
+            f"ffmpeg -y -i '{video}' -vn -b:a 128k -c:a libmp3lame out.mp3"
+        )
+        await gif.communicate()
+        await xx.edit("`Uploading Sound...`")
+        try:
+            await event.client.send_file(
+                event.chat_id,
+                "out.mp3",
+                thumb="userbot/resources/logo.jpg",
+                reply_to=rep_msg,
+            )
+        except BaseException:
+            os.remove(video)
+            return await xx.edit("**Tidak dapat mengconvert ke audio! 🥺**")
+        await xx.delete()
+        os.remove("out.mp3")
+        os.remove(video)
+    else:
+        await xx.edit(
+            "**Perintah tidak diketahui! ketik** `.help convert` **bila butuh bantuan**"
+        )
+        return
 
 
-CMD_HELP.update({"converter": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.convert`" "\n↳ : Converter Video mp3"})
+@toni_cmd(pattern="makevoice$")
+async def makevoice(event):
+    if not event.reply_to:
+        return await edit_delete(event, "**Mohon Balas Ke Audio atau video**")
+    msg = await event.get_reply_message()
+    if not event.is_reply or not (msg.audio or msg.video):
+        return await edit_delete(event, "**Mohon Balas Ke Audio atau video**")
+    xxnx = await edit_or_reply(event, "`Processing...`")
+    dl = msg.file.name
+    file = await msg.download_media(dl)
+    await xxnx.edit("`Converting to Voice Note...`")
+    await runcmd(
+        f"ffmpeg -i '{file}' -map 0:a -codec:a libopus -b:a 100k -vbr on man.opus"
+    )
+    await event.client.send_message(
+        event.chat_id, file="man.opus", force_document=False, reply_to=msg
+    )
+    await xxnx.delete()
+    os.remove(file)
+    os.remove("man.opus")
+
+
+CMD_HELP.update(
+    {
+        "converter": f"**Plugin : **`converter`\
+        \n\n  •  **Syntax :** `{cmd}convert foto`\
+        \n  •  **Function : **Untuk Mengconvert sticker ke foto\
+        \n\n  •  **Syntax :** `{cmd}convert mp3`\
+        \n  •  **Function : **Untuk Mengconvert dari video ke file mp3\
+        \n\n  •  **Syntax :** `{cmd}makevoice`\
+        \n  •  **Function : **Untuk Mengconvert audio ke voice note\
+        \n\n  •  **Syntax :** `{cmd}convert audio` <efek>\
+        \n  •  **Function : **Untuk Menambahkan efek suara jadi berskin\
+        \n  •  **List Efek :** `bengek`, `jedug`, `echo`, `robot`\
+    "
+    }
+)
