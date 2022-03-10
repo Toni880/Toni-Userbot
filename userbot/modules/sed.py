@@ -10,9 +10,8 @@
 import re
 from sre_constants import error as sre_err
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd, CMD_HELP
+from userbot.utils import toni_cmd
 
 DELIMITERS = ("/", ":", "|", "_")
 
@@ -69,7 +68,7 @@ async def separate_sed(sed_string):
     return None
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"s(?: |$)(.*)"))
+@toni_cmd(pattern=r"s(?: |$)(.*)"))
 async def sed(command):
     """For sed command, use sed on Telegram."""
     sed_result = await separate_sed(command.text)
