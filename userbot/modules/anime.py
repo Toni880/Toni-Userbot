@@ -678,3 +678,5 @@ CMD_HELP.update({
     \nUsage: Search manga.\
     \n\n`{cmd}whatanime` Reply with media.\
     \nUsage: Find anime from media file."
+}
+)
