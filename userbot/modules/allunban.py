@@ -2,7 +2,10 @@
 # Copyright © 2021 Geez-Projects
 from telethon.tl.types import ChannelParticipantsKicked
 
-from userbot import CMD_HELP
+from userbot import (
+    CMD_HELP,
+    CMD_HANDLER as cmd,
+)
 from userbot.utils import edit_or_reply, toni_cmd
 
 
@@ -26,7 +29,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "allunban": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}allunban`\
+        "allunban": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}allunban`\
     \n↳ : Membatalkan semua Ban Di Anggota Grup."
     }
 )
