@@ -4,7 +4,7 @@ from userbot import CMD_HELP, CMD_HANDLER as cmd
 from userbot.utils import toni_cmd
 
 
-@register(outgoing=True, pattern="^.sadboy(?: |$)(.*)")
+@toni_cmd(pattern="sadboy(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(2)
