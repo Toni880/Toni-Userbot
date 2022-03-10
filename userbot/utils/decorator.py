@@ -15,7 +15,6 @@ from userbot import (
     tgbot,
 )
 
-
 def toni_cmd(
     pattern: str = None,
     allow_sudo: bool = True,
@@ -57,14 +56,8 @@ def toni_cmd(
                 cmd2 = sudo_ + command
             else:
                 cmd1 = (
-                    (toni_ +
-                     pattern).replace(
-                        "$",
-                        "").replace(
-                        "\\",
-                        "").replace(
-                        "^",
-                        ""))
+                    (toni_ + pattern).replace("$", "").replace("\\", "").replace("^", "")
+                )
                 cmd2 = (
                     (sudo_ + pattern)
                     .replace("$", "")
@@ -75,6 +68,7 @@ def toni_cmd(
                 CMD_LIST[file_test].append(cmd1)
             except BaseException:
                 CMD_LIST.update({file_test: [cmd1]})
+
 
     def decorator(func):
         if not disable_edited:
