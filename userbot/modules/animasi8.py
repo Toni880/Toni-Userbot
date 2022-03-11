@@ -2,12 +2,11 @@
 
 from time import sleep
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd, CMD_HELP
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"heu(?: |$)(.*)"))
+@toni_cmd(pattern=r"heu(?: |$)(.*)")
 async def _(typew):
     await typew.edit("▒▒▒▒▒▄██████████▄▒▒▒▒▒\n"
                      "▒▒▒▄██████████████▄▒▒▒\n"
@@ -23,7 +22,7 @@ async def _(typew):
                      "▒▒▒▒▀████████████▀▒▒▒▒\n")
     
     
-@bot.on(toni_cmd(outgoing=True, pattern=r"hem(?: |$)(.*)"))
+@toni_cmd(pattern=r"hem(?: |$)(.*)")
 async def _(typew):
     await typew.edit(" ╭━┳━╭━╭━╮╮\n"
                      " ┃┈┈┈┣▅╋▅┫┃\n"
@@ -36,7 +35,7 @@ async def _(typew):
                      "      **MENCURIGAKAN**\n")
     
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"wle(?: |$)(.*)"))
+@toni_cmd(pattern=r"wle(?: |$)(.*)")
 async def _(typew):
     await typew.edit("┈╭━━━━━━━━━━━╮┈\n" 
                      "╭╯┈╭━━╮┈╭━━╮┈╰╮\n" 
@@ -48,7 +47,7 @@ async def _(typew):
                      "┈┃┈┈┈┈┈╰━╯┈┈┈┃┈\n")
     
     
-@bot.on(toni_cmd(outgoing=True, pattern=r"peler(?: |$)(.*)"))
+@toni_cmd(pattern=r"peler(?: |$)(.*)")
 async def _(typew):
     await typew.edit("`MAU LIAT PELER GA???`")
     sleep(1)
@@ -69,7 +68,7 @@ async def _(typew):
                      "░▒▒▀▀▄▄▄▄█▄▄▀░░░░░░░█─\n")
     
     
-@bot.on(toni_cmd(outgoing=True, pattern=r"ahh(?: |$)(.*)"))
+@toni_cmd(pattern=r"ahh(?: |$)(.*)")
 async def _(typew):
     await typew.edit("ahhh")
     await typew.edit("ahhh ahhh")
@@ -98,7 +97,7 @@ async def _(typew):
    
 CMD_HELP.update(
     {
-        "animasi9": f"**Plugin : **`animasi9`\
+        "animasi9": f"**Plugin : **`animasi8`\
         \n\n  •  **Syntax :** `{cmd}heu`\
         \n  •  **Function : **Mengirim Gambar Monyet.\
         \n\n  •  **Syntax :** `{cmd}hem`\
