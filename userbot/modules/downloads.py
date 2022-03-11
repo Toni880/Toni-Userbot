@@ -19,8 +19,6 @@ from userbot import (
     CMD_HANDLER as cmd,
 )
 
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-
 
 @toni_cmd(pattern="song (.*)")
 async def download_video(event):
@@ -105,7 +103,7 @@ Connected to server...
         rip_data["title"], rip_data["uploader"]
     )
     await xx.edit(f"`{upteload}`")
-    CAPT = f"╭┈────────────────┈\n➥ {rip_data['title']}\n➥ Uploader - {rip_data['uploader']}\n╭┈────────────────┈╯\n➥ By : {DEFAULTUSER}\n╰┈────────────────┈➤"
+    CAPT = f"╭┈────────────────┈\n➥ {rip_data['title']}\n➥ Uploader - {rip_data['uploader']}\n╭┈────────────────┈╯\n➥ By : {ALIVE_NAME}\n╰┈────────────────┈➤"
     await event.client.send_file(
         event.chat_id,
         f"{rip_data['id']}.mp3",
