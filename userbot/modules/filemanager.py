@@ -4,13 +4,13 @@ import os.path
 import time
 from os.path import exists, isdir
 
-from userbot.events import register
+from userbot.utils import toni_cmd
 from userbot.utils import humanbytes
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
 
-@register(outgoing=True, pattern=r"^\.ls ?(.*)")
+@toni_cmd(pattern=r"ls ?(.*)")
 async def lst(event):
     if event.fwd_from:
         return
