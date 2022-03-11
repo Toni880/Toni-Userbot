@@ -2,11 +2,15 @@
 
 from sqlalchemy.exc import IntegrityError
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    bot,
+)
+from userbot.utils import toni_cmd
 
 
-@register(outgoing=True, disable_edited=True, pattern=r"^\.fbans(?: |$)(.*)")
+@toni_cmd(pattern=r"^\.fbans(?: |$)(.*)")
 async def fban(event):
     """Bans a user from connected federations."""
     try:
@@ -77,7 +81,7 @@ async def fban(event):
     )
 
 
-@register(outgoing=True, disable_edited=True, pattern=r"^\.unfbans(?: |$)(.*)")
+@toni_cmd(pattern=r"unfbans(?: |$)(.*)")
 async def unfban(event):
     """Unbans a user from connected federations."""
     try:
@@ -146,7 +150,7 @@ async def unfban(event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.addfs(?: |$)(.*)")
+@toni_cmd(pattern=r"addfs(?: |$)(.*)")
 async def addf(event):
     """Adds current chat to connected federations."""
     try:
@@ -167,7 +171,7 @@ async def addf(event):
     await event.edit("**Added this group to federations list!**")
 
 
-@register(outgoing=True, pattern=r"^\.delfs$")
+@toni_cmd(pattern=r"delfs$")
 async def delf(event):
     """Removes current chat from connected federations."""
     try:
@@ -198,7 +202,7 @@ async def listf(event):
     await event.edit(msg)
 
 
-@register(outgoing=True, disable_edited=True, pattern=r"^\.clearfs$")
+@toni_cmd(pattern=r"clearfs$")
 async def delf(event):
     """Removes all chats from connected federations."""
     try:
@@ -212,17 +216,17 @@ async def delf(event):
 
 CMD_HELP.update(
     {
-        "federation": ">`.fbans <id/username> <reason>`"
+        "federation": f">`{cmd}fbans <id/username> <reason>`"
         "\nUsage: Bans user from connected federations."
         "\nYou can reply to the user whom you want to fban or manually pass the username/id."
-        "\n\n`>.unfbans <id/username> <reason>`"
+        f"\n\n`>{cmd}unfbans <id/username> <reason>`"
         "\nUsage: Same as fban but unbans the user"
-        "\n\n>`.addfs <name>`"
+        f"\n\n>`{cmd}addfs <name>`"
         "\nUsage: Adds current group and stores it as <name> in connected federations."
         "\nAdding one group is enough for one federation."
-        "\n\n>`.delfs`"
+        f"\n\n>`{cmd}delfs`"
         "\nUsage: Removes current group from connected federations."
-        "\n\n>`.listfs`"
+        f"\n\n>`{cmd}listfs`"
         "\nUsage: Lists all connected federations by specified name."
     }
 )
