@@ -1,11 +1,11 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd, CMD_HELP, bot
+from userbot.utils import toni_cmd
 
 
-@register(outgoing=True, pattern=r"^\.nmap(?: |$)(.*)")
+@toni_cmd(pattern=r"nmap(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -28,7 +28,7 @@ async def _(event):
             await event.client.delete_messages(response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.subd(?: |$)(.*)")
+@toni_cmd(pattern=r"subd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -51,7 +51,7 @@ async def _(event):
             await event.client.delete_messages(response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.cek(?: |$)(.*)")
+@toni_cmd(pattern=r"cek(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -74,7 +74,7 @@ async def _(event):
             await event.client.delete_messages(httpheader, response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.bin(?: |$)(.*)")
+@toni_cmd(pattern=r"bin(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -97,7 +97,7 @@ async def _(event):
             await event.client.delete_messages(response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.cc(?: |$)(.*)")
+@toni_cmd(pattern=r"cc(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -122,15 +122,15 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "phreaker": "`.nmap <bug hosts>`\
+        "phreaker": f"`{cmd}nmap <bug hosts>`\
 \nUsage: to get info bug/host.\
-\n\n`.subd <bug hosts>`\
+\n\n`{cmd}subd <bug hosts>`\
 \nUsage: to get subdomain bug/host.\
-\n\n`.cek <bug hosts>`\
+\n\n`{cmd}cek <bug hosts>`\
 \nUsage: to cek respons bug/host.\
-    \n\n`.bin < bin number >`\
+    \n\n`{cmd}bin < bin number >`\
     \nUsage: to cek bin ip.\
-\n\n`.cc <mm|yy|cvv`\
+\n\n`{cmd}cc <mm|yy|cvv`\
 \nUsage: to cek Credits Card Stats."
     }
 )
