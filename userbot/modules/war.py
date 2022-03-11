@@ -1,153 +1,152 @@
 from time import sleep
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import edit_or_reply, toni_cmd
 
-from userbot import CMD_HELP
-from userbot.events import register
 
-
-@register(outgoing=True, pattern=r"^\.jamet(?: |$)(.*)")
+@toni_cmd(pattern="jamet(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("**WOII**")
+    x = await edit_or_reply(typew, "**WOII**")
     sleep(1.5)
-    await typew.edit("**JAMET KONTOL**")
+    await x.edit("**JAMET KONTOL**")
     sleep(1.5)
-    await typew.edit("**CUMA MAU BILANG**")
+    await x.edit("**CUMA MAU BILANG**")
     sleep(1.5)
-    await typew.edit("**GAUSAH SO ASIK**")
+    await x.edit("**GAUSAH SO ASIK**")
     sleep(1.5)
-    await typew.edit("**EMANG KENAL?**")
+    await x.edit("**EMANG KENAL?**")
     sleep(1.5)
-    await typew.edit("**GAUSAH REPLY**")
+    await x.edit("**GAUSAH REPLY**")
     sleep(1.5)
-    await typew.edit("**KITA BUKAN KAWAN**")
+    await x.edit("**KITA BUKAN KAWAN**")
     sleep(1.5)
-    await typew.edit("**GASUKA PC ANJING**")
+    await d.edit("**GASUKA PC ANJING**")
     sleep(1.5)
-    await typew.edit("**BOCAH KAMPUNG**")
+    await x.edit("**BOCAH KAMPUNG**")
     sleep(1.5)
-    await typew.edit("**MENTAL TEMPE**")
+    await x.edit("**MENTAL TEMPE**")
     sleep(1.5)
-    await typew.edit("**LEMBEK NGENTOT🔥**")
+    await x.edit("**LEMBEK NGENTOT🔥**")
 
 
-@register(outgoing=True, pattern=r"^\.pp(?: |$)(.*)")
+@toni_cmd(pattern="pp(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit(
-        "**PASANG PP DULU NGENTOT,BIAR ORANG-ORANG PADA TAU BETAPA HINA NYA MUKA LU 😆**"
-    )
+    await edit_or_reply(typew,
+                        "**PASANG PP DULU NGENTOT,BIAR ORANG-ORANG PADA TAU BETAPA HINA NYA MUKA LU 😆**"
+                        )
 
 
-@register(outgoing=True, pattern=r"^\.dp(?: |$)(.*)")
+@toni_cmd(pattern="dp(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("**MUKA LU HINA, GAUSAH SOK KERAS YA NGENTOT!!**")
+    await edit_or_reply(typew, "**MUKA LU HINA, GAUSAH SOK KERAS YA NGENTOT!!**")
 
 
-@register(outgoing=True, pattern=r"^\.so(?: |$)(.*)")
+@toni_cmd(pattern="so(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("**GAUSAH SOKAB SAMA GUA NGENTOT, LU BABU GA LEVEL!!**")
+    await edit_or_reply(typew, "**GAUSAH SOKAB SAMA GUA NGENTOT, LU BABU GA LEVEL!!**")
 
 
-@register(outgoing=True, pattern=r"^\.nb(?: |$)(.*)")
+@toni_cmd(pattern="nb(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**")
+    await edit_or_reply(typew, "**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**")
 
 
-@register(outgoing=True, pattern=r"^\.met(?: |$)(.*)")
+@toni_cmd(pattern="met(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("**NAMANYA JUGA JAMET CAPER SANA SINI BUAT CARI NAMA BHAHAHA**")
+    await edit_or_reply(typew, "**NAMANYA JUGA JAMET CAPER SANA SINI BUAT CARI NAMA BHAHAHA**")
 
 
-@register(outgoing=True, pattern=r"^\.war(?: |$)(.*)")
+@toni_cmd(pattern="war(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit(
-        "**WAR WAR PALAK BAPAK KAU WAR, SOK KERAS BANGET GOBLOK, DI TONGKRONGAN JADI BABU, DI TELE SOK JAGOAN...**"
-    )
+    await edit_or_reply(event,
+                        "**WAR WAR PALAK BAPAK KAU WAR, SOK KERAS BANGET GOBLOK, DI TONGKRONGAN JADI BABU, DI TELE SOK JAGOAN...**"
+                        )
 
 
-@register(outgoing=True, pattern=r"^\.wartai(?: |$)(.*)")
+@toni_cmd(pattern="wartai(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit(
-        "**WAR WAR TAI ANJING, KETRIGGER MINTA SHARELOK LU KIRA MAU COD-AN GOBLOK, BACOTAN LU AJA KGA ADA KERAS KERASNYA TOLOL**"
-    )
+    await edit_or_reply(typew,
+                        "**WAR WAR TAI ANJING, KETRIGGER MINTA SHARELOK LU KIRA MAU COD-AN GOBLOK, BACOTAN LU AJA KGA ADA KERAS KERASNYA TOLOL**"
+                        )
 
 
-@register(outgoing=True, pattern=r"^\.kismin(?: |$)(.*)")
+@toni_cmd(pattern="kismin(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit(
-        "**CUIHHHH, MAKAN AJA MASIH NGEMIS LO GOBLOK, JANGAN SO NINGGI YA KONTOL GA KEREN LU KEK GITU NGENTOT!!**"
-    )
+    await edit_or_reply(typew,
+                        "**CUIHHHH, MAKAN AJA MASIH NGEMIS LO GOBLOK, JANGAN SO NINGGI YA KONTOL GA KEREN LU KEK GITU NGENTOT!!**"
+                        )
 
 
-@register(outgoing=True, pattern=r"^\.ded(?: |$)(.*)")
+@toni_cmd(pattern="ded(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("**MATI AJA LU GOBLOK, GAGUNA LU HIDUP DI BUMI**")
+    await edit_or_reply(typew, "**MATI AJA LU GOBLOK, GAGUNA LU HIDUP DI BUMI**")
 
 
-@register(outgoing=True, pattern=r"^\.sokab(?: |$)(.*)")
+@toni_cmd(pattern="sokab(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit(
-        "**SOKAB BET LU GOBLOK, KAGA ADA ISTILAH NYA BAWAHAN TEMENAN AMA BOS AHAHAHA!!**"
-    )
+    await edit_or_reply(typew,
+                        "**SOKAB BET LU GOBLOK, KAGA ADA ISTILAH NYA BAWAHAN TEMENAN AMA BOS AHAHAHA!!**"
+                        )
 
 
-@register(outgoing=True, pattern=r"^\.gembel(?: |$)(.*)")
+@toni_cmd(pattern="gembel(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit(
-        "**MUKA BAPAK LU KEK KELAPA SAWIT ANJING, GA USAH NGATAIN ORANG, MUKA LU AJA KEK GEMBEL TEXAS KONTOL!!**"
-    )
+    await edit_or_reply(typew,
+                        "**MUKA BAPAK LU KEK KELAPA SAWIT ANJING, GA USAH NGATAIN ORANG, MUKA LU AJA KEK GEMBEL TEXAS KONTOL!!**"
+                        )
 
 
-@register(outgoing=True, pattern=r"^\.cuih(?: |$)(.*)")
+@toni_cmd(pattern="cuih(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit(
-        "**GAK KEREN LO KEK BEGITU GOBLOK, KELUARGA LU BAWA SINI GUA LUDAHIN SATU-SATU, SETDAH!!!**"
-    )
+    await edit_or_reply(typew,
+                        "**GAK KEREN LO KEK BEGITU GOBLOK, KELUARGA LU BAWA SINI GUA LUDAHIN SATU-SATU, SETDAH!!!**"
+                        )
 
 
 CMD_HELP.update(
     {
-        "war": "**Plugin : **`war`\
-        \n\n  •  **Syntax :** `.jamet`\
+        "war": f"**Plugin : **`war`\
+        \n\n  •  **Syntax :** `{cmd}jamet`\
         \n  •  **Function : **Menghina Jamet telegram\
-        \n\n  •  **Syntax :** `.pp`\
+        \n\n  •  **Syntax :** `{cmd}pp`\
         \n  •  **Function : **Menghina Jamet telegram yang ga pake foto profil\
-        \n\n  •  **Syntax :** `.dp`\
+        \n\n  •  **Syntax :** `{cmd}dp`\
         \n  •  **Function : **Menghina Jamet muka hina!\
-        \n\n  •  **Syntax :** `.so`\
+        \n\n  •  **Syntax :** `{cmd}so`\
         \n  •  **Function : **Ngeledek orang sokab\
-        \n\n  •  **Syntax :** `.nb`\
+        \n\n  •  **Syntax :** `{cmd}nb`\
         \n  •  **Function : **Ngeledek orang norak baru pake bot\
-        \n\n  •  **Syntax :** `.so`\
+        \n\n  •  **Syntax :** `{cmd}so`\
         \n  •  **Function : **Ngeledek orang sokab\
-        \n\n  •  **Syntax :** `.skb`\
+        \n\n  •  **Syntax :** `{cmd}skb`\
         \n  •  **Function : **Ngeledek orang sokab versi 2\
-        \n\n  •  **Syntax :** `.met`\
+        \n\n  •  **Syntax :** `{cmd}met`\
         \n  •  **Function : **Ngeledek si jamet caper\
-        \n\n  •  **Syntax :** `.war`\
+        \n\n  •  **Syntax :** `{cmd}war`\
         \n  •  **Function : **Ngeledek orang so keras ngajak war\
-        \n\n  •  **Syntax :** `.wartai`\
+        \n\n  •  **Syntax :** `{cmd}wartai`\
         \n  •  **Function : **Ngeledek orang so ketrigger ngajak cod minta sharelok\
-        \n\n  •  **Syntax :** `.kismin`\
+        \n\n  •  **Syntax :** `{cmd}kismin`\
         \n  •  **Function : **Ngeledek orang kismin so jagoan di tele\
-        \n\n  •  **Syntax :** `.ded`\
+        \n\n  •  **Syntax :** `{cmd}ded`\
         \n  •  **Function : **Nyuruh orang mati aja goblok wkwk\
-        \n\n  •  **Syntax :** `.sokab`\
+        \n\n  •  **Syntax :** `{cmd}sokab`\
         \n  •  **Function : **Ngeledek orang so kenal so dekat padahal kga kenal goblok\
-        \n\n  •  **Syntax :** `.gembel`\
+        \n\n  •  **Syntax :** `{cmd}gembel`\
         \n  •  **Function : **Ngeledek bapaknya si jamet\
-        \n\n  •  **Syntax :** `.cuih`\
+        \n\n  •  **Syntax :** `{cmd}cuih`\
         \n  •  **Function : **Ngeludahin keluarganya satu satu wkwk\
         \n\n**Klo mau Req, kosa kata dari lu Hubungi @IDnyaKosong**\
     "
