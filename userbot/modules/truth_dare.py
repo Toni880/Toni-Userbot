@@ -6,8 +6,8 @@ import random
 
 import redis
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 dare = [
     "Bertindak seperti monyet dan merekam video itu.",
@@ -168,22 +168,22 @@ truth = [
 
 
 # truth
-@register(outgoing=True, pattern="^.truth$")
+@toni_cmd(pattern="truth$")
 async def redis(pong):
     await pong.reply(random.choice(truth))
 
 
-@register(outgoing=True, pattern="^.t$")
+@toni_cmd(pattern="t$")
 async def redis(pong):
     await pong.reply(random.choice(truth))
 
 
-@register(outgoing=True, pattern="^t$")
+@toni_cmd(pattern="t$")
 async def redis(pong):
     await pong.reply(random.choice(truth))
 
 
-@register(outgoing=True, pattern="^T$")
+@toni_cmd(pattern="T$")
 async def redis(pong):
     await pong.reply(random.choice(truth))
 
@@ -191,32 +191,29 @@ async def redis(pong):
 # dare
 
 
-@register(outgoing=True, pattern="^.dare$")
+@toni_cmd(pattern="dare$")
 async def redis(pong):
     await pong.reply(random.choice(dare))
 
-
-@register(outgoing=True, pattern="^.d$")
+@toni_cmd(pattern="d$")
 async def redis(pong):
     await pong.reply(random.choice(dare))
 
-
-@register(outgoing=True, pattern="^d$")
+@toni_cmd(pattern="d$")
 async def redis(pong):
     await pong.reply(random.choice(dare))
 
-
-@register(outgoing=True, pattern="^D$")
+@toni_cmd(pattern="D$")
 async def redis(pong):
     await pong.reply(random.choice(dare))
 
 
 CMD_HELP.update(
     {
-        "truth": "**✘ Plugin** `truth` | `.t` | `t` |\
-        \n\n  •  **Perintah :** `.truth` \
+        "truth": f"**✘ Plugin** `truth` | `{cmd}t` | `t` |\
+        \n\n  •  **Perintah :** `{cmd}truth` \
         \n  •  **Fungsi :** Mengirimkan Sebuah Pertanyaan Random.\
-        \n\n  •  **Perintah :** `.dare` | `.d` | `d` |\
+        \n\n  •  **Perintah :** `{cmd}dare` | `{cmd}d` | `d` |\
         \n  •  **Fungsi :** Mengirimkan Sebuah Tantangan Random.\
     "
     }
