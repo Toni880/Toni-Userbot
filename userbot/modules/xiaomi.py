@@ -3,12 +3,11 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd, CMD_HELP
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="firmware(?: |$)(.*)"))
+@toni_cmd(pattern="firmware(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -32,7 +31,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="fastboot(?: |$)(.*)"))
+@toni_cmd(pattern="fastboot(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -56,7 +55,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="recovery(?: |$)(.*)"))
+@toni_cmd(pattern="recovery(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -80,7 +79,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="pb(?: |$)(.*)"))
+@toni_cmd(pattern="pb(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -104,7 +103,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="of(?: |$)(.*)"))
+@toni_cmd(pattern="of(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -128,7 +127,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="eu(?: |$)(.*)"))
+@toni_cmd(pattern="eu(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -152,7 +151,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="vendor(?: |$)(.*)"))
+@toni_cmd(pattern="vendor(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -176,7 +175,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="specs(?: |$)(.*)"))
+@toni_cmd(pattern="specs(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
