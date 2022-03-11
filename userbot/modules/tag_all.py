@@ -11,7 +11,7 @@ import random
 import re
 
 from userbot import CMD_HANDLER as cmd, CMD_HELP
-from userbot.events import register
+from userbot.utils import toni_cmd
 
 usernexp = re.compile(r"@(\w{3,32})\[(.+?)\]")
 nameexp = re.compile(r"\[([\w\S]+)\]\(tg://user\?id=(\d+)\)\[(.+?)\]")
