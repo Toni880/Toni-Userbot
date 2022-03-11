@@ -22,7 +22,7 @@ PROFILE_IMAGE = os.environ.get(
 )
 
 
-@toni_cmd(pattern=r"offline(?: |$)(.*)"))
+@toni_cmd(pattern=r"offline(?: |$)(.*)")
 # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
@@ -65,7 +65,7 @@ async def _(event):
         await event.edit(str(e))
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"unoff(?: |$)(.*)"))
+@bot.on(toni_cmd(outgoing=True, pattern=r"unoff(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
