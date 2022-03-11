@@ -29,6 +29,7 @@ GCAST_BLACKLIST = [
     -1001578091827,  # PrimeSupportGroup
     -1001752592753,  # SkyzuSupport
     -1001380293847,  # NastySupport
+    -1001795125065,  # BagaskaraSupport
 ]
 
 
