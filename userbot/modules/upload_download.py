@@ -21,13 +21,18 @@ from hachoir.parser import createParser
 from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeVideo
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import toni_cmd
+from userbot import 
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    LOGS,
+    TEMP_DOWNLOAD_DIRECTORY,
+)
+from userbot.utils import toni_cmd
 from userbot.utils import humanbytes, progress
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"download(?: |$)(.*)"))
+@toni_cmd(pattern=r"download(?: |$)(.*)")
 async def download(target_file):
     """For .download command, download files to the userbot's server."""
     await target_file.edit("Processing ...")
@@ -104,7 +109,7 @@ async def download(target_file):
         await target_file.edit("Reply to a message to download to my local server.")
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"uploadir(?: |$)(.*)"))
+@toni_cmd(pattern=r"uploadir(?: |$)(.*)")
 async def uploadir(udir_event):
     """For .uploadir command, allows you to upload everything from a folder in the server"""
     input_str = udir_event.pattern_match.group(1)
@@ -181,7 +186,7 @@ async def uploadir(udir_event):
         await udir_event.edit("404: Directory Not Found")
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"upload(?: |$)(.*)"))
+@toni_cmd(pattern=r"upload(?: |$)(.*)")
 async def upload(u_event):
     """For .upload command, allows you to upload a file from the userbot's server"""
     await u_event.edit("Processing ...")
@@ -257,7 +262,7 @@ def extract_w_h(file):
         return width, height
 
 
-@bot.on(toni_cmd(pattern=r"uploadas(stream|vn|all) (.*)", outgoing=True))
+@toni_cmd(pattern=r"uploadas(stream|vn|all) (.*)")
 async def uploadas(uas_event):
     """For .uploadas command, allows you to specify some arguments for upload."""
     await uas_event.edit("Processing ...")
