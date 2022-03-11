@@ -3,8 +3,15 @@ from datetime import datetime
 from pytz import timezone
 from telethon.events import ChatAction
 
-from userbot import BOTLOG_CHATID, CLEAN_WELCOME, CMD_HELP, LOGS, bot
-from userbot.events import toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    BOTLOG_CHATID,
+    CLEAN_WELCOME,
+    CMD_HELP,
+    LOGS,
+    bot,
+)
+from userbot.utils import toni_cmd
 
 
 @bot.on(ChatAction)
@@ -107,7 +114,7 @@ async def welcome_to_chat(event):
             update_previous_welcome(event.chat_id, current_message.id)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"setwelcome(?: |$)(.*)"))
+@toni_cmd(pattern=r"setwelcome(?: |$)(.*)")
 async def save_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import add_welcome_setting
@@ -141,7 +148,7 @@ async def save_welcome(event):
         await event.edit(success.format("Disini"))
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"checkwelcome(?: |$)(.*)"))
+@toni_cmd(pattern=r"checkwelcome(?: |$)(.*)")
 async def show_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import get_current_welcome_settings
@@ -163,7 +170,7 @@ async def show_welcome(event):
         await event.reply(cws.reply)
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"rmwelcome(?: |$)(.*)"))
+@toni_cmd(pattern=r"rmwelcome(?: |$)(.*)")
 async def del_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import rm_welcome_setting
@@ -177,15 +184,15 @@ async def del_welcome(event):
 
 CMD_HELP.update(
     {
-        "welcome": ">`.setwelcome` <pesan welcome> atau balas ke pesan ketik `.setwelcome`"
+        "welcome": f">`{cmd}setwelcome` <pesan welcome> atau balas ke pesan ketik `{cmd}setwelcome`"
         "\nUsage: Menyimpan pesan welcome digrup."
         "\n\nFormat Variabel yang bisa digunakan dipesan welcome:"
         "\n`{mention}, {title}, {count}, {first}, {last}, {fullname}, "
         "{userid}, {username}, {my_first}, {my_fullname}, {my_last}, "
         "{my_mention}, {my_username}`"
-        "\n\n>`.checkwelcome`"
+        f"\n\n>`{cmd}checkwelcome`"
         "\nUsage: Check pesan welcome yang anda simpan."
-        "\n\n>`.rmwelcome`"
+        f"\n\n>`{cmd}rmwelcome`"
         "\nUsage: Menghapus pesan welcome yang anda simpan."
     }
 )
