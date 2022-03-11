@@ -11,12 +11,11 @@ import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd, CMD_HELP
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"stick (.*)"))
+@toni_cmd(pattern=r"stick (.*)")
 async def stext(event):
     sticktext = event.pattern_match.group(1)
 
