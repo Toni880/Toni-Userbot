@@ -14,7 +14,7 @@ from userbot import CMD_HELP, bot, CMD_HANDLER as cmd
 from userbot.utils import progress, toni_cmd
 
 
-@toni_cmd(pattern=r"ssvideo(?: |$)(.*)"))
+@toni_cmd(pattern=r"ssvideo(?: |$)(.*)")
 async def ssvideo(event):
     if not event.reply_to_msg_id:
         await event.edit("📛 `Balas ke media apa pun..`")
