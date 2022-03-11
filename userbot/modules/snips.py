@@ -40,7 +40,7 @@ async def on_snip(event):
         await event.delete()
 
 
-@toni_cmd(pattern="snip (.*)"))
+@toni_cmd(pattern="snip (.*)")
 async def on_snip_save(event):
     """For .snip command, saves snips for future use."""
     try:
@@ -79,7 +79,7 @@ async def on_snip_save(event):
         await event.edit(success.format("saved", keyword))
 
 
-@toni_cmd(pattern="snips (.*)"))
+@toni_cmd(pattern="snips (.*)")
 async def on_snip_list(event):
     """For .snips command, lists snips saved by you."""
     try:
@@ -100,7 +100,7 @@ async def on_snip_list(event):
     await event.edit(message)
 
 
-@toni_cmd(pattern="remsnip (.*)"))
+@toni_cmd(pattern="remsnip (.*)")
 async def on_snip_delete(event):
     """For .remsnip command, deletes a snip."""
     try:
