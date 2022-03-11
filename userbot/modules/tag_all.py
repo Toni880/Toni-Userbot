@@ -10,7 +10,7 @@ import asyncio
 import random
 import re
 
-from userbot import CMD_HELP, bot
+from userbot import CMD_HANDLER as cmd, CMD_HELP
 from userbot.events import register
 
 usernexp = re.compile(r"@(\w{3,32})\[(.+?)\]")
@@ -24,7 +24,7 @@ class FlagContainer:
     is_active = False
 
 
-@register(outgoing=True, pattern=r"^\.mention(?: |$)(.*)", disable_errors=True)
+@toni_cmd(pattern=r"mention(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -37,7 +37,7 @@ async def _(event):
     await bot.send_message(chat, mentions, reply_to=event.message.reply_to_msg_id)
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.emojitag(?: |$)(.*)")
+@toni_cmd(pattern=r"emojitag(?: |$)(.*)")
 async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
@@ -83,7 +83,7 @@ async def _(event):
         FlagContainer.is_active = False
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)")
+@toni_cmd(pattern=r"all(?: |$)(.*)")
 async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
@@ -131,7 +131,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "tag": "**Plugin : **`tag`\
+        "tag": f"**Plugin : **`tag`\
         \n\n  •  **Syntax :** `{cmd}mention`\
         \n  •  **Function : **Untuk Menmention semua anggota yang ada di group tanpa menyebut namanya.\
         \n\n  •  **Syntax :** `{cmd}all` <text>\
