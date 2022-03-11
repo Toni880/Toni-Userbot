@@ -65,7 +65,7 @@ async def _(event):
         await event.edit(str(e))
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"unoff(?: |$)(.*)")
+@toni_cmd(pattern=r"unoff(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
