@@ -19,7 +19,7 @@ from userbot import (
 from userbot.utils import toni_cmd
 
 
-@toni_cmd(pattern=r"sspam(?: |$)(.*)"))
+@toni_cmd(pattern=r"sspam(?: |$)(.*)")
 async def stickerpack_spam(event):
     if event.fwd_from:
         return
