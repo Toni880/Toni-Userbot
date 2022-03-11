@@ -1,10 +1,10 @@
-from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.utils import toni_cmd
+from userbot import CMD_HELP, bot, CMD_HANDLER as cmd
 
 
 # Port By @VckyouuBitch From GeezProject
 # Untuk Siapapun Yang Hapus Credits Ini, Kamu Anjing:)
-@register(outgoing=True, pattern=r"^\.tmsg (.*)")
+@toni_cmd(pattern="tmsg (.*)")
 async def _(event):
     k = await event.get_reply_message()
     if k:
@@ -16,10 +16,9 @@ async def _(event):
     a = await bot.get_messages(event.chat_id, 0, from_user=u)
     await event.edit(f"Total Message Dari {u}. Total Chats `{a.total}`")
 
-
 CMD_HELP.update(
     {
-        "totalmsg": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.tmsg` | `.tmsg` <username>\
+        "totalmsg": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}tmsg` | `{cmd}tmsg` <username>\
     \n↳ : Mengembalikan jumlah pesan total pengguna dalam obrolan saat ini."
     }
 )
