@@ -5,12 +5,15 @@ import os
 import requests
 from bs4 import BeautifulSoup as bs
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    TEMP_DOWNLOAD_DIRECTORY,
+)
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"ts(?: |$)(.*)"))
+@toni_cmd(pattern=r"ts(?: |$)(.*)")
 async def gengkapak(e):
     await e.edit("`Please wait, fetching results...`")
     query = e.pattern_match.group(1)
@@ -69,7 +72,7 @@ def dogbin(magnets):
     return urls
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"tos(?: |$)(.*)"))
+@toni_cmd(pattern=r"tos(?: |$)(.*)")
 async def tor_search(event):
     if event.fwd_from:
         return
