@@ -14,7 +14,7 @@ from userbot import (
     CMD_HELP,
     CHANNEL,
 )
-from userbot.utils import toni_cmd
+from userbot.utils import toni_cmd, edit_or_reply
 
 modules = CMD_HELP
 
