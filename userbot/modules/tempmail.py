@@ -3,12 +3,11 @@ import asyncio
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd, CMD_HELP, bot
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"tm(?: |$)(.*)"))
+@toni_cmd(pattern=r"tm(?: |$)(.*)")
 async def _(event):
     chat = "@TempMailBot"
     geez = await event.edit("Sedang Memprosess...")
