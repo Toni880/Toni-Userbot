@@ -28,6 +28,7 @@ from userbot import (
     StartTime,
     CMD_HELP,
     BOT_VER,
+    bot,
 )
 from userbot.utils import toni_cmd, edit_or_reply
 
