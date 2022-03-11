@@ -6,8 +6,8 @@
 
 import pyfiglet
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 CMD_SET = {
     "slant": "slant",
@@ -462,7 +462,7 @@ CMD_SET = {
 }
 
 
-@register(outgoing=True, pattern=r"^\.fg(?: |$)(.*)")
+@toni_cmd(pattern=r"fg(?: |$)(.*)")
 async def figlet(event):
     input_str = event.pattern_match.group(1)
     if "|" in input_str:
@@ -485,4 +485,9 @@ async def figlet(event):
     await event.edit(f"‌‌‎`{result}`")
 
 
-CMD_HELP.update({"figlet": ">`.fg`" "\nUsage : Make a text a figlet.."})
+CMD_HELP.update(
+    {
+        "figlet": f">`{cmd}fg`" 
+        "\nUsage : Make a text a figlet.."
+    }
+)
