@@ -18,7 +18,7 @@ from userbot.utils import toni_cmd
 bground = "black"
 
 
-@toni_cmd(pattern=r"(ascii|asciis)$"))
+@toni_cmd(pattern=r"(ascii|asciis)$")
 async def ascii(event):
     if not event.reply_to_msg_id:
         await event.edit("`Balas ke Media apa pun..`")
@@ -130,7 +130,7 @@ async def random_color():
     return color
 
 
-@toni_cmd(pattern=r"asciibg(?: |$)(.*)"))
+@toni_cmd(pattern=r"asciibg(?: |$)(.*)")
 async def _(event):
     BG = event.pattern_match.group(1)
     if BG.isnumeric():
@@ -146,7 +146,7 @@ async def _(event):
 Converted = TEMP_DOWNLOAD_DIRECTORY + "sticker.webp"
 
 
-@toni_cmd(pattern=r"(mirror|flip|ghost|bw|poster)$"))
+@toni_cmd(pattern=r"(mirror|flip|ghost|bw|poster)$")
 async def transform(event):
     if not event.reply_to_msg_id:
         await event.edit("`Balas ke Media apa pun..`")
@@ -213,7 +213,7 @@ async def transform(event):
         return
 
 
-@toni_cmd(pattern=r"rotate(?: |$)(.*)"))
+@toni_cmd(pattern=r"rotate(?: |$)(.*)")
 async def rotate(event):
     if not event.reply_to_msg_id:
         await event.edit("`Balas ke media apa pun..`")
