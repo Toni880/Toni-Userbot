@@ -13,11 +13,13 @@ from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 from requests import get
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
-from userbot import OPEN_WEATHER_MAP_APPID as OWM_API
-from userbot import WEATHER_DEFCITY, bot
-from userbot.events import toni_cmd
+from userbot import (
+    OPEN_WEATHER_MAP_APPID as OWM_API,
+    CMD_HANDLER as cmd,
+    WEATHER_DEFCITY,
+    CMD_HELP,
+)
+from userbot.utils import toni_cmd
 
 # ===== CONSTANT =====
 if WEATHER_DEFCITY:
@@ -40,7 +42,7 @@ async def get_tz(con):
         return
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"weather(?: |$)(.*)"))
+@toni_cmd(pattern=r"weather(?: |$)(.*)")
 async def get_weather(weather):
     """For .weather command, gets the current weather of a city."""
 
