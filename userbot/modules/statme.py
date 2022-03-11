@@ -16,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-@toni_cmd(pattern=r"stats(?: |$)(.*)"))
+@toni_cmd(pattern=r"stats(?: |$)(.*)")
 async def stats(
     event: NewMessage.Event,
 ) -> None:  # pylint: disable = R0912, R0914, R0915
