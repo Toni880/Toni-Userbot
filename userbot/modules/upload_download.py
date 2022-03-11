@@ -21,7 +21,6 @@ from hachoir.parser import createParser
 from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeVideo
 
-from userbot import 
 from userbot import (
     CMD_HANDLER as cmd,
     CMD_HELP,
