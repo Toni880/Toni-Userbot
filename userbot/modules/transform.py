@@ -8,14 +8,17 @@ from hachoir.parser import createParser
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl.types import DocumentAttributeFilename
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    TEMP_DOWNLOAD_DIRECTORY,
+)
+from userbot.utils import toni_cmd
 
 bground = "black"
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"(ascii|asciis)$"))
+@toni_cmd(pattern=r"(ascii|asciis)$"))
 async def ascii(event):
     if not event.reply_to_msg_id:
         await event.edit("`Balas ke Media apa pun..`")
@@ -127,7 +130,7 @@ async def random_color():
     return color
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"asciibg(?: |$)(.*)"))
+@toni_cmd(pattern=r"asciibg(?: |$)(.*)"))
 async def _(event):
     BG = event.pattern_match.group(1)
     if BG.isnumeric():
@@ -143,7 +146,7 @@ async def _(event):
 Converted = TEMP_DOWNLOAD_DIRECTORY + "sticker.webp"
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"(mirror|flip|ghost|bw|poster)$"))
+@toni_cmd(pattern=r"(mirror|flip|ghost|bw|poster)$"))
 async def transform(event):
     if not event.reply_to_msg_id:
         await event.edit("`Balas ke Media apa pun..`")
@@ -210,7 +213,7 @@ async def transform(event):
         return
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"rotate(?: |$)(.*)"))
+@toni_cmd(pattern=r"rotate(?: |$)(.*)"))
 async def rotate(event):
     if not event.reply_to_msg_id:
         await event.edit("`Balas ke media apa pun..`")
