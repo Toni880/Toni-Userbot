@@ -10,12 +10,11 @@ from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import CMD_HANDLER as cmd, CMD_HELP, bot
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"wall(?: |$)(.*)"))
+@toni_cmd(pattern=r"wall(?: |$)(.*)")
 async def _(event):
     try:
         query = event.pattern_match.group(1)
