@@ -12,11 +12,6 @@ from userbot import (
     CMD_HELP,
     bot,
 )
-# imported from uniborg by @heyworld
-
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
 
 
 @toni_cmd(pattern="gbanb(?: |$)(.*)")
@@ -40,7 +35,7 @@ async def _(event):
     await event.delete()
     await event.reply("**gbanning...**")
     asyncio.sleep(3.5)
-    await event.edit(f"**User gbanned by {DEFAULTUSER}**")
+    await event.edit(f"**User gbanned by {ALIVE_NAME}**")
     asyncio.sleep(5)
     await event.delete()
 
@@ -63,7 +58,7 @@ async def _(event):
     await event.delete()
     await event.reply("**ungbanning...**")
     asyncio.sleep(3.5)
-    await event.edit(f"**User ungbanned by {DEFAULTUSER}**")
+    await event.edit(f"**User ungbanned by {ALIVE_NAME}**")
     asyncio.sleep(5)
     await event.delete()
 
