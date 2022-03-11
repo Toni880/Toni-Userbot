@@ -7,10 +7,6 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from userbot.utils import toni_cmd
 from userbot import ALIVE_NAME, CMD_HELP, bot, CMD_HANDLER as cmd
 
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
-
 
 @toni_cmd(pattern="fgban(?: |$)(.*)")
 async def gbun(event):
@@ -18,7 +14,7 @@ async def gbun(event):
         return
     gbunVar = event.text
     gbunVar = gbunVar[6:]
-    mentions = f"`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By` {DEFAULTUSER}\n"
+    mentions = f"`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By` {ALIVE_NAME}\n"
     no_reason = "No Reason Given "
     await event.edit("**Summoning out the mighty gban hammer ☠️**")
     asyncio.sleep(3.5)
@@ -38,7 +34,7 @@ async def gbun(event):
         else:
             jnl = ("`Warning!!`"
                    "[{}](tg://user?id={})"
-                   f"` 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By` {DEFAULTUSER}\n\n"
+                   f"` 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By` {ALIVE_NAME}\n\n"
                    "**Name: ** __{}__\n"
                    "**ID : ** `{}`\n"
                    ).format(firstname, idd, firstname, idd)
@@ -55,7 +51,7 @@ async def gbun(event):
             await reply_message.reply(jnl)
     else:
         mention = (
-            f"Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By {DEFAULTUSER} \nReason: No Reason Given. ")
+            f"Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By {ALIVE_NAME} \nReason: No Reason Given. ")
         await event.reply(mention)
     await event.delete()
 
