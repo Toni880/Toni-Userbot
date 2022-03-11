@@ -19,11 +19,17 @@ from shutil import which
 
 import psutil
 from telethon import __version__, version
-
-from userbot import ALIVE_LOGO, ALIVE_NAME, BOT_VER
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, UPSTREAM_REPO_BRANCH, StartTime, bot
-from userbot.events import toni_cmd
+  
+from userbot import (
+    UPSTREAM_REPO_BRANCH,
+    CMD_HANDLER as cmd,
+    ALIVE_LOGO,
+    ALIVE_NAME,
+    StartTime,
+    CMD_HELP,
+    BOT_VER,
+)
+from userbot.utils import toni_cmd, edit_or_reply
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
@@ -59,7 +65,7 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.spc"))
+@toni_cmd(pattern=r"spc")
 async def psu(event):
     uname = platform.uname()
     softw = "**Informasi Sistem**\n"
@@ -115,7 +121,7 @@ def get_size(bytes, suffix="B"):
         bytes /= factor
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.sysd$"))
+@toni_cmd(pattern=r"sysd$")
 async def sysdetails(sysd):
     if not sysd.text[0].isalpha() and sysd.text[0] not in ("/", "#", "@", "!"):
         try:
@@ -134,7 +140,7 @@ async def sysdetails(sysd):
             await sysd.edit("`Install neofetch first !!`")
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.botver$"))
+@toni_cmd(pattern=r"botver$")
 async def bot_ver(event):
     if event.text[0].isalpha() or event.text[0] in ("/", "#", "@", "!"):
         return
@@ -173,7 +179,7 @@ async def bot_ver(event):
         )
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.pip(?: |$)(.*)"))
+@toni_cmd(pattern=r"pip(?: |$)(.*)")
 async def pipcheck(pip):
     if pip.text[0].isalpha() or pip.text[0] in ("/", "#", "@", "!"):
         return
@@ -221,7 +227,7 @@ async def pipcheck(pip):
         await pip.edit("Gunakan `.help pip` Untuk Melihat Contoh")
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.(?:tonicalive)\s?(.)?"))
+@toni_cmd(pattern=r"(?:tonicalive)\s?(.)?")
 async def amireallyalive(alive):
     user = await bot.get_me()
     await get_readable_time((time.time() - StartTime))
@@ -258,7 +264,7 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.(?:tonion)\s?(.)?"))
+@toni_cmd(pattern=r"(?:tonion)\s?(.)?")
 async def amireallyalive(alive):
     await bot.get_me()
     await get_readable_time((time.time() - StartTime))
@@ -292,18 +298,18 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?"))
+@toni_cmd(pattern=r"(?:alive|on)\s?(.)?")
 async def redis(alive):
     user = await bot.get_me()
     await get_readable_time((time.time() - StartTime))
-    await alive.edit("__Sedang Memuat.__")
-    await alive.edit("__Sedang Memuat..__")
-    await alive.edit("__Sedang Memuat.__")
-    await alive.edit("__Sedang Memuat..__")
-    await alive.edit("__Sedang Memuat...__")
-    await alive.edit("__Sedang Memuat..__")
-    await alive.edit("__Sedang Memuat...__")
-    await alive.edit("⚡")
+    xx = await edit_or_reply(alive, "__Sedang Memuat.__")
+    await xx.edit("__Sedang Memuat..__")
+    await xx.edit("__Sedang Memuat.__")
+    await xx.edit("__Sedang Memuat..__")
+    await xx.edit("__Sedang Memuat...__")
+    await xx.edit("__Sedang Memuat..__")
+    await xx.edit("__Sedang Memuat...__")
+    await xx.edit("⚡")
     await asyncio.sleep(2)
     output = (
         f"╭✠╼━━━━━━━━━━━━━━━━━━━✠╮\n"
@@ -314,10 +320,10 @@ async def redis(alive):
         f"┃✧ **Branch   :** {UPSTREAM_REPO_BRANCH} \n"
         f"┃✧ **Bot Ver  :** {BOT_VER} \n"
         f"┃✧ **Modules  :** {len(modules)} Modules \n"
-        f"┃✧ **GitHub   :** [Repo](https://github.com/Tonic990/Tonic-User) \n"
-        f"┃✧ **Groups   :** [groups](https://t.me/GroupVirtualMusic) \n"
+        f"┃✧ **GitHub   :** [Repo](https://github.com/Tonic990/Tonic-Userbot) \n"
+        f"┃✧ **Groups   :** [groups](https://t.me/PrimeSupportGroup) \n"
         f"┃✧ **Owner    :** [『TØNIC』 乂 ₭ILLΣR](https://t.me/Bukan_guudlooking) \n"
-        f"┃✧ **channel  :** [channel](https://t.me/VirtualMusicChannel) \n"
+        f"┃✧ **channel  :** [channel](https://t.me/PrimeSupportChannel) \n"
         f"╰✠╼━━━━━━━━━━━━━━━━━━━✠╯"
     )
     if ALIVE_LOGO:
@@ -340,7 +346,7 @@ async def redis(alive):
         await alive.delete()
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="^.aliveu"))
+@toni_cmd(pattern="aliveu")
 async def amireallyaliveuser(username):
     """For .aliveu command, change the username in the .alive command."""
     message = username.text
@@ -353,7 +359,7 @@ async def amireallyaliveuser(username):
     await username.edit("`" f"{output}" "`")
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"^\.resetalive$"))
+@toni_cmd(pattern=r"resetalive$")
 async def amireallyalivereset(ureset):
     global DEFAULTUSER  # global statement
     DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
