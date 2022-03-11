@@ -4,19 +4,24 @@ from datetime import datetime
 from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import toni_cmd
+from userbot import (
+    CMD_HELP,
+    TEMP_DOWNLOAD_DIRECTORY,
+    bot,
+    CMD_HANDLER as cmd,
+)
+from userbot.utils import edit_or_reply, toni_cmd
 
 telegraph = Telegraph()
 r = telegraph.create_account(short_name="telegraph")
 auth_url = r["auth_url"]
 
 
-@bot.on(toni_cmd(outgoing=True, pattern="tg (t|m)(?: |$)(.*)"))
+@toni_cmd(pattern="tg (m|t)$")
 async def telegraphs(graph):
-    await graph.edit("`Sedang Memproses...`")
-    if not graph.text[0].isalpha() and graph.text[0] not in ("/", "#", "@", "!"):
+    xnxx = await edit_or_reply(graph, "`Sedang Memproses...`")
+    if not graph.text[0].isalpha() and graph.text[0] not in (
+            "/", "#", "@", "!"):
         if graph.fwd_from:
             return
         if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -31,7 +36,7 @@ async def telegraphs(graph):
                 )
                 end = datetime.now()
                 ms = (end - start).seconds
-                await graph.edit(
+                await xnxx.edit(
                     "Di Download Ke {} Dalam {} Detik.".format(downloaded_file_name, ms)
                 )
                 try:
@@ -43,13 +48,13 @@ async def telegraphs(graph):
                     start = datetime.now()
                     media_urls = upload_file(downloaded_file_name)
                 except exceptions.TelegraphException as exc:
-                    await graph.edit("ERROR: " + str(exc))
+                    await xnxx.edit("ERROR: " + str(exc))
                     os.remove(downloaded_file_name)
                 else:
                     end = datetime.now()
                     ms_two = (end - start).seconds
                     os.remove(downloaded_file_name)
-                    await graph.edit(
+                    await xnxx.edit(
                         "Berhasil Mengunggah Ke [Telegraph](https://telegra.ph{}).".format(
                             media_urls[0], (ms + ms_two)
                         ),
@@ -78,16 +83,14 @@ async def telegraphs(graph):
                 )
                 end = datetime.now()
                 ms = (end - start).seconds
-                await graph.edit(
+                await xnxx.edit(
                     "Berhasil Mengunggah Ke [Telegraph](https://telegra.ph/{}).".format(
                         response["path"], ms
                     ),
                     link_preview=True,
                 )
         else:
-            await graph.edit(
-                "`Mohon Balas Ke Pesan, Untuk Mendapatkan Link Telegraph Permanen.`"
-            )
+            await xnxx.edit("`Mohon Balas Ke Pesan, Untuk Mendapatkan Link Telegraph Permanen.`")
 
 
 def resize_image(image):
@@ -97,8 +100,7 @@ def resize_image(image):
 
 CMD_HELP.update(
     {
-        "telegraph": f"**✘ Plugin telegraph :\
-\n\n  •  Perintah : `{cmd}tg` [m/t]\
-  \n  •  Fungsi : Mengunggah t(Teks) Atau m(Media) Ke Telegraph."
+        "telegraph": f">`{cmd}tg` <m|t>"
+        "\nUsage: Mengunggah t(Teks) Atau m(Media) Ke Telegraph."
     }
 )
