@@ -183,7 +183,7 @@ async def delf(event):
     await event.edit("**Removed this group from federations list!**")
 
 
-@register(outgoing=True, pattern=r"^\.listfs$")
+@toni_cmd(pattern=r"listfs$")
 async def listf(event):
     """List all connected federations."""
     try:
