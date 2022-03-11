@@ -13,7 +13,7 @@ from userbot import (
 from userbot.utils import toni_cmd
 
 
-@toni_cmd(pattern=r"spotnow(:? |$)(.*)?"))
+@toni_cmd(pattern=r"spotnow(:? |$)(.*)?")
 async def _(event):
     if event.fwd_from:
         return
