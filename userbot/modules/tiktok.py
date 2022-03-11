@@ -1,11 +1,14 @@
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import toni_cmd
+from userbot import (
+    CMD_HANDLER as cmd,
+    CMD_HELP,
+    bot,
+)
+from userbot.utils import toni_cmd
 
 
-@bot.on(toni_cmd(outgoing=True, pattern=r"tiktok(?: |$)(.*)"))
+@toni_cmd(pattern=r"tiktok(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
