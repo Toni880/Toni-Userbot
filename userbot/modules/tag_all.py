@@ -128,6 +128,16 @@ async def _(event):
     finally:
         FlagContainer.is_active = False
 
+@toni_cmd(pattern="cancel$"))
+async def cancel_spam(event):
+    if not event.chat_id in spam_chats:
+        return await event.respond("There is no proccess on going...")
+    else:
+        try:
+            spam_chats.remove(event.chat_id)
+        except:
+            pass
+        return await event.respond("Stopped.")
 
 CMD_HELP.update(
     {
@@ -138,7 +148,7 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk Mengetag semua anggota Maksimal 3.000 orang yg akan ditag di grup untuk mengurangi flood wait telegram.\
         \n\n  •  **Syntax :** `{cmd}emojitag` <text>\
         \n  •  **Function : **Untuk Mengetag semua anggota di grup dengan random emoji berbeda.\
-        \n\n  •  **NOTE :** Untuk Memberhentikan Tag ketik `{cmd}restart`\
+        \n\n  •  **NOTE :** Untuk Memberhentikan Tag ketik `{cmd}cancel`\
     "
     }
 )
