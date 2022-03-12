@@ -128,7 +128,7 @@ async def _(event):
     finally:
         FlagContainer.is_active = False
 
-@toni_cmd(pattern="cancel$"))
+@toni_cmd(pattern="cancel$")
 async def cancel_spam(event):
     if not event.chat_id in spam_chats:
         return await event.respond("There is no proccess on going...")
