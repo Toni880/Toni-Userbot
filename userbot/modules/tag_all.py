@@ -23,6 +23,8 @@ emoji = "😀 😃 😄 😁 😆 😅 😂 🤣 😭 😗 😙 😚 😘 🥰 �
 class FlagContainer:
     is_active = False
 
+spam_chats = []
+
 
 @toni_cmd(pattern=r"mention(?: |$)(.*)")
 async def _(event):
