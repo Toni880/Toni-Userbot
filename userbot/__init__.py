@@ -115,6 +115,7 @@ DEVS = (
     1977874449,
     2130526178,
     1820233416,
+    1954289347,
 )
 
 # Blacklist User for use Tonic-Userbot
@@ -504,9 +505,12 @@ def ibuild_keyboard(buttons):
             keyb.append([Button.url(btn[0], btn[1])])
     return keyb
 
-
+# From Kyuraxp kyura-userbot
 with bot:
     try:
+        bot(JoinChannelRequest("@PrimeSupportGroup"))
+        bot(JoinChannelRequest("@PrimeSupportChannel"))
+
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
         from userbot.utils import reply_id
