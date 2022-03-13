@@ -59,18 +59,19 @@ async def gethash(hash_q):
 
 @toni_cmd(pattern="base64 (en|de) (.*)")
 async def endecrypt(query):
-    """ For .base64 command, find the base64 encoding of the given string. """
+    """For .base64 command, find the base64 encoding of the given string."""
     if query.pattern_match.group(1) == "en":
-        lething = str(pybase64.b64encode(
-            bytes(query.pattern_match.group(2), "utf-8")))[2:]
-        await query.reply("Encoded: `" + lething[:-1] + "`")
+        lething = str(pybase64.b64encode(bytes(query.pattern_match.group(2), "utf-8")))[
+            2:
+        ]
+        await query.reply("**Encoded:** `" + lething[:-1] + "`")
     else:
         lething = str(
             pybase64.b64decode(
                 bytes(query.pattern_match.group(2), "utf-8"), validate=True
             )
         )[2:]
-        await query.reply("Decoded: `" + lething[:-1] + "`")
+        await query.reply("**Decoded:** `" + lething[:-1] + "`")
 
 
 CMD_HELP.update(
