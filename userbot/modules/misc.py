@@ -77,6 +77,14 @@ async def repo_is_here(wannasee):
                         f"➣ **GET STRING SESSION VIA BOT    :** [KLIK DISINI](https://t.me/PrimeStringBot?start)\n"
                         )
 
+@toni_cmd(pattern="deploy$")
+async def repo_is_here(wannasee):
+    """For .repo command, just returns the repo URL."""
+    await edit_or_reply(wannasee,
+                        f"➣ **DEPLOY VIA WEB :** [KLIK DISINI](https://heroku.com/deploy?template=https://github.com/Tonic990/Tonic-Userbot)\n"
+                        f"➣ **DEPLOY VIA BOT :** [KLIK DISINI](https://telegram.dog/XTZ_HerokuBot?start=VG9uaWM5OTAvVG9uaWMtVXNlcmJvdCBUb25pYy1Vc2VyYm90)\n"
+                        )
+
 
 @toni_cmd(pattern="shutdown$")
 async def killdabot(event):
@@ -135,7 +143,7 @@ async def repo_is_here(wannasee):
         "✰ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Github](https://github.com/Tonic990/Tonic-User)\n"
         "✰ **ᴏᴡɴᴇʀ ʙᴏᴛ :** [『TØNIC』 乂 ₭ILLΣR](t.me/Bukan_guudlooking)\n"
         "✰ **ᴄʜᴀɴɴᴇʟ :** [Channel](t.me/PrimeSupportChannel)\n"
-        "✰ **ʟɪᴄᴇɴsᴇ :** [GPL-3.0 License](https://github.com/Tonic990/Tonic-User/blob/Skyzuu-Userbot/LICENSE)"
+        "✰ **ʟɪᴄᴇɴsᴇ :** [GPL-3.0 License](https://github.com/Tonic990/Tonic-Userbot/blob/Tonic-Userbot/LICENSE)"
     )
 
 
@@ -293,6 +301,8 @@ CMD_HELP.update({
     \n↳ : Menampilan link Repository Tonic-Userbot.",
     "string": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}string`\
     \n↳: Menampilkan link String Tonic-Userbot",
+     "deploy": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}deploy`\
+    \n↳: Menampilkan link Deploy Tonic-Userbot",
     "readme": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙 `{cmd}readme`\
     \n↳ : Menyediakan tautan untuk mengatur userbot dan modulnya.",
     "repeat": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}repeat <no> <text>`\
