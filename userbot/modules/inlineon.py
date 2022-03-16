@@ -26,4 +26,4 @@ async def _(event):
             await bot.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             return await event.edit("Harap unblock `@BotFather` dan coba lagi")
-        await event.edit(f"**Berhasil Menyalakan Mode Inline untuk `@{BOT_USERNAME}`!**")
+        await event.edit(f"**Berhasil Menyalakan Mode Inline untuk `{BOT_USERNAME}`!**")
