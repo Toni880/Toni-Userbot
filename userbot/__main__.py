@@ -5,8 +5,18 @@ from importlib import import_module
 
 import requests
 
-from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
-from userbot import DEVS, LOGS, bot, call_py, blacklistuser
+from userbot import (
+    BOT_TOKEN,
+    BOT_USERNAME,
+    BOT_VER,
+    BOTLOG_CHATID,
+    DEVS, 
+    LOGS,
+    bot,
+    call_py,
+    blacklistuser,
+    CMD_HANDLER as cmd,
+)
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot
 
@@ -44,7 +54,7 @@ LOGS.info(f"Tonic-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 async def check_alive():
     try:
         if BOTLOG_CHATID != 0:
-            await bot.send_message(BOTLOG_CHATID, "✨ **Tonic Userbot Berhasil Diaktifkan**!!\n━━━━━━━━━━━━━━━\n➠ **Userbot Version** - 3.1.0@Tonic-Userbot\n➠ **Ketik** `.ping` **Untuk Mengecheck Bot**\n━━━━━━━━━━━━━━━\n➠ **Powered By:** @PrimeSupportGroup ")
+            await bot.send_message(BOTLOG_CHATID, f"✨ **Tonic Userbot Berhasil Diaktifkan**!!\n━━━━━━━━━━━━━━━\n➠ **Userbot Version** - 3.1.0@Tonic-Userbot\n➠ **Ketik** `{cmd}ping` **Untuk Mengecheck Bot**\n━━━━━━━━━━━━━━━\n➠ **Powered By:** @PrimeSupportGroup ")
     except Exception as e:
         LOGS.info(str(e))
     try:
