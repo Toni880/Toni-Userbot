@@ -22,6 +22,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon import events
 
 from userbot import (
+    TEMP_DOWNLOAD_DIRECTORY,
     S_PACK_NAME as custompack,
     CMD_HELP,
     CMD_HANDLER as cmd,
