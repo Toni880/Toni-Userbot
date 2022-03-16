@@ -27,7 +27,7 @@ from userbot import (
     CMD_HANDLER as cmd,
     bot,
 )
-from userbot.utils import toni_cmd, edit_delete
+from userbot.utils import toni_cmd, edit_delete, edit_or_reply
 
 KANGING_STR = [
     "Sedang Mengambil Sticker Ini Ke Pack Anda",
