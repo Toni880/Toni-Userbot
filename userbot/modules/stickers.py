@@ -27,6 +27,7 @@ from userbot import (
     CMD_HANDLER as cmd,
     bot,
 )
+from userbot.utils.tools import animator, create_quotly
 from userbot.utils import toni_cmd, edit_delete, edit_or_reply
 
 KANGING_STR = [
