@@ -9,7 +9,12 @@ from html_telegraph_poster import TelegraphPoster
 from PIL import Image
 from yt_dlp import YoutubeDL
 from typing import Optional, Union
-from userbot import bot, LOGS, SUDO_USERS
+from userbot import (
+    bot,
+    LOGS,
+    SUDO_USERS,
+    TEMP_DOWNLOAD_DIRECTORY,
+)
 
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import (
