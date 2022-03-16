@@ -18,6 +18,8 @@ from telethon.tl.types import (
     InputStickerSetID,
     MessageMediaPhoto,
 )
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon import events
 
 from userbot import (
     S_PACK_NAME as custompack,
@@ -370,7 +372,7 @@ async def pussy(args):
         await edit_delete(args, "`I can't convert that...`")
         return
     cmd = "/newvideo"
-    packname = f"geez_{userid}_temp_pack"
+    packname = f"tonic_{userid}_temp_pack"
     response = urllib.request.urlopen(
         urllib.request.Request(f"http://t.me/addstickers/{packname}")
     )
@@ -395,7 +397,7 @@ async def pussy(args):
             "/newvideo",
             args,
             1,
-            "Geez",
+            "Tonic",
             True,
             "😂",
             packname,
@@ -414,6 +416,114 @@ async def pussy(args):
     )
     if os.path.exists(sticker):
         os.remove(sticker)
+
+@toni_cmd(pattern="itos$")
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await edit_delete(
+            event, "sir this is not a image message reply to image message"
+        )
+        return
+    reply_message = await event.get_reply_message()
+    if not reply_message.media:
+        await edit_delete(event, "sir, This is not a image ")
+        return
+    chat = "@buildstickerbot"
+    xx = await edit_or_reply(event, "Membuat Sticker..")
+    async with event.client.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=164977173)
+            )
+            msg = await event.client.forward_messages(chat, reply_message)
+            response = await response
+        except YouBlockedUserError:
+            await event.client(UnblockRequest(chat))
+            msg = await event.client.forward_messages(chat, reply_message)
+            response = await response
+        if response.text.startswith("Hi!"):
+            await xx.edit(
+                "Can you kindly disable your forward privacy settings for good?"
+            )
+        else:
+            await xx.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
+            await event.client.send_message(event.chat_id, response.message)
+            await event.client.delete_message(event.chat_id, [msg.id, response.id])
+
+
+@toni_cmd(pattern="get$")
+async def _(event):
+    rep_msg = await event.get_reply_message()
+    if not event.is_reply or not rep_msg.sticker:
+        return await edit_delete(event, "**Harap balas ke stiker**")
+    xx = await edit_or_reply(event, "`Mengconvert ke foto...`")
+    foto = io.BytesIO()
+    foto = await event.client.download_media(rep_msg.sticker, foto)
+    im = Image.open(foto).convert("RGB")
+    im.save("sticker.png", "png")
+    await event.client.send_file(
+        event.chat_id,
+        "sticker.png",
+        reply_to=rep_msg,
+    )
+    await xx.delete()
+    remove("sticker.png")
+    
+@toni_cmd(pattern="editsticker ?(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await edit_delete(event, "**Mohon Reply ke Sticker dan Berikan emoji.**")
+        return
+    reply_message = await event.get_reply_message()
+    emot = event.pattern_match.group(1)
+    if reply_message.sender.bot:
+        await edit_delete(event, "**Mohon Reply ke Sticker.**")
+        return
+    xx = await edit_or_reply(event, "`Processing...`")
+    if emot == "":
+        await xx.edit("**Silahkan Kirimkan Emot Baru.**")
+    else:
+        chat = "@Stickers"
+        async with event.client.conversation(chat) as conv:
+            try:
+                response = conv.wait_event(
+                    events.NewMessage(incoming=True, from_users=429000)
+                )
+                await conv.send_message("/editsticker")
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await event.client.forward_messages(chat, reply_message)
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await conv.send_message(f"{emot}")
+                response = await response
+            except YouBlockedUserError:
+                await event.client(UnblockRequest(chat))
+                await conv.send_message("/editsticker")
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await event.client.forward_messages(chat, reply_message)
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await conv.send_message(f"{emot}")
+                response = await response
+            if response.text.startswith("Invalid pack selected."):
+                await xx.edit("**Maaf Paket yang dipilih tidak valid.**")
+            elif response.text.startswith(
+                "Please send us an emoji that best describes your sticker."
+            ):
+                await xx.edit(
+                    "**Silahkan Kirimkan emoji yang paling menggambarkan stiker Anda.**"
+                )
+            else:
+                await xx.edit(
+                    f"**Berhasil Mengedit Emoji Stiker**\n**Emoji Baru:** {emot}"
+                )
 
 
 @toni_cmd(pattern=r"stkrinfo$")
@@ -460,7 +570,7 @@ async def get_pack_info(event):
     await xx.edit(OUTPUT)
 
 
-@toni_cmd(pattern=r"get$")
+@toni_cmd(pattern=r"getsticker$")
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
         await edit_delete(sticker, "**Harap balas ke stiker**")
@@ -482,17 +592,37 @@ async def sticker_to_png(sticker):
 
 CMD_HELP.update(
     {
-        "stickers": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}kang | {cmd}tikel [emoji('s)]?`"
-        f"\n↳ : Balas {cmd}tikel Ke Sticker Atau Gambar Untuk Menambahkan Ke Pack Mu "
-        "\nBisa Memilih Emoji Sesuai Pilihanmu."
-        f"\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}kang | {cmd}tikel  (emoji['s]]?` [nomer]?"
-        "\n↳ : Ambil Sticker/Gambar Ke Pack Baru Mu "
-        f"\n\n 𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}delsticker` <reply sticker>\"
-        ""\n  ↳ : **Untuk Menghapus sticker dari Sticker Pack.\""
-        "Dan Bisa Pilih Emoji Sticker Mu."
-        f"\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}stkrinfo`"
-        "\n↳ : Dapatkan Informasi Pack Sticker."
-        f"\n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}get`"
-        "\n↳ : Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker."
+        "stickers": f"**Plugin : **`stickers`\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}kang` atau `{cmd}tikel` [emoji]\
+        \n  ↳ : **Balas .kang Ke Sticker Atau Gambar Untuk Menambahkan Ke Sticker Pack Mu\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}kang` [emoji] atau `{cmd}tikel` [emoji]\
+        \n  ↳ : **Balas {cmd}kang emoji Ke Sticker Atau Gambar Untuk Menambahkan dan costum emoji sticker Ke Pack Mu\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}delsticker` <reply sticker>\
+        \n  ↳ : **Untuk Menghapus sticker dari Sticker Pack.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}editsticker` <reply sticker> <emoji>\
+        \n  ↳ : **Untuk Mengedit emoji stiker dengan emoji yang baru.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}stkrinfo`\
+        \n  ↳ : **Untuk Mendapatkan Informasi Sticker Pack.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}stickers` <nama sticker pack >\
+        \n  ↳ : **Untuk Mencari Sticker Pack.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}csticker`\
+        \n  ↳ : **Balas Gif/Video Untuk menjadikan Sticker\
+        \n\n  •  **NOTE:** Untuk Membuat Sticker Pack baru Gunakan angka dibelakang `{cmd}kang`\
+        \n  •  **CONTOH:** `{cmd}kang 2` untuk membuat dan menyimpan ke sticker pack ke 2\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "sticker_v2": f"**Plugin : **`stickers`\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣?? :** `{cmd}getsticker`\
+        \n  ↳ : **Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker.\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}get`\
+        \n  ↳ : **Balas ke sticker untuk mendapatkan foto sticker\
+        \n\n  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 :** `{cmd}itos`\
+        \n  ↳ : **Balas ke foto untuk membuat foto menjadi sticker\
+    "
     }
 )
