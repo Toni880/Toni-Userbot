@@ -7,6 +7,7 @@
 import io
 import os
 import math
+import asyncio
 import random
 import urllib.request
 from os import remove
