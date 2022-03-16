@@ -34,6 +34,87 @@ KANGING_STR = [
     "Sedang Mengambil Sticker Ini Ke Pack Anda",
     "Sedang Mengambil Sticker Ini Ke Pack Anda",
 ]
+def verify_cond(geezarray, text):
+    return any(i in text for i in geezarray)
+
+async def delpack(xx, conv, cmd, args, packname):
+    try:
+        await conv.send_message(cmd)
+    except YouBlockedUserError:
+        await xx.edit("You have blocked the @stickers bot. unblock it and try.")
+        return None, None
+    await conv.send_message("/delpack")
+    await conv.get_response()
+    await args.client.send_read_acknowledge(conv.chat_id)
+    await conv.send_message(packname)
+    await conv.get_response()
+    await args.client.send_read_acknowledge(conv.chat_id)
+    await conv.send_message("Yes, I am totally sure.")
+    await conv.get_response()
+    await args.client.send_read_acknowledge(conv.chat_id)
+
+async def newpacksticker(
+    xx,
+    conv,
+    cmd,
+    args,
+    pack,
+    packnick,
+    is_video,
+    emoji,
+    packname,
+    is_anim,
+    stfile,
+    otherpack=False,
+    pkang=False,
+):
+    try:
+        await conv.send_message(cmd)
+    except YouBlockedUserError:
+        await xx.edit("You have blocked the @stickers bot. unblock it and try.")
+        if not pkang:
+            return None, None, None
+        return None, None
+    await conv.get_response()
+    await args.client.send_read_acknowledge(conv.chat_id)
+    await conv.send_message(packnick)
+    await conv.get_response()
+    await args.client.send_read_acknowledge(conv.chat_id)
+    if is_video:
+        await conv.send_file("animate.webm")
+    elif is_anim:
+        await conv.send_file("AnimatedSticker.tgs")
+        os.remove("AnimatedSticker.tgs")
+    else:
+        stfile.seek(0)
+        await conv.send_file(stfile, force_document=True)
+    rsp = await conv.get_response()
+    if not verify_cond(custompack, rsp.text):
+        await xx.edit(
+            f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**error :**{rsp}"
+        )
+        if not pkang:
+            return None, None, None
+        return None, None
+    await conv.send_message(emoji)
+    await args.client.send_read_acknowledge(conv.chat_id)
+    await conv.get_response()
+    await conv.send_message("/publish")
+    if is_anim:
+        await conv.get_response()
+        await conv.send_message(f"<{packnick}>")
+    await conv.get_response()
+    await args.client.send_read_acknowledge(conv.chat_id)
+    await conv.send_message("/skip")
+    await args.client.send_read_acknowledge(conv.chat_id)
+    await conv.get_response()
+    await conv.send_message(packname)
+    await args.client.send_read_acknowledge(conv.chat_id)
+    await conv.get_response()
+    await args.client.send_read_acknowledge(conv.chat_id)
+    if not pkang:
+        return otherpack, packname, emoji
+    return pack, packname
 
 
 @toni_cmd(pattern=r"(?:tikel|kang)\s?(.)?")
