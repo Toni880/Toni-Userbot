@@ -5,6 +5,7 @@
 #
 
 import io
+import os
 import math
 import random
 import urllib.request
@@ -479,7 +480,7 @@ async def pussy(args):
             "/newvideo",
             args,
             1,
-            "Tonic",
+            "Tonic-Userbot",
             True,
             "😂",
             packname,
