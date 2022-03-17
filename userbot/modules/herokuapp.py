@@ -181,7 +181,7 @@ async def dyno_usage(dyno):
             AppHours = math.floor(AppQuotaUsed / 60)
             AppMinutes = math.floor(AppQuotaUsed % 60)
 
-            await dyno.edit(
+            await xx.edit(
                 "☂Dყɳσ Sααƚ Iɳι : \n"
                 f"➽ {AppHours} ᴊᴀᴍ - {AppMinutes} ᴍᴇɴɪᴛ [ {AppPercentage}% ]  \n"
                 f"☂Dყɳσ Bυʅαɳ Iɳι: \n"
@@ -189,7 +189,7 @@ async def dyno_usage(dyno):
                 f" ✄ вσт σƒ  : {ALIVE_NAME} \n"
             )
             await asyncio.sleep(20)
-            await event.delete()
+            await xx.delete()
             return True
 
 
@@ -205,7 +205,7 @@ async def _(dyno):
     xx = await edit_or_reply(dyno, "`Sedang Mengambil Logs Anda`")
     with open("logs.txt", "w") as log:
         log.write(app.get_log())
-    await dyno.delete()
+    await xx.delete()
     await dyno.client.send_file(
         dyno.chat_id,
         file="logs.txt",
