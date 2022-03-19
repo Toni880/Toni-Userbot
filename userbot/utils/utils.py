@@ -150,40 +150,101 @@ async def autobot():
         sys.exit(1)
         
 async def autopilot():
-    if BOTLOG_CHATID:
-        return
-    await bot.start()
-        LOGS.info("Sedang Membuat Grup Logs....")
+    if BOTLOG_CHATID and str(BOTLOG_CHATID).startswith("-100"):
+        heroku_var("BOTLOG_CHATID", BOTLOG_CHATID)
+    channel = heroku_var("BOTLOG_CHATID")
+    if channel:
+        try:
+            chat = await bot.get_entity(channel)
+        except BaseException:
+            logging.exception("message")
+            heroku_var("BOTLOG_CHATID")
+            channel = None
+    if not channel:
+        if bot._bot:
+            LOGS.info("'BOTLOG_CHATID' not found! Add it in order to use 'BOTMODE'")
+            import sys
+
+            sys.exit()
+        LOGS.info("Creating a Log Channel for You!")
         try:
             r = await bot(
                 CreateChannelRequest(
-                    title="Bot Logs",
-                    about="Tonic Log Group\n\n Join @PrimeSupportGroup",
+                    title="My Ultroid Logs",
+                    about="My Ultroid Log Group\n\n Join @TeamUltroid",
                     megagroup=True,
                 ),
             )
         except ChannelsTooMuchError:
             LOGS.info(
-                "Anda Berada di Terlalu Banyak Saluran & Grup, Tinggalkan Beberapa Dan Mulai Ulang Bot"
+                "You Are in Too Many Channels & Groups , Leave some And Restart The Bot"
             )
-            sys.exit()
+            import sys
+
+            sys.exit(1)
         except BaseException as er:
             LOGS.info(er)
             LOGS.info(
-                "Ada yang Salah, Buat Grup dan atur id-nya di config var LOG_CHANNEL."
+                "Something Went Wrong , Create A Group and set its id on config var BOTLOG_CHATID."
             )
+            import sys
+
             sys.exit(1)
         chat = r.chats[0]
         channel = get_peer_id(chat)
-        heroku_var["BOTLOG_CHATID"] = str(channel)
+        heroku_var("BOTLOG_CHATID", str(channel))
+    assistant = True
+    try:
+        await bot.get_permissions(int(channel), asst.me.username)
+    except UserNotParticipantError:
+        try:
+            await bot(InviteToChannelRequest(int(channel), [asst.me.username]))
+        except BaseException as er:
+            LOGS.info("Error while Adding Assistant to Log Channel")
+            LOGS.exception(er)
+            assistant = False
+    except BaseException as er:
+        assistant = False
+        LOGS.exception(er)
+    if assistant:
+        try:
+            achat = await asst.get_entity(int(channel))
+        except BaseException as er:
+            achat = None
+            LOGS.info("Error while getting Log channel from Assistant")
+            LOGS.exception(er)
+        if achat and not achat.admin_rights:
+            rights = ChatAdminRights(
+                add_admins=True,
+                invite_users=True,
+                change_info=True,
+                ban_users=True,
+                delete_messages=True,
+                pin_messages=True,
+                anonymous=False,
+                manage_call=True,
+            )
+            try:
+                await bot(
+                    EditAdminRequest(
+                        int(channel), asst.me.username, rights, "Assistant"
+                    )
+                )
+            except ChatAdminRequiredError:
+                LOGS.info(
+                    "Failed to promote 'Assistant Bot' in 'Log Channel' due to 'Admin Privileges'"
+                )
+            except BaseException as er:
+                LOGS.info("Error while promoting assistant in Log Channel..")
+                LOGS.exception(er)
     if isinstance(chat.photo, ChatPhotoEmpty):
         photo = await download_file(
-            "https://telegra.ph/file/33193e0075fc37c000379.jpg", "logo.jpg"
+            "https://telegra.ph/file/27c6812becf6f376cbb10.jpg", "channelphoto.jpg"
         )
-        toni = await bot.upload_file(photo)
+        ll = await bot.upload_file(photo)
         try:
             await bot(
-                EditPhotoRequest(int(channel), InputChatUploadedPhoto(toni))
+                EditPhotoRequest(int(channel), InputChatUploadedPhoto(ll))
             )
         except BaseException as er:
             LOGS.exception(er)
