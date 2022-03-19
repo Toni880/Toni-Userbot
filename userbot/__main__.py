@@ -50,6 +50,13 @@ LOGS.info(
 
 LOGS.info(f"Tonic-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
+bot.loop.run_until_complete(check_alive())
+if not BOTLOG_CHATID:
+    LOGS.info(
+        "BOTLOG_CHATID Vars tidak terisi, Memulai Membuat Group Log Otomatis..."
+    )
+    bot.loop.run_until_complete(autopilot())
+
 
 async def check_alive():
     try:
@@ -70,12 +77,6 @@ if not BOT_TOKEN:
     )
     bot.loop.run_until_complete(autobot())
     
-bot.loop.run_until_complete(check_alive())
-if not BOTLOG_CHATID:
-    LOGS.info(
-        "BOTLOG_CHATID Vars tidak terisi, Memulai Membuat Group Log Otomatis..."
-    )
-    bot.loop.run_until_complete(autopilot())
 
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
