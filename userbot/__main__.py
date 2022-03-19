@@ -50,13 +50,7 @@ LOGS.info(
 
 LOGS.info(f"Tonic-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
-bot.loop.run_until_complete(check_alive())
-if not BOTLOG_CHATID:
-    LOGS.info(
-        "BOTLOG_CHATID Vars tidak terisi, Memulai Membuat Group Log Otomatis..."
-    )
-    bot.loop.run_until_complete(autopilot())
-
+bot.run_in_loop(autopilot())
 
 async def check_alive():
     try:
