@@ -148,6 +148,46 @@ async def autobot():
             "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"
         )
         sys.exit(1)
+        
+async def autopilot():
+    if BOTLOG_CHATID:
+        return
+    await bot.start()
+        LOGS.info("Sedang Membuat Grup Logs....")
+        try:
+            r = await bot(
+                CreateChannelRequest(
+                    title="Bot Logs",
+                    about="Tonic Log Group\n\n Join @PrimeSupportGroup",
+                    megagroup=True,
+                ),
+            )
+        except ChannelsTooMuchError:
+            LOGS.info(
+                "Anda Berada di Terlalu Banyak Saluran & Grup, Tinggalkan Beberapa Dan Mulai Ulang Bot"
+            )
+            sys.exit()
+        except BaseException as er:
+            LOGS.info(er)
+            LOGS.info(
+                "Ada yang Salah, Buat Grup dan atur id-nya di config var LOG_CHANNEL."
+            )
+            sys.exit(1)
+        chat = r.chats[0]
+        channel = get_peer_id(chat)
+        heroku_var["BOTLOG_CHATID"] = str(channel)
+    if isinstance(chat.photo, ChatPhotoEmpty):
+        photo = await download_file(
+            "https://telegra.ph/file/33193e0075fc37c000379.jpg", "logo.jpg"
+        )
+        toni = await bot.upload_file(photo)
+        try:
+            await bot(
+                EditPhotoRequest(int(channel), InputChatUploadedPhoto(toni))
+            )
+        except BaseException as er:
+            LOGS.exception(er)
+        os.remove(photo)
 
 
 def load_module(shortname):
