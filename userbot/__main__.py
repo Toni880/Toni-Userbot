@@ -18,7 +18,7 @@ from userbot import (
     CMD_HANDLER as cmd,
 )
 from userbot.modules import ALL_MODULES
-from userbot.utils import autobot
+from userbot.utils import autobot, autopilot
 
 try:
     bot.start()
@@ -69,6 +69,13 @@ if not BOT_TOKEN:
         "BOT_TOKEN Vars tidak terisi, Memulai Membuat BOT Otomatis di @Botfather..."
     )
     bot.loop.run_until_complete(autobot())
+    
+bot.loop.run_until_complete(check_alive())
+if not BOTLOG_CHATID:
+    LOGS.info(
+        "BOTLOG_CHATID Vars tidak terisi, Memulai Membuat Group Log Otomatis..."
+    )
+    bot.loop.run_until_complete(autopilot())
 
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
