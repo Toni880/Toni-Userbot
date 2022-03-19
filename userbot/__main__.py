@@ -50,8 +50,6 @@ LOGS.info(
 
 LOGS.info(f"Tonic-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
-bot.run_in_loop(autopilot())
-
 async def check_alive():
     try:
         if BOTLOG_CHATID != 0:
