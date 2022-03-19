@@ -18,7 +18,7 @@ from userbot import (
     CMD_HANDLER as cmd,
 )
 from userbot.modules import ALL_MODULES
-from userbot.utils import autobot, autopilot
+from userbot.utils import autobot
 
 try:
     bot.start()
