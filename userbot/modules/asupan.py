@@ -27,6 +27,26 @@ async def _(event):
         await event.delete()
     except Exception:
         await event.edit("Tidak bisa menemukan video asupan.")
+        
+@toni_cmd(pattern="phub$")
+async def _(event):
+    try:
+        phub = [
+            porn
+            async for porn in event.client.iter_messages(
+                "@TonicPorn", filter=InputMessagesFilterVideo
+            )
+        ]
+        xx = await event.client.get_me()
+        await event.client.send_file(
+            event.chat_id,
+            file=random.choice(phub),
+            caption=f"ᴀsᴜᴘᴀɴ ʙʏ [{owner}](tg://user?id={xx.id})",
+        )
+        await event.delete()
+    except Exception:
+        await event.edit("Tidak bisa menemukan video asupan.")
+
 
 
 CMD_HELP.update(
@@ -34,6 +54,8 @@ CMD_HELP.update(
         "asupan": f"**Plugin : **`asupan`\
         \n\n  •  **Syntax :** `{cmd}asupan`\
         \n  •  **Function : **Untuk Mengirim video asupan secara random.\
+        \n\n  •  **Syntax :** `{cmd}phub`\
+        \n  •  **Function : **Untuk Mengirim video phub secara random.\
     "
     }
 )
