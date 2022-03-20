@@ -9,7 +9,7 @@ from userbot.utils import toni_cmd, edit_or_reply, edit_delete, text_set
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 
-@toni_cmd(pattern="write(?: |$)(.*)")
+@toni_cmd(pattern="nulis(?: |$)(.*)")
 async def writer(event):
     if event.reply_to:
         reply = await event.get_reply_message()
@@ -37,8 +37,8 @@ async def writer(event):
 
 CMD_HELP.update(
     {
-        "writer": f"**plugin : **`writer`\
-        \n\n  •  **syntax :** `{cmd}write` <text>\
+        "Nulis": f"**plugin : **`Nulis`\
+        \n\n  •  **syntax :** `{cmd}nulis` <text>\
         \n  •  **function : **menulis Teks Di buku ,buat Lu Yang mager nulis\
     "
     }
