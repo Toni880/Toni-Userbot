@@ -381,6 +381,86 @@ async def animator(media, mainevent, textevent):
     sticker = "animate.webm"
     return sticker
 
+async def _format_quote(event, reply=None, sender=None, type_="private"):
+    async def telegraph(file_):
+        file = f"{file_}.png"
+        Image.open(file_).save(file, "PNG")
+        files = {"file": open(file, "rb").read()}
+        uri = (
+            "https://telegra.ph"
+            + (
+                await async_searcher(
+                    "https://telegra.ph/upload", post=True, data=files, re_json=True
+                )
+            )[0]["src"]
+        )
+        os.remove(file)
+        os.remove(file_)
+        return uri
+
+    if reply:
+        reply = {
+            "name": get_display_name(reply.sender) or "Deleted Account",
+            "text": reply.raw_text,
+            "chatId": reply.chat_id,
+        }
+    else:
+        reply = {}
+    is_fwd = event.fwd_from
+    name = None
+    last_name = None
+    if sender and sender.id not in DEVS:
+        id_ = get_peer_id(sender)
+        name = get_display_name(sender)
+    elif not is_fwd:
+        id_ = event.sender_id
+        sender = await event.get_sender()
+        name = get_display_name(sender)
+    else:
+        id_, sender = None, None
+        name = is_fwd.from_name
+        if is_fwd.from_id:
+            id_ = get_peer_id(is_fwd.from_id)
+            try:
+                sender = await event.client.get_entity(id_)
+                name = get_display_name(sender)
+            except ValueError:
+                pass
+    if sender and hasattr(sender, "last_name"):
+        last_name = sender.last_name
+    entities = []
+    if event.entities:
+        for entity in event.entities:
+            if type(entity) in _entities:
+                enti_ = entity.to_dict()
+                del enti_["_"]
+                enti_["type"] = _entities[type(entity)]
+                entities.append(enti_)
+    message = {
+        "entities": entities,
+        "chatId": id_,
+        "avatar": True,
+        "from": {
+            "id": id_,
+            "first_name": (name or (sender.first_name if sender else None))
+            or "Deleted Account",
+            "last_name": last_name,
+            "username": sender.username if sender else None,
+            "language_code": "en",
+            "title": name,
+            "name": name or "Unknown",
+            "type": type_,
+        },
+        "text": event.raw_text,
+        "replyMessage": reply,
+    }
+    if event.document and event.document.thumbs:
+        file_ = await event.download_media(thumb=-1)
+        uri = await telegraph(file_)
+        message["media"] = {"url": uri}
+
+    return message
+
 O_API = "https://bot.lyo.su/quote/generate"
 
 async def create_quotly(
