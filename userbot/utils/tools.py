@@ -18,6 +18,7 @@ from userbot import (
 
 from telethon.utils import get_display_name, get_peer_id
 from telethon.tl.functions.channels import GetParticipantRequest
+from telethon.tl import types
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantCreator,
