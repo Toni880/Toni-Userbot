@@ -3,6 +3,7 @@ import hashlib
 import asyncio
 import shlex
 import os
+import aiohttp
 from os.path import basename
 import os.path
 from html_telegraph_poster import TelegraphPoster
