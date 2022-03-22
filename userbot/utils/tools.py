@@ -16,6 +16,7 @@ from userbot import (
     TEMP_DOWNLOAD_DIRECTORY,
 )
 
+from telethon.utils import get_display_name, get_peer_id
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import (
     ChannelParticipantAdmin,
