@@ -381,6 +381,8 @@ async def animator(media, mainevent, textevent):
     sticker = "animate.webm"
     return sticker
 
+O_API = "https://bot.lyo.su/quote/generate"
+
 async def create_quotly(
     event,
     url="https://qoute-api-akashpattnaik.koyeb.app/generate",
