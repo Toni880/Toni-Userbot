@@ -382,6 +382,49 @@ async def animator(media, mainevent, textevent):
     sticker = "animate.webm"
     return sticker
 
+async def async_searcher(
+    url: str,
+    post: bool = None,
+    headers: dict = None,
+    params: dict = None,
+    json: dict = None,
+    data: dict = None,
+    ssl=None,
+    re_json: bool = False,
+    re_content: bool = False,
+    real: bool = False,
+):
+    async with aiohttp.ClientSession(headers=headers) as client:
+        if post:
+            data = await client.post(url, json=json, data=data, ssl=ssl)
+        else:
+            data = await client.get(url, params=params, ssl=ssl)
+        if re_json:
+            return await data.json()
+        if re_content:
+            return await data.read()
+        if real:
+            return data
+        return await data.text()
+
+
+_entities = {
+    types.MessageEntityPhone: "phone_number",
+    types.MessageEntityMention: "mention",
+    types.MessageEntityBold: "bold",
+    types.MessageEntityCashtag: "cashtag",
+    types.MessageEntityStrike: "strikethrough",
+    types.MessageEntityHashtag: "hashtag",
+    types.MessageEntityEmail: "email",
+    types.MessageEntityMentionName: "text_mention",
+    types.MessageEntityUnderline: "underline",
+    types.MessageEntityUrl: "url",
+    types.MessageEntityTextUrl: "text_link",
+    types.MessageEntityBotCommand: "bot_command",
+    types.MessageEntityCode: "code",
+    types.MessageEntityPre: "pre",
+}
+
 async def _format_quote(event, reply=None, sender=None, type_="private"):
     async def telegraph(file_):
         file = f"{file_}.png"
