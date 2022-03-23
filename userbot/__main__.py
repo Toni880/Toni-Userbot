@@ -18,7 +18,7 @@ from userbot import (
     CMD_HANDLER as cmd,
 )
 from userbot.modules import ALL_MODULES
-from userbot.utils import autobot
+from userbot.utils import autobot, autopilot
 
 try:
     bot.start()
@@ -43,6 +43,12 @@ except Exception as e:
 
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
+    
+if not BOTLOG_CHATID:
+    LOGS.info(
+        "BOTLOG_CHATID Vars tidak terisi, Memulai Membuat Grup Otomatis..."
+    )
+    bot.loop.run_until_complete(autopilot())
 
 LOGS.info(
     f"Jika {user.first_name} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/PrimeSupportGroup"
