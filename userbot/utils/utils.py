@@ -276,10 +276,7 @@ async def autopilot():
         LOGS.info(
             "Terjadi kesalahan, Buat sebuah grup lalu isi id nya di config var BOTLOG_CHATID."
         )
-        exit(1)
-    await bot(EditAdminRequest(int(BOTLOG_CHATID), BOT_USERNAME, rights, "Assistant"))
-        ppk = "userbot/resource/extras/Tonic.jpg"
-            await bot(EditPhotoRequest(BOTLOG_CHATID, await bot.upload_file(ppk)))
+        exit(1)   
     chat_id = r.chats[0].id
     if not str(chat_id).startswith("-100"):
         heroku_var["BOTLOG_CHATID"] = "-100" + str(chat_id)
