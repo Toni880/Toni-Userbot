@@ -38,7 +38,7 @@ def multi_toni():
         try:
             bot.start()
             call_py.start()
-            LOOP.run_until_complete(man_client(bot))
+            LOOP.run_until_complete(toni_client(bot))
             user = bot.get_me()
             name = user.first_name
             uid = user.id
