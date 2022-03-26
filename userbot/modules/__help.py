@@ -77,8 +77,8 @@ async def cmd_list(event):
                 conv.chat_id,
                 [first.id, second.id, third.id, fourth.id, fifth.id, sixth.id],
             )
-    else:
-        await edit_or_reply(
-            event,
-            "**Silahkan Buat BOT di @BotFather dan Tambahkan Var** `BOT_TOKEN` & `BOT_USERNAME`",
-        )
+        else:
+            await edit_or_reply(
+                event,
+                "**Silahkan Buat BOT di @BotFather dan Tambahkan Var** `BOT_TOKEN` & `BOT_USERNAME`",
+            )
