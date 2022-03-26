@@ -84,7 +84,7 @@ async def autobot():
             await asyncio.sleep(1)
             await bot.send_message(bf, f"@{username}")
             await asyncio.sleep(1)
-            await bot.send_file(bf, "userbot/resources/geez.jpg")
+            await bot.send_file(bf, "userbot/resource/extras/Tonic.jpg")
             await asyncio.sleep(3)
             await bot.send_message(bf, "/setabouttext")
             await asyncio.sleep(1)
@@ -217,6 +217,8 @@ def remove_plugin(shortname):
     except BaseException:
         raise ValueError
 
+# bye Ice-Userbot
+
 async def create_supergroup(group_name, client, botusername, descript):
     try:
         result = await client(
@@ -244,6 +246,7 @@ async def create_supergroup(group_name, client, botusername, descript):
         created_chat_id = int("-100" + str(created_chat_id))
     return result, created_chat_id
 
+
 async def autopilot():
     if BOTLOG_CHATID and str(BOTLOG_CHATID).startswith("-100"):
         return
@@ -259,8 +262,8 @@ async def autopilot():
     try:
         r = await bot(
             CreateChannelRequest(
-                title="ᴛᴏɴɪᴄ ʟᴏɢs",
-                about="ᴍʏ ᴛᴏɴɪᴄ ʟᴏɢs ɢʀᴏᴜᴘ\n\n ᴊᴏɪɴ @PrimeSupportGroup",
+                title="ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ʟᴏɢs",
+                about="ᴍʏ ᴛᴏɴɪᴄ ʟᴏɢs ɢʀᴏᴜᴘ\n\n Join @PrimeSupportGroup",
                 megagroup=True,
             ),
         )
