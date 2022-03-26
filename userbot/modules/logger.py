@@ -1,25 +1,26 @@
-# credits: mrconfused
+# Credits: mrconfused
 # Recode by @mrismanaziz
-# t.me/SharingUserbot
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
+
 import asyncio
 
-from telethon import events
-
 from userbot import (
-  BOTLOG_CHATID,
   CMD_HANDLER as cmd,
+  BOTLOG_CHATID,
   CMD_HELP,
-  LOGS, 
-  bot,
-)  
+  LOGS,
+)
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
-from userbot.modules.vcg import vcmention
+from userbot.modules.vcplugin import vcmention
 from userbot.utils import (
-  toni_cmd,
-  _format,
-  edit_delete,
-  edit_or_reply,
+    _format,
+    chataction,
+    edit_delete,
+    edit_or_reply,
+    toni_cmd,
+    toni_handler,
 )
 from userbot.utils.tools import media_type
 
@@ -34,7 +35,7 @@ class LOG_CHATS:
 LOG_CHATS_ = LOG_CHATS()
 
 
-@bot.on(events.ChatAction)
+@chataction()
 async def logaddjoin(toni):
     user = await toni.get_user()
     chat = await toni.get_chat()
@@ -46,16 +47,15 @@ async def logaddjoin(toni):
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{toni.action_message.id})"
     if toni.user_added:
         tmp = toni.added_by
-        text = f"u📩 **#TAMBAH_LOG\n •** {vcmention(tmp)} **Menambahkan** {vcmention(user)}\n **• Ke Group** {chat}"
+        text = f"📩 **#ADD_LOG\n •** {vcmention(tmp)} **Menambahkan** {vcmention(user)}\n **• Ke Group** {chat}"
     elif toni.user_joined:
-        text = f"📨 **#LOG_GABUNG\n •** [{user.first_name}](tg://user?id={user.id}) **Bergabung\n • Ke Group** {chat}"
+        text = f"📨 **#JOIN_LOG\n •** [{user.first_name}](tg://user?id={user.id}) **Bergabung\n • Ke Group** {chat}"
     else:
         return
     await toni.client.send_message(BOTLOG_CHATID, text)
 
 
-@bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
-@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.is_private))
+@toni_handler(incoming=True, func=lambda e: e.is_private)
 async def monito_p_m_s(toni):
     if BOTLOG_CHATID == -100:
         return
@@ -71,7 +71,7 @@ async def monito_p_m_s(toni):
                 if LOG_CHATS_.NEWPM:
                     await LOG_CHATS_.NEWPM.edit(
                         LOG_CHATS_.NEWPM.text.replace(
-                            "**💌 #PESAN_BARU**",
+                            "**💌 #NEW_MESSAGE**",
                             f" • `{LOG_CHATS_.COUNT}` **Pesan**",
                         )
                     )
@@ -90,38 +90,37 @@ async def monito_p_m_s(toni):
                 LOGS.warn(str(e))
 
 
-@bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
-@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.mentioned))
-async def log_tagged_messages(yahaha):
+@toni_handler(incoming=True, func=lambda e: e.mentioned)
+async def log_tagged_messages(toni):
     if BOTLOG_CHATID == -100:
         return
-    pornhub = await yahaha.get_chat()
+    hmm = await toni.get_chat()
 
     if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG") == "false":
         return
     if (
-        (no_log_pms_sql.is_approved(pornhub.id))
+        (no_log_pms_sql.is_approved(hmm.id))
         or (BOTLOG_CHATID == -100)
-        or (await yahaha.get_sender() and (await yahaha.get_sender()).bot)
+        or (await toni.get_sender() and (await toni.get_sender()).bot)
     ):
         return
     full = None
     try:
-        full = await yahaha.client.get_entity(yahaha.message.from_id)
+        full = await toni.client.get_entity(toni.message.sender_id)
     except Exception as e:
         LOGS.info(str(e))
-    messaget = media_type(yahaha)
+    messaget = media_type(toni)
     resalt = f"<b>📨 #TAGS #MESSAGE</b>\n<b> • Dari : </b>{_format.htmlmentionuser(full.first_name , full.id)}"
     if full is not None:
-        resalt += f"\n<b> • Grup : </b><code>{pornhub.title}</code>"
+        resalt += f"\n<b> • Grup : </b><code>{hmm.title}</code>"
     if messaget is not None:
         resalt += f"\n<b> • Jenis Pesan : </b><code>{messaget}</code>"
     else:
-        resalt += f"\n<b> • 👀 </b><a href = 'https://t.me/c/{pornhub.id}/{yahaha.message.id}'>Lihat Pesan</a>"
-    resalt += f"\n<b> • Message : </b>{yahaha.message.message}"
+        resalt += f"\n<b> • 👀 </b><a href = 'https://t.me/c/{hmm.id}/{toni.message.id}'>Lihat Pesan</a>"
+    resalt += f"\n<b> • Message : </b>{toni.message.message}"
     await asyncio.sleep(0.5)
-    if not yahaha.is_private:
-        await yahaha.client.send_message(
+    if not toni.is_private:
+        await toni.client.send_message(
             BOTLOG_CHATID,
             resalt,
             parse_mode="html",
@@ -152,36 +151,36 @@ async def log(log_text):
 
 
 @toni_cmd(pattern="log$")
-async def set_no_log_p_m(event):
+async def set_log_p_m(toni):
     if BOTLOG_CHATID != -100:
-        chat = await event.get_chat()
+        chat = await toni.get_chat()
         if no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.disapprove(chat.id)
             await edit_delete(
-                event, "**LOG Chat dari Grup ini Berhasil Diaktifkan**", 15
+                toni, "**LOG Chat dari Grup ini Berhasil Diaktifkan**", 15
             )
 
 
 @toni_cmd(pattern="nolog$")
-async def set_no_log_p_m(event):
+async def set_no_log_p_m(toni):
     if BOTLOG_CHATID != -100:
-        chat = await event.get_chat()
+        chat = await toni.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.approve(chat.id)
             await edit_delete(
-                event, "**LOG Chat dari Grup ini Berhasil Dimatikan**", 15
+                toni, "**LOG Chat dari Grup ini Berhasil Dimatikan**", 15
             )
 
 
-@toni_cmd(pattern="pmlog (on|off)$")
-async def set_pmlog(event):
+@toni_cmd(pattern="pmlog (on|off)$", allow_sudo=False)
+async def set_pmlog(toni):
     if BOTLOG_CHATID == -100:
         return await edit_delete(
-            event,
+            toni,
             "**Untuk Menggunakan Module ini, Anda Harus Mengatur** `BOTLOG_CHATID` **di Config Vars**",
             30,
         )
-    input_str = event.pattern_match.group(1)
+    input_str = toni.pattern_match.group(1)
     if input_str == "off":
         h_type = False
     elif input_str == "on":
@@ -192,26 +191,26 @@ async def set_pmlog(event):
         PMLOG = True
     if PMLOG:
         if h_type:
-            await edit_or_reply(event, "**PM LOG Sudah Diaktifkan**")
+            await edit_or_reply(toni, "**PM LOG Sudah Diaktifkan**")
         else:
             addgvar("PMLOG", h_type)
-            await edit_or_reply(event, "**PM LOG Berhasil Dimatikan**")
+            await edit_or_reply(toni, "**PM LOG Berhasil Dimatikan**")
     elif h_type:
         addgvar("PMLOG", h_type)
-        await edit_or_reply(event, "**PM LOG Berhasil Diaktifkan**")
+        await edit_or_reply(toni, "**PM LOG Berhasil Diaktifkan**")
     else:
-        await edit_or_reply(event, "**PM LOG Sudah Dimatikan**")
+        await edit_or_reply(toni, "**PM LOG Sudah Dimatikan**")
 
 
 @toni_cmd(pattern="gruplog (on|off)$")
-async def set_gruplog(event):
+async def set_gruplog(toni):
     if BOTLOG_CHATID == -100:
         return await edit_delete(
-            event,
+            toni,
             "**Untuk Menggunakan Module ini, Anda Harus Mengatur** `BOTLOG_CHATID` **di Config Vars**",
             30,
         )
-    input_str = event.pattern_match.group(1)
+    input_str = toni.pattern_match.group(1)
     if input_str == "off":
         h_type = False
     elif input_str == "on":
@@ -222,29 +221,29 @@ async def set_gruplog(event):
         GRUPLOG = True
     if GRUPLOG:
         if h_type:
-            await edit_or_reply(event, "**Group Log Sudah Diaktifkan**")
+            await edit_or_reply(toni, "**Group Log Sudah Diaktifkan**")
         else:
             addgvar("GRUPLOG", h_type)
-            await edit_or_reply(event, "**Group Log Berhasil Dimatikan**")
+            await edit_or_reply(toni, "**Group Log Berhasil Dimatikan**")
     elif h_type:
         addgvar("GRUPLOG", h_type)
-        await edit_or_reply(event, "**Group Log Berhasil Diaktifkan**")
+        await edit_or_reply(toni, "**Group Log Berhasil Diaktifkan**")
     else:
-        await edit_or_reply(event, "**Group Log Sudah Dimatikan**")
+        await edit_or_reply(toni, "**Group Log Sudah Dimatikan**")
 
 
 CMD_HELP.update(
     {
-        "logger": f"**Modules : **`logger`\
-        \n\n •  **Command  :** `{cmd}save`\
-        \n  •  **Function  : **Untuk Menyimpan pesan yang ditandai ke grup pribadi.\
-        \n\n •  **Command  :** `{cmd}log`\
-        \n  •  **Function  : **Untuk mengaktifkan Log Chat dari obrolan/grup itu.\
-        \n\n •  **Command  :** `{cmd}nolog`\
-        \n  •  **Function  : **Untuk menonaktifkan Log Chat dari obrolan/grup itu.\
-        \n\n •  **Command  :** `{cmd}pmlog on/off`\
-        \n  •  **Function  : **Untuk mengaktifkan atau menonaktifkan pencatatan pesan pribadi\
-        \n\n •  **Command  :** `{cmd}gruplog on/off`\
-        \n  •  **Function  : **Untuk mengaktifkan atau menonaktifkan tag grup, yang akan masuk ke grup pmlogger."
+        "logger": f"**Plugin : **`logger`\
+        \n\n  •  **Syntax :** `{cmd}save`\
+        \n  •  **Function : **__Untuk Menyimpan pesan yang ditandai ke grup pribadi.__\
+        \n\n  •  **Syntax :** `{cmd}log`\
+        \n  •  **Function : **__Untuk mengaktifkan Log Chat dari obrolan/grup itu.__\
+        \n\n  •  **Syntax :** `{cmd}nolog`\
+        \n  •  **Function : **__Untuk menonaktifkan Log Chat dari obrolan/grup itu.__\
+        \n\n  •  **Syntax :** `{cmd}pmlog on/off`\
+        \n  •  **Function : **__Untuk mengaktifkan atau menonaktifkan pencatatan pesan pribadi__\
+        \n\n  •  **Syntax :** `{cmd}gruplog on/off`\
+        \n  •  **Function : **__Untuk mengaktifkan atau menonaktifkan tag grup, yang akan masuk ke grup pmlogger.__"
     }
 )
