@@ -110,9 +110,11 @@ def toni_handler(
 
     return decorator
 
-def chataction(**args):
+
+def chataction(
+    **args,
+):
     def decorator(func):
-        if bot:
             bot.add_event_handler(func, events.ChatAction(**args))
             return func
         
