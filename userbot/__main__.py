@@ -16,6 +16,7 @@ from userbot import (
     DEVS, 
     LOGS,
     LOOP,
+    bot,
 )
 from userbot.clients import multi_toni, toni_userbot_on
 from userbot.modules import ALL_MODULES
@@ -39,11 +40,11 @@ except BaseException as e:
     sys.exit(1)
 
 
-LOOP.run_until_complete(toni_userbot_on())
+bot.loop.run_until_complete(toni_userbot_on())
 if not BOTLOG_CHATID:
-    LOOP.run_until_complete(autopilot())
+    bot.loop.run_until_complete(autopilot())
 if not BOT_TOKEN:
-    LOOP.run_until_complete(autobot())
+    bot.loop.run_until_complete(autobot())
 idle()
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
