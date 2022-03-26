@@ -267,6 +267,10 @@ async def autopilot():
                 megagroup=True,
             ),
         )
+        await bot(
+            EditAdminRequest(int(BOTLOG_CHATID), BOT_USERNAME, rights, "Assistant"))
+        ppk = "userbot/resource/extras/Tonic.jpg"
+            await bot(EditPhotoRequest(BOTLOG_CHATID, await bot.upload_file(ppk)))
     except ChannelsTooMuchError:
         LOGS.info(
             "Terlalu banyak channel dan grup, hapus salah satu dan restart lagi"
