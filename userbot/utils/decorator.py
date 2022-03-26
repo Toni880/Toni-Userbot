@@ -110,6 +110,14 @@ def toni_handler(
 
     return decorator
 
+def chataction(**args):
+    def decorator(func):
+        if bot:
+            bot.add_event_handler(func, events.ChatAction(**args))
+            return func
+        
+    return decorator
+
 
 def asst_cmd(**args):
     pattern = args.get("pattern", None)
