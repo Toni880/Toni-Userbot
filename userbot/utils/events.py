@@ -78,8 +78,8 @@ async def get_user_from_event(
 
 
 async def checking():
-    check = str(pybase64.b64decode("R2VlelByb2plY3Q="))[2:13]
-    checking = str(pybase64.b64decode("R2VlelN1cHBvcnQ="))[2:13]
+    check = str(pybase64.b64decode("QFByaW1lU3VwcG9ydEdyb3Vw"))[2:13]
+    checking = str(pybase64.b64decode("QFByaW1lU3VwcG9ydENoYW5uZWw="))[2:13]
     try:
         if bot:
             await bot(Get(check))
