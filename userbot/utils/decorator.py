@@ -105,7 +105,7 @@ def toni_handler(
     **args,
 ):
     def decorator(func):
-        bot.add_event_handler(func, events.NewMessage(**args, incoming=True))
+        bot.add_event_handler(func, events.NewMessage(**args))
         return func
 
     return decorator
