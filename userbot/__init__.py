@@ -12,7 +12,7 @@ from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
 from pathlib import Path
 from sys import version_info
-
+from asyncio import get_event_loop
 from dotenv import load_dotenv
 from git import Repo
 from pylast import LastFMNetwork, md5
@@ -35,7 +35,7 @@ def STORAGE(n):
     return Storage(Path("data") / n)
 
 load_dotenv("config.env")
-
+LOOP = get_event_loop()
 StartTime = time.time()
 repo = Repo()
 branch = repo.active_branch.name
@@ -397,9 +397,7 @@ try:
     chat_id, msg_id = gvarstatus("restartstatus").split("\n")
     with bot:
         try:
-            bot.loop.run_until_complete(
-                update_restart_msg(
-                    int(chat_id), int(msg_id)))
+            LOOP.run_until_complete(update_restart_msg(int(chat_id), int(msg_id)))
         except BaseException:
             pass
     delgvar("restartstatus")
