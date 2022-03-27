@@ -30,7 +30,7 @@ from userbot import (
     bot,
     tgbot,
 )
-from userbot.utils import toni_cmd
+from userbot.utils import toni_cmd, edit_or_reply
 
 user = bot.get_me()
 DEFAULTUSER = user.first_name
