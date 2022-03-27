@@ -135,7 +135,7 @@ async def repeat(rep):
     await rep.edit(replyText)
 
 
-@toni_cmd(pattern="^.repo$")
+@toni_cmd(pattern="repo$")
 async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await edit_or_reply(wannasee,
