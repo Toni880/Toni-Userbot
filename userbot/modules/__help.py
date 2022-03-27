@@ -25,7 +25,7 @@ from userbot import (
     ALIVE_NAME,
     BOT_USERNAME,
     CMD_HELP,
-    CMD_HANDLER,
+    CMD_HANDLER as cmd,
     CMD_LIST,
     bot,
     tgbot,
