@@ -41,6 +41,7 @@ CUSTOM_HELP_EMOJI = "⚡"
 
 @toni_cmd(pattern="help ?(.*)")
 async def cmd_list(event):
+    chat = "@BotFather"
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
