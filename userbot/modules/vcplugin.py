@@ -546,6 +546,10 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk mengubah volume (Membutuhkan Hak admin)\
         \n\n  •  **Syntax :** `{cmd}playlist`\
         \n  •  **Function : **Untuk menampilkan daftar putar Lagu/Video\
+        \n\n  •  **Syntax :** `{cmd}joinvc`\
+        \n  •  **Function : **Liat sendiri aja\
+        \n\n  •  **Syntax :** `{cmd}leavevc`\
+        \n  •  **Function : **Liat sendiri aja\
     "
     }
 )
