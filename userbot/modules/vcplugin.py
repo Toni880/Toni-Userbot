@@ -559,10 +559,17 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk mengubah volume (Membutuhkan Hak admin)\
         \n\n  •  **Syntax :** `{cmd}playlist`\
         \n  •  **Function : **Untuk menampilkan daftar putar Lagu/Video\
-        \n\n  •  **Syntax :** `{cmd}joinvc`\
-        \n  •  **Function : **Liat sendiri aja\
-        \n\n  •  **Syntax :** `{cmd}leavevc`\
-        \n  •  **Function : **Liat sendiri aja\
     "
+    }
+)
+
+CMD_HELP.update(
+    {
+        "vctools": f"**Plugin : **`vctools`\
+        \n\n • **Syntax :** `{cmd}joinvc`\
+        \n  •  **Function : **Naik OS menggunakan bot\
+        \n\n  •  **Syntax :** `{cmd}leavevc`\
+        \n  •  **Function : **Turun OS menggunakan bot\
+        "
     }
 )
