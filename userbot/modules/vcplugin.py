@@ -475,6 +475,19 @@ async def join_(event):
     )
     await geezav.edit(f"**{from_user} Berhasil Naik Ke VCG!**")
 
+@toni_cmd(pattern="leavevc(?: |$)(.*)")
+async def leavevc(event):
+    """ leave video chat """
+    geezav = await edit_or_reply(event, "Processing")
+    chat_id = event.chat_id
+    from_user = vcmention(event.sender)
+    if from_user:
+        try:
+            await call_py.leave_group_call(chat_id)
+        except (NotInGroupCallError, NoActiveGroupCall):
+            await edit_or_reply(event, f"{from_user} Tidak Berada Di VC Group.")
+        await geezav.edit(f"**{from_user} Berhasil Turun Dari VC Group.**")
+
 
 
 @toni_cmd(pattern="playlist$")
