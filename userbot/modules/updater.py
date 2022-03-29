@@ -28,6 +28,7 @@ from userbot.utils import (
     edit_or_reply,
     edit_delete,
 )
+from userbot.events import register
 
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
