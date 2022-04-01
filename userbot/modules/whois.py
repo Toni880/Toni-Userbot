@@ -18,7 +18,7 @@ from userbot import CMD_HANDLER as cmd, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
 
-@register(outgoing=true pattern="whois(?: |$)(.*)")
+@register(pattern=".whois(?: |$)(.*)", Outgoing=True)
 async def who(event):
 
     await event.edit("`Mengambil Informasi Pengguna Ini...`")
