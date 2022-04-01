@@ -4,8 +4,8 @@
 
 from youtube_dl import YoutubeDL
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 
 @toni_cmd(pattern="yt(a|v|sa|sv) (.*)", disable_errors=True)
