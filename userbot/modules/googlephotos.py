@@ -51,7 +51,7 @@ PHOTOS_BASE_URI = "https://photoslibrary.googleapis.com"
 TOKEN_FILE_NAME = "GP_GEEZ.json"
 
 
-@tomi_cmd(pattern=r"gpsetup")
+@toni_cmd(pattern=r"gpsetup")
 async def setup_google_photos(event):
     if event.chat_id != BOTLOG_CHATID:
         return
