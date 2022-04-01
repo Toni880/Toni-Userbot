@@ -21,12 +21,13 @@ from userbot import (
     BOTLOG,
     BOTLOG_CHATID,
     CMD_HELP,
+    CMD_HANDLER as cmd,
     DEFAULT_BIO,
     LASTFM_USERNAME,
     bot,
     lastfm,
 )
-from userbot.events import register
+from userbot.utils import toni_cmd
 
 # =================== CONSTANT ===================
 LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
@@ -55,7 +56,7 @@ LastLog = False
 # ================================================
 
 
-@register(outgoing=True, pattern=r"^\.lastfm$")
+@toni_cmd(pattern=r"lastfm$")
 async def last_fm(lastFM):
     """For .lastfm command, fetch scrobble data from last.fm."""
     await lastFM.edit("`Processing...`")
@@ -187,7 +188,7 @@ async def get_curr_track(lfmbio):
     RUNNING = False
 
 
-@register(outgoing=True, pattern=r"^\.lastbio (on|off)")
+@toni_cmd(pattern=r"lastbio (on|off)")
 async def lastbio(lfmbio):
     arg = lfmbio.pattern_match.group(1).lower()
     global LASTFMCHECK
@@ -211,7 +212,7 @@ async def lastbio(lfmbio):
         await lfmbio.edit(LFM_BIO_ERR)
 
 
-@register(outgoing=True, pattern=r"^\.lastlog (on|off)")
+@toni_cmd(pattern=r"lastlog (on|off)")
 async def lastlog(lstlog):
     arg = lstlog.pattern_match.group(1).lower()
     global LastLog
@@ -228,11 +229,11 @@ async def lastlog(lstlog):
 
 CMD_HELP.update(
     {
-        "lastfm": ">`.lastfm`"
+        "lastfm": f">`{cmd}lastfm`"
         "\nUsage: Shows currently scrobbling track or most recent scrobbles if nothing is playing."
-        "\n\n>`.lastbio <on/off>`"
+        f"\n\n>`{cmd}lastbio <on/off>`"
         "\nUsage: Enables/Disables last.fm current playing to bio."
-        "\n\n>`.lastlog <on/off>`"
+        f"\n\n>`{cmd}lastlog <on/off>`"
         "\nUsage: Enable/Disable last.fm bio logging in the bot-log group."
     }
 )
