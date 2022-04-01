@@ -1,11 +1,11 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd, bot
+from userbot.utils import toni_cmd
 
 
-@register(outgoing=True, pattern=r"^\.resi(?: |$)(.*)")
+@toni_cmd(pattern=r"resi(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -21,7 +21,7 @@ async def _(event):
             await conv.send_message(f"{kurir} {resi}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("Unblock @ GeDebugBetaBot dulu Goblok!!")
+            await event.reply("Unblock @GeDebugBetaBot dulu Goblok!!")
             return
         else:
             await event.edit(f"{response.message.message}")
@@ -30,9 +30,9 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "resi": "`.resi`\
+        "resi": f"`{cmd}resi`\
 \nUsage: Cek resi \
-\n\n`.lacak`\
+\n\n`{cmd}lacak`\
 \nUsage:lacak paket"
     }
 )
