@@ -1,11 +1,11 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd, bot
+from userbot.utils import toni_cmd
 
 
-@register(outgoing=True, pattern=r"^\.hentai(?: |$)(.*)")
+@toni_cmd(pattern=r"hentai(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -31,7 +31,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "hentai": "`.hentai` <link / code> \
+        "hentai": f"`{cmd}hentai` <link / code> \
 \nUsage: view nhentai in telegra.ph XD\n"
     }
 )
