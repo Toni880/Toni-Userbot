@@ -7,8 +7,8 @@ from re import findall
 
 from search_engine_parser import GoogleSearch
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HELP, CMD_HANDLER as cmd
+from userbot.utils import toni_cmd
 
 
 def progress(current, total):
@@ -19,7 +19,7 @@ def progress(current, total):
     )
 
 
-@register(outgoing=True, pattern=r"^\.go")
+@toni_cmd(pattern=r"go")
 async def gsearch(q_event):
     """For .google command, do a Google search."""
     match = q_event.pattern_match.group(1)
@@ -49,4 +49,6 @@ async def gsearch(q_event):
     )
 
 
-CMD_HELP.update({"google": ".go <query>\nUse - Search the query on Google"})
+CMD_HELP.update(
+{
+"google": f"{cmd}go <query>\nUse - Search the query on Google"})
