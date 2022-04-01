@@ -15,10 +15,10 @@ from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
 
 from userbot import CMD_HANDLER as cmd, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import toni_cmd
+from userbot.events import register
 
 
-@toni_cmd(pattern="whois(?: |$)(.*)")
+@register(outgoing=true pattern="whois(?: |$)(.*)")
 async def who(event):
 
     await event.edit("`Mengambil Informasi Pengguna Ini...`")
