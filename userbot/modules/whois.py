@@ -14,11 +14,11 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from userbot.events import toni_cmd
 
 
-@register(pattern=".whois(?: |$)(.*)", outgoing=True)
+@toni_cmd(pattern="whois(?: |$)(.*)")
 async def who(event):
 
     await event.edit("`Mengambil Informasi Pengguna Ini...`")
@@ -148,7 +148,7 @@ async def fetch_info(replied_user, event):
 
 CMD_HELP.update(
     {
-        "whois": ">`.whois <username> Atau Balas Ke Pesan Pengguna Ketik .whois`"
+        "whois": f">`{cmd}whois <username> Atau Balas Ke Pesan Pengguna Ketik {cmd}whois`"
         "\nUsage: Mendapatkan Informasi Pengguna."
     }
 )
