@@ -33,9 +33,8 @@ from urllib.error import HTTPError
 
 from pySmartDL import SmartDL
 
-from userbot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
-from userbot.utils import humanbytes, time_formatter
+from userbot import CMD_HANDLER as cmd, CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
+from userbot.utils import humanbytes, time_formatter, toni_cmd
 
 
 async def subprocess_run(megadl, cmd):
@@ -53,7 +52,7 @@ async def subprocess_run(megadl, cmd):
     return stdout.decode().strip(), stderr.decode().strip(), exitCode
 
 
-@register(outgoing=True, pattern=r"^\.mega(?: |$)(.*)")
+@toni_cmd(pattern=r"mega(?: |$)(.*)")
 async def mega_downloader(megadl):
     await megadl.edit("`Collecting information...`")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -185,7 +184,7 @@ async def decrypt_file(megadl, file_path, temp_file_path, hex_key, hex_raw_key):
 
 CMD_HELP.update(
     {
-        "mega": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: >`.mega <MEGA.nz link>`"
+        "mega": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: >`{cmd}mega <MEGA.nz link>`"
         "\n↳ : Reply to a MEGA.nz link or paste your MEGA.nz link to "
         "download the file into your userbot server."
     }
