@@ -2,8 +2,8 @@ import random
 import re
 from asyncio import sleep
 
-from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd, CMD_HELP, bot
+from userbot.utils import toni_cmd
 
 EMOJI_PATTERN = re.compile(
     "["
@@ -26,7 +26,7 @@ def deEmojify(inputString: str) -> str:
     return re.sub(EMOJI_PATTERN, "", inputString)
 
 
-@register(outgoing=True, pattern=r"^\.rst(?: |$)(.*)")
+@toni_cmd(pattern=r"rst(?: |$)(.*)")
 async def rastick(animu):
     text = animu.pattern_match.group(1)
     if not text:
@@ -120,7 +120,7 @@ async def rastick(animu):
 
 CMD_HELP.update(
     {
-        "rastick": ">`.rst`"
+        "rastick": f">`{cmd}rst`"
         "\nUsage: To stickerize your text with random sticker templates."
         "\n@StickerizerBot"
     }
