@@ -31,8 +31,7 @@ from userbot import (
     G_PHOTOS_CLIENT_SECRET,
     TEMP_DOWNLOAD_DIRECTORY,
 )
-from userbot.events import register
-from userbot.utils import progress
+from userbot.utils import progress, toni_cmd
 
 logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
@@ -52,7 +51,7 @@ PHOTOS_BASE_URI = "https://photoslibrary.googleapis.com"
 TOKEN_FILE_NAME = "GP_GEEZ.json"
 
 
-@register(outgoing=True, pattern=r"^\.gpsetup")
+@tomi_cmd(pattern=r"gpsetup")
 async def setup_google_photos(event):
     if event.chat_id != BOTLOG_CHATID:
         return
@@ -119,7 +118,7 @@ async def check_creds(token_file, event):
     return False, None
 
 
-@register(outgoing=True, pattern=r"^\.gp( -- (.*))?")
+@toni_cmd(pattern=r"gp( -- (.*))?")
 async def upload_google_photos(event):
     if event.fwd_from:
         return
