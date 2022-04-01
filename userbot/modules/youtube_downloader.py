@@ -8,7 +8,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern=".yt(a|v|sa|sv) (.*)", disable_errors=True)
+@toni_cmd(pattern="yt(a|v|sa|sv) (.*)", disable_errors=True)
 async def download_from_youtube_(event):
     opt = event.pattern_match.group(1).lower()
     if opt == "a":
@@ -96,13 +96,13 @@ async def download_from_youtube_(event):
 
 CMD_HELP.update(
     {
-        "ytdownload": "𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.yta` <(youtube) link>\
+        "ytdownload": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}yta` <(youtube) link>\
    \nUsage : Download audio from the link.\
-   \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ytv <(youtube) link>`\
+   \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ytv <(youtube) link>`\
    \nUsage : Download video  from the link.\
-   \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ytsa <(youtube) search query>`\
+   \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ytsa <(youtube) search query>`\
    \nUsage : Search and download audio from youtube.\
-   \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `.ytsv <(youtube) search query>`\
+   \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ytsv <(youtube) search query>`\
    \nUsage : Search and download video from youtube."
     }
 )
