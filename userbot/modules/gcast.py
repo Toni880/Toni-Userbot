@@ -30,6 +30,7 @@ GCAST_BLACKLIST = [
     -1001752592753,  # SkyzuSupport
     -1001380293847,  # NastySupport
     -1001795125065,  # BagaskaraSupport
+    -1001113421561,  # 🇮🇩 Dukungan Group Help | GH ID
 ]
 
 
