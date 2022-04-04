@@ -827,8 +827,7 @@ Voice chat group menu untuk {owner}
                 reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
  
-
-        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ub_modul_(.*)")))
+          @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ub_modul_(.*)")))
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
                 modul_name = event.data_match.group(1).decode("UTF-8")
@@ -845,9 +844,8 @@ Voice chat group menu untuk {owner}
                         + " "
                     )
                 else:
-                    help_string = (
-                        str(CMD_HELP[modul_name]).replace("`", "").replace("**", "")
-                    )
+                    help_string = (str(CMD_HELP[modul_name]).replace(
+                        "`", "").replace("**", ""))
 
                 reply_pop_up_alert = (
                     help_string
@@ -856,10 +854,8 @@ Voice chat group menu untuk {owner}
                         modul_name
                     )
                 )
-
-#               By Flicks Userbot <github.com/farizjs/Flicks-userbot>
                 await event.edit(
-                    reply_pop_up_alert, buttons=[Button.inline("Back", data="reopen")]
+                    reply_pop_up_alert, buttons=[Button.inline("ʙᴀᴄᴋ", data="reopen")]
                 )
 
             else:
@@ -870,5 +866,4 @@ Voice chat group menu untuk {owner}
         LOGS.info(
             "Help Mode Inline Bot Mu Tidak aktif. Tidak di aktifkan juga tidak apa-apa. "
             "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
-            "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. "
-        )
+            "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. ")
