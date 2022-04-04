@@ -482,7 +482,9 @@ def ibuild_keyboard(buttons):
             keyb.append([Button.url(btn[0], btn[1])])
     return keyb
 
+
 with bot:
+    try:
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
         from userbot.utils import reply_id
@@ -491,8 +493,11 @@ with bot:
         user = bot.get_me()
         uid = user.id
         owner = user.first_name
+        asst = tgbot.get_me()
+        botusername = asst.username
         logo = ALIVE_LOGO
         tonilogo = INLINE_PIC
+        cmd = CMD_HANDLER
         tgbotusername = BOT_USERNAME
         BTN_URL_REGEX = re.compile(
             r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)"
@@ -509,7 +514,8 @@ with bot:
             [Button.inline("ʙᴀᴄᴋ", data="close")],
         ]
 
-        @tgbot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+        @tgbot.on(events.NewMessage(incoming=True,
+                  func=lambda e: e.is_private))
         async def bot_pms(event):
             chat = await event.get_chat()
             if check_is_black_list(chat.id):
@@ -565,8 +571,12 @@ with bot:
                         return await event.reply(f"**ERROR:** `{e}`")
                     try:
                         add_user_to_db(
-                            reply_to, user_name, user_id, reply_msg, event.id, msg.id
-                        )
+                            reply_to,
+                            user_name,
+                            user_id,
+                            reply_msg,
+                            event.id,
+                            msg.id)
                     except Exception as e:
                         LOGS.error(str(e))
                         if BOTLOG:
@@ -575,32 +585,57 @@ with bot:
                                 f"**ERROR:** Saat menyimpan detail pesan di database\n`{e}`",
                             )
 
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"reopen")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                buttons = paginate_help(0, dugmeler, "helpme")
+                text = f"**✨ ᴛᴏɴɪᴄ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**"
+                await event.edit(
+                    text,
+                    file=tonilogo,
+                    buttons=buttons,
+                    link_preview=False,
+                )
+            else:
+                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
         @tgbot.on(events.InlineQuery)
         async def inline_handler(event):
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith("@PrimeSupportGroup"):
+            if event.query.user_id == uid and query.startswith("@TonicUserbot"):
                 buttons = paginate_help(0, dugmeler, "helpme")
-                result = builder.photo(
+                result = await event.builder.photo(
                     file=tonilogo,
                     link_preview=False,
-                    text=f"**🚫 Tonic - Userbot Inline Menu 🚫**\n\n•  **Owner** [{user.first_name}](tg://user?id={user.id})\n•  **Jumlah** `{len(dugmeler)}` Modules",
-                    buttons=buttons,
+                    text=f"**🚫 ᴛᴏɴɪᴄ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ 🚫**\n\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**",
+                    buttons=main_help_button,
                 )
             elif query.startswith("repo"):
                 result = builder.article(
                     title="Repository",
                     description="Repository Tonic - Userbot",
                     url="https://t.me/PrimeSupportGroup",
-                    thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
-                    text="**Tonic - Userbot**\n➖➖➖➖➖➖➖➖➖➖\n❍▸ **Owner Repo :** [Toni - Ex](https://t.me/Bukan_guudlooking)\n**Support :** @PrimeSupportGroup\n❍▸ **Repository :** [Tonic-Userbot](https://github.com/Tonic990/Tonic-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    thumb=InputWebDocument(
+                        INLINE_PIC,
+                        0,
+                        "image/jpeg",
+                        []),
+                    text="**Tonic-Userbot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **ᴏᴡɴᴇʀ ʀᴇᴘᴏ :** [ৡৢ͡𝙳𝙱 𝙏𝙊𝙉𝙄-𝙀𝙓 [🇮🇩]](https://t.me/Bukan_guudlooking)\n✣ **sᴜᴘᴘᴏʀᴛ :** @PrimeSupportGroup\n✣ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Tonic-Userbot](https://github.com/Tonic990/Tonic-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
-                            custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/PrimeSupportGroup"),
                             custom.Button.url(
-                                "ʀᴇᴘᴏ", "https://github.com/Tonic990/Tonic-Userbot"
-                            ),
+                                "ɢʀᴏᴜᴘ",
+                                "https://t.me/PrimeSupportGroup"),
+                            custom.Button.url(
+                                "ʀᴇᴘᴏ",
+                                "https://github.com/Tonic990/Tonic-Userbot"),
                         ],
                     ],
                     link_preview=False,
@@ -618,9 +653,9 @@ with bot:
                         to_check -= 1
                     if n_escapes % 2 == 0:
                         buttons.append(
-                            (match.group(2), match.group(3), bool(match.group(4)))
-                        )
-                        note_data += markdown_note[prev : match.start(1)]
+                            (match.group(2), match.group(3), bool(
+                                match.group(4))))
+                        note_data += markdown_note[prev: match.start(1)]
                         prev = match.end(1)
                     elif n_escapes % 2 == 1:
                         note_data += markdown_note[prev:to_check]
@@ -639,17 +674,23 @@ with bot:
                 )
             else:
                 result = builder.article(
-                    title="⚡ Tonic - Userbot ⚡",
-                    description="Tonic-Ubot | Telethon",
+                    title="✨ ᴛᴏɴɪᴄ-υѕєявσт ✨",
+                    description="Tonic - Userbot | Telethon",
                     url="https://t.me/PrimeSupportGroup",
-                    thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
-                    text=f"**Tonic - Userbot**\n➖➖➖➖➖➖➖➖➖➖\n**UserMode:** [{user.first_name}](tg://user?id={user.id})\n**Assistant:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @PrimeSupportGroup\n➖➖➖➖➖➖➖➖➖➖",
+                    thumb=InputWebDocument(
+                        INLINE_PIC,
+                        0,
+                        "image/jpeg",
+                        []),
+                    text=f"**Tonic-Userbot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴀssɪsᴛᴀɴᴛ:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**ᴜᴘᴅᴀᴛᴇs:** @PrimeSupportGroup\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
-                            custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/PrimeSupportGroup"),
                             custom.Button.url(
-                                "ʀᴇᴘᴏꜱɪᴛᴏʀʏ", "https://github.com/Tonic990/Tonic-Userbot"
-                             ),
+                                "ɢʀᴏᴜᴘ",
+                                "https://t.me/PrimeSupportGroup"),
+                            custom.Button.url(
+                                "ʀᴇᴘᴏ",
+                                "https://github.com/Tonic990/Tonic-Userbot"),
                         ],
                     ],
                     link_preview=False,
@@ -657,7 +698,54 @@ with bot:
             await event.answer(
                 [result], switch_pm="👥 USERBOT PORTAL", switch_pm_param="start"
             )
-# from Kyy-Userbot
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(
+                data=re.compile(rb"helpme_next\((.+?)\)")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                current_page_number = int(
+                    event.data_match.group(1).decode("UTF-8"))
+                buttons = paginate_help(
+                    current_page_number + 1, dugmeler, "helpme")
+                await event.edit(buttons=buttons)
+            else:
+                reply_pop_up_alert = (
+                    f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                )
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"helpme_close\((.+?)\)")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:  # @Kyy-Userbot
+                # https://t.me/TelethonChat/115200
+                await event.edit(
+                    file=tonilogo,
+                    link_preview=True,
+                    buttons=main_help_button)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"gcback")
+            )
+        )
+        async def gback_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:  # @Kyy-Userbot
+                # https://t.me/TelethonChat/115200
+                text = (
+                    f"**✨ ᴛᴏɴɪᴄ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**")
+                await event.edit(
+                    text,
+                    file=tonilogo,
+                    link_preview=True,
+                    buttons=main_help_button)
+
         @tgbot.on(events.CallbackQuery(data=b"toni_inline"))
         async def about(event):
             if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
@@ -753,66 +841,6 @@ Voice chat group menu untuk {owner}
             ]
             await event.edit("**ᴍᴇɴᴜ ᴅɪᴛᴜᴛᴜᴘ!**", file=tonilogo, buttons=buttons)
 
-        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(rb"reopen")))
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
-                current_page_number = int(looters)
-                buttons = paginate_help(current_page_number, dugmeler, "helpme")
-                text = f"**Tonic - Userbot Inline Menu**\n\n🔸 **Owner** [{user.first_name}](tg://user?id={user.id})\n•  **Jumlah** `{len(dugmeler)}` Module"
-                await event.edit(
-                    text,
-                    file=tonilogo,
-                    buttons=buttons,
-                    link_preview=False,
-                )
-            else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
-
-        @tgbot.on(
-            events.callbackquery.CallbackQuery(
-                data=re.compile(rb"helpme_next\((.+?)\)")
-            )
-        )
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
-                current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-                buttons = paginate_help(current_page_number + 1, dugmeler, "helpme")
-                await event.edit(buttons=buttons)
-            else:
-                reply_pop_up_alert = (
-                    f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
-                )
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
-
-        @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(rb"helpme_close\((.+?)\)")
-            )
-        )
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:  # @Kyy-Userbot
-                # https://t.me/TelethonChat/115200
-                await event.edit(
-                    file=kyylogo,
-                    link_preview=True,
-                    buttons=main_help_button)
-
-        @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(rb"gcback")
-            )
-        )
-        async def gback_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:  # @Kyy-Userbot
-                # https://t.me/TelethonChat/115200
-                text = (
-                    f"**✨ ᴛᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**")
-                await event.edit(
-                    text,
-                    file=tonilogo,
-                    link_preview=True,
-                    buttons=main_help_button)
         @tgbot.on(
             events.callbackquery.CallbackQuery(
                 data=re.compile(rb"helpme_prev\((.+?)\)")
@@ -828,8 +856,8 @@ Voice chat group menu untuk {owner}
             else:
                 reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
- 
-          @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ub_modul_(.*)")))
+
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ub_modul_(.*)")))
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
                 modul_name = event.data_match.group(1).decode("UTF-8")
