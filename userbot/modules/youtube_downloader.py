@@ -4,11 +4,11 @@
 
 from youtube_dl import YoutubeDL
 
+from userbot.events import register
 from userbot import CMD_HELP, CMD_HANDLER as cmd
-from userbot.utils import toni_cmd
 
 
-@toni_cmd(pattern="yt(a|v|sa|sv) (.*)", disable_errors=True)
+@register(outgoing=True, pattern=".yt(a|v|sa|sv) (.*)", disable_errors=True)
 async def download_from_youtube_(event):
     opt = event.pattern_match.group(1).lower()
     if opt == "a":
@@ -63,9 +63,8 @@ async def download_from_youtube_(event):
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
-            return await event.edit(
-                "Give me a (youtube) search query to download audio from!"
-            )
+            return await event.edit("Give me a (youtube) search query to download audio from!"
+                                    )
         xx = await event.edit("`Searching on YouTube...`")
         url = await get_yt_link(query)
         await xx.edit("`Downloading audio song...`")
@@ -83,9 +82,8 @@ async def download_from_youtube_(event):
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
-            return await event.edit(
-                "Give me a (youtube) search query to download video from!"
-            )
+            return await event.edit("Give me a (youtube) search query to download video from!"
+                                    )
         xx = await event.edit("`Searching YouTube...`")
         url = await get_yt_link(query)
         await xx.edit("`Downloading video song...`")
@@ -96,7 +94,8 @@ async def download_from_youtube_(event):
 
 CMD_HELP.update(
     {
-        "ytdownload": f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}yta` <(youtube) link>\
+    "ytdownload":
+    f"𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}yta` <(youtube) link>\
    \nUsage : Download audio from the link.\
    \n\n𝘾𝙤𝙢𝙢𝙖𝙣𝙙: `{cmd}ytv <(youtube) link>`\
    \nUsage : Download video  from the link.\
