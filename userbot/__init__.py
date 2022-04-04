@@ -382,15 +382,6 @@ async def checking():
         await bot(GetSec(checker))
     except BaseException:
         pass
-    
-with bot:
-    try:
-        bot.loop.run_until_complete(checking())
-    except BaseException:
-        LOGS.info(
-            "Join Support Group @PrimeSupportGroup and Channel @PrimeSupportChannel to see the updates of userbot"
-            "Don't Leave")
-        quit(1)
 
 async def update_restart_msg(chat_id, msg_id):
     DEFAULTUSER = ALIVE_NAME or "Set `ALIVE_NAME` ConfigVar!"
