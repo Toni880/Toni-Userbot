@@ -110,7 +110,7 @@ if CONFIG_CHECK:
 DEVS = (
     1663258664,
     1416529201,
-    1784606556,
+    2046879193, # akun yg grey hilang
     2116587637, # sipaling ganteng
     955903284,
     1977874449,
