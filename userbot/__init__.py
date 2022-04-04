@@ -14,6 +14,7 @@ from pathlib import Path
 from sys import version_info
 from asyncio import get_event_loop
 from dotenv import load_dotenv
+from base64 import b64decode
 from git import Repo
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
