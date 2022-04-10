@@ -27,7 +27,6 @@ from userbot import (
     ALIVE_NAME,
     DEVS,
 )
-from userbot.modules.sql_helper import pm_permit_sql as pmpermit_sql
 
 
 DEF_UNAPPROVED_MSG = (
@@ -441,20 +440,6 @@ async def add_pmsg(cust_msg):
             await cust_msg.edit(
                 "**Anda Belum Menyetel Pesan Costum PMPERMIT,**\n"
                 f"**Masih Menggunakan Pesan PM Default:**\n\n{DEF_UNAPPROVED_MSG}"
-            )
-
-
-@bot.on(events.NewMessage(incoming=True, from_users=(DEVS)))
-async def permitpm(event):
-    if event.fwd_from:
-        return
-    chats = await event.get_chat()
-    if event.is_private:
-        if not pm_permit_sql.is_approved(chats.id):
-            pm_permit_sql.approve(
-                chats.id, f"`Hallo {owner}, Developer Telah Mengirimi Anda Pesan... `")
-            await borg.send_message(
-                chats, f"**Menerima Pesan!, Pengguna Terdeteksi Adalah Developer Saya**"
             )
 
 
