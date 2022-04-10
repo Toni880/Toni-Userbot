@@ -27,7 +27,7 @@ from userbot import (
     ALIVE_NAME,
     DEVS,
 )
-import userbot.modules.sql_helper.pm_permit_sql as pmpermit_sql
+from userbot.modules.sql_helper import pm_permit_sql as pmpermit_sql
 
 
 DEF_UNAPPROVED_MSG = (
