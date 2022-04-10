@@ -281,6 +281,9 @@ ALIVE_LOGO = os.environ.get(
 INLINE_PIC = os.environ.get(
     "INLINE_PIC") or "https://telegra.ph/file/33193e0075fc37c000379.jpg"
 
+PMPERMIT_PIC = os.environ.get(
+    "PMPERMIT_PIC") or "https://telegra.ph/file/33193e0075fc37c000379.jpg"
+
 # Default emoji help
 INLINE_EMOJI = os.environ.get("INLINE_EMOJI") or "✨"
 
