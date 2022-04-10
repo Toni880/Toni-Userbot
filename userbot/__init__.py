@@ -283,6 +283,7 @@ INLINE_PIC = os.environ.get(
 
 PMPERMIT_PIC = os.environ.get(
     "PMPERMIT_PIC") or "https://telegra.ph/file/33193e0075fc37c000379.jpg"
+PM_LIMIT = int(os.environ.get("PM_LIMIT", 4))
 
 # Default emoji help
 INLINE_EMOJI = os.environ.get("INLINE_EMOJI") or "✨"
