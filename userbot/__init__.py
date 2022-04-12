@@ -510,6 +510,11 @@ with bot:
             ],
             [Button.inline("ʙᴀᴄᴋ", data="close")],
         ]
+        
+        USER_BOT_NO_WARN = (
+           f"**PMSecurity of** {ALIVE_NAME}!"
+            "\n\nSilahkan beri alasan mengapa anda chat saya"
+            "\nAtau tunggu saya untuk merespon atau Anda akan **diblokir dan dilaporkan sebagai spam!!**")
 
         @tgbot.on(events.NewMessage(incoming=True,
                   func=lambda e: e.is_private))
@@ -613,6 +618,18 @@ with bot:
                     link_preview=False,
                     text=f"**✨ ᴛᴏɴɪᴄ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**",
                     buttons=main_help_button,
+                )
+            elif query.startswith("pmpermit"):
+                TELEBT = USER_BOT_NO_WARN
+                result = builder.article(
+                    "PmPermit",
+                    text=TELEBT,
+                    buttons=[
+                        [
+                            Button.inline("• Untuk Chat •", data="chat"),
+                            Button.inline("• Untuk Spam •", data="heheboi"),
+                        ],
+                    ],
                 )
             elif query.startswith("repo"):
                 result = builder.article(
@@ -888,9 +905,99 @@ Voice chat group menu untuk {owner}
             else:
                 reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+                
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"toni_pm")))
+        async def on_pm_click(event):
+            if event.query.user_id == uid:
+                reply_pop_up_alert = "Ini bukan untukmu, tuan!"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+            else:
+                await event.edit(
+                    f"Ini adalah Keamanan PM untuk {ALIVE_NAME} untuk menjauhkan spammer.\n\nDilindungi oleh [Userbot](t.me/PrimeSupportGroup)"
+                )
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"req")))
+        async def on_pm_click(event):
+            if event.query.user_id == uid:
+                reply_pop_up_alert = "Ini bukan untukmu, tuan!"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+            else:
+                await event.edit(
+                    f"baik, `{ALIVE_NAME}` akan segera menghubungi Anda!\nSampai saat itu mohon **tunggu dengan sabar dan jangan spam di sini.**"
+                )
+                target = await event.client(GetFullUserRequest(event.query.user_id))
+                first_name = html.escape(target.user.first_name)
+                ok = event.query.user_id
+                if first_name is not None:
+                    first_name = first_name.replace("\u2060", "")
+                tosend = f"Hey {ALIVE_NAME}, [{first_name}](tg://user?id={ok}) sedang **meminta** sesuatu di PM!"
+                await tgbot.send_message(BOTLOG_CHATID, tosend)
 
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chat")))
+        async def on_pm_click(event):
+            event.query.user_id
+            if event.query.user_id == uid:
+                reply_pop_up_alert = "Ini bukan untukmu, tuan!"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+            else:
+                await event.edit(
+                    f"wah, mau ngobrol...\nHarap tunggu dan lihat apakah {ALIVE_NAME} sedang dalam mood untuk mengobrol, jika ya, dia akan segera membalas!\nSampai saat itu, **jangan spam.**"
+                )
+                target = await event.client(GetFullUserRequest(event.query.user_id))
+                ok = event.query.user_id
+                first_name = html.escape(target.user.first_name)
+                if first_name is not None:
+                    first_name = first_name.replace("\u2060", "")
+                tosend = f"Hey {ALIVE_NAME}, [{first_name}](tg://user?id={ok}) ingin PM Anda untuk ** Obrolan Acak**!"
+                await tgbot.send_message(BOTLOG_CHATID, tosend)
+
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"setuju")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:
+                await event.answer(
+                    f"Untuk menyetujui PM, gunakan {CMD_HANDLER}ok", cache_time=0, alert=True)
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"block")))
+        async def on_pm_click(event):
+            if event.query.user_id == uid:
+                await event.edit(
+                    f"Sepertinya {ALIVE_NAME} sedang tidak mood untuk mengobrol\nGoodbye.\nPesan Anda telah diabaikan.\njika tidak mau di blokir maka jangan spam!!"
+                )
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"heheboi")))
+        async def on_pm_click(event):
+            if event.query.user_id == uid:
+                reply_pop_up_alert = "Ini bukan untukmu, tuan!"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+            else:
+                await event.edit(
+                    f"Oh, jadi Anda di sini untuk spam 😤\nGoodbye.\nPesan Anda telah dibaca dan berhasil diabaikan."
+                )
+                await bot(functions.contacts.BlockRequest(event.query.user_id))
+                target = await event.client(GetFullUserRequest(event.query.user_id))
+                ok = event.query.user_id
+                first_name = html.escape(target.user.first_name)
+                if first_name is not None:
+                    first_name = first_name.replace("\u2060", "")
+                first_name = html.escape(target.user.first_name)
+                await tgbot.send_message(
+                    BOTLOG_CHATID,
+                    f"[{first_name}](tg://user?id={ok}) mencoba untuk **spam** kotak masuk Anda.\nSelanjutnya, dia saya **blokir**",
+                )
+    
+    
     except BaseException:
-        LOGS.info(
-            "Help Mode Inline Bot Mu Tidak aktif. Tidak di aktifkan juga tidak apa-apa. "
-            "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
+        LOGS.info("Help Mode Inline Bot Mu Tidak aktif. Tidak di aktifkan juga tidak apa-apa. "	
+            "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "	
             "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. ")
