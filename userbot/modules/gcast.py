@@ -31,6 +31,9 @@ GCAST_BLACKLIST = [
     -1001380293847,  # NastySupport
     -1001795125065,  # BagaskaraSupport
     -1001113421561,  # 🇮🇩 Dukungan Group Help | GH ID
+    -1001701551771,  # X-Binner Chat
+    -1001267233272,  # Pocong Userbot
+    -1001613504853,  # Solid support
 ]
 
 
