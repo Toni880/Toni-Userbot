@@ -6,10 +6,32 @@ from pathlib import Path
 from random import randint
 
 import heroku3
+from telethon.errors import (
+    BotMethodInvalidError,
+    ChannelPrivateError,
+    ChannelsTooMuchError,
+    ChatAdminRequiredError,
+    UserNotParticipantError,
+)
 from telethon.tl.functions.contacts import UnblockRequest
-from telethon.tl.functions.channels import CreateChannelRequest
-from telethon.tl.types import ChatAdminRights
-
+from telethon.tl.functions.channels import (
+    CreateChannelRequest,
+    EditAdminRequest,
+    EditPhotoRequest,
+    InviteToChannelRequest,
+    JoinChannelRequest,
+)
+from telethon.tl.types import (
+    ChannelParticipantsAdmins,
+    ChatPhotoEmpty,
+    ChatAdminRights,
+    ChatBannedRights,
+    InputChatPhotoEmpty,
+    InputChatUploadedPhoto,
+    InputMessagesFilterDocument,
+    MessageMediaPhoto,
+)
+from urllib.request import urlretrieve
 from userbot import (
     BOT_TOKEN,
     BOTLOG_CHATID,
@@ -18,6 +40,7 @@ from userbot import (
     HEROKU_APP_NAME,
     LOGS,
     bot,
+    tgbot,
 )
 
 heroku_api = "https://api.heroku.com"
