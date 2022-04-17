@@ -34,7 +34,7 @@ async def autobot():
         return
     await bot.start()
     await bot.send_message(
-        BOTLOG_CHATID, "➕ **Sedang Membuat Bot Di@BotFather Harap Tunggu Beberapa Detik!**"
+        BOTLOG_CHATID, "➕ **SEDANG MEMBUAT BOT TELEGRAM UNTUK ANDA DI @BotFather**"
     )
     who = await bot.get_me()
     name = who.first_name + " Assistant Bot"
@@ -51,9 +51,9 @@ async def autobot():
     await bot.send_message(bf, "/newbot")
     await asyncio.sleep(1)
     isdone = (await bot.get_messages(bf, limit=1))[0].text
-    if isdone.startswith("Itu tidak bisa saya lakukan."):
+    if isdone.startswith("That I cannot do."):
         LOGS.info(
-            "🚧 Silakan buat Bot dari @BotFather dan tambahkan tokennya di var BOT_TOKEN"
+            "Silakan buat Bot dari @BotFather dan tambahkan tokennya di var BOT_TOKEN"
         )
         sys.exit(1)
     await bot.send_message(bf, name)
@@ -74,12 +74,18 @@ async def autobot():
     await bot.send_read_acknowledge("botfather")
     if isdone.startswith("Sorry,"):
         ran = randint(1, 100)
-        username = "rosebot" + (str(who.id))[6:] + str(ran) + "ubot"
+        username = "tonibot" + (str(who.id))[6:] + str(ran) + "ubot"
         await bot.send_message(bf, username)
         await asyncio.sleep(1)
         nowdone = (await bot.get_messages(bf, limit=1))[0].text
         if nowdone.startswith("Done!"):
             token = nowdone.split("`")[1]
+            await bot.send_message(bf, "/setinline")
+            await asyncio.sleep(1)
+            await bot.send_message(bf, f"@{username}")
+            await asyncio.sleep(1)
+            await bot.send_message(bf, "Search")
+            await asyncio.sleep(3)
             await bot.send_message(bf, "/setuserpic")
             await asyncio.sleep(1)
             await bot.send_message(bf, f"@{username}")
@@ -107,15 +113,34 @@ async def autobot():
                 BOTLOG_CHATID,
                 "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
             )
+            rights = ChatAdminRights(
+                             add_admins=False,
+                             invite_users=True,
+                             change_info=True,
+                             ban_users=True,
+                             delete_messages=True,
+                             pin_messages=True,
+                             anonymous=False,
+                             manage_call=True,
+                         )
+            await bot(EditAdminRequest(int(BOTLOG_CHATID), f"@{username}", rights, "ᴀssɪsᴛᴀɴᴛ"))
+            toni = "userbot/resource/extras/Tonic.jpg"
+            await bot(EditPhotoRequest(BOTLOG_CHATID, await bot.upload_file(toni)))
             heroku_var["BOT_TOKEN"] = token
             heroku_var["BOT_USERNAME"] = f"@{username}"
         else:
             LOGS.info(
-                "🚧 Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"
+                "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"
             )
             sys.exit(1)
     elif isdone.startswith("Done!"):
         token = isdone.split("`")[1]
+        await bot.send_message(bf, "/setinline")
+        await asyncio.sleep(1)
+        await bot.send_message(bf, f"@{username}")
+        await asyncio.sleep(1)
+        await bot.send_message(bf, "Search")
+        await asyncio.sleep(3)
         await bot.send_message(bf, "/setuserpic")
         await asyncio.sleep(1)
         await bot.send_message(bf, f"@{username}")
@@ -143,6 +168,19 @@ async def autobot():
             BOTLOG_CHATID,
             "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
         )
+        rights = ChatAdminRights(
+                 add_admins=False,
+                 invite_users=True,
+                 change_info=True,
+                 ban_users=True,
+                 delete_messages=True,
+                 pin_messages=True,
+                 anonymous=False,
+                 manage_call=True,
+             )
+        await bot(EditAdminRequest(int(BOTLOG_CHATID), f"@{username}", rights, "ᴀssɪsᴛᴀɴᴛ"))
+        toni = "userbot/resource/extras/Tonic.jpg"
+        await bot(EditPhotoRequest(BOTLOG_CHATID, await bot.upload_file(toni)))
         heroku_var["BOT_TOKEN"] = token
         heroku_var["BOT_USERNAME"] = f"@{username}"
     else:
@@ -176,6 +214,52 @@ def load_module(shortname):
         # for imports
         sys.modules["userbot.modules." + shortname] = mod
         LOGS.info("Successfully imported " + shortname)
+
+async def autopilot():
+    if BOTLOG_CHATID and str(BOTLOG_CHATID).startswith("-100"):
+        return
+    k = []  # To Refresh private ids
+    async for x in bot.iter_dialogs():
+        k.append(x.id)
+    if BOTLOG_CHATID:
+        try:
+            await bot.get_entity(int("BOTLOG_CHATID"))
+            return
+        except BaseException:
+            del heroku_var["BOTLOG_CHATID"]
+    try:
+        r = await bot(
+            CreateChannelRequest(
+                title="ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ʟᴏɢs",
+                about="ᴍʏ ᴛᴏɴɪᴄ ʟᴏɢs ɢʀᴏᴜᴘ\n\n Join @PrimeSupportGroup",
+                megagroup=True,
+            ),
+        )
+    except ChannelsTooMuchError:
+        LOGS.info(
+            "Terlalu banyak channel dan grup, hapus salah satu dan restart lagi"
+        )
+        exit(1)
+    except BaseException:
+        LOGS.info(
+            "Terjadi kesalahan, Buat sebuah grup lalu isi id nya di config var BOTLOG_CHATID."
+        )
+        exit(1)   
+    chat_id = r.chats[0].id
+    if not str(chat_id).startswith("-100"):
+        heroku_var["BOTLOG_CHATID"] = "-100" + str(chat_id)
+    else:
+        heroku_var["BOTLOG_CHATID"] = str(chat_id)
+    rights = ChatAdminRights(
+        add_admins=True,
+        invite_users=True,
+        change_info=True,
+        ban_users=True,
+        delete_messages=True,
+        pin_messages=True,
+        anonymous=False,
+        manage_call=True,
+    )
 
 
 def start_assistant(shortname):
@@ -245,50 +329,3 @@ async def create_supergroup(group_name, client, botusername, descript):
     if not str(created_chat_id).startswith("-100"):
         created_chat_id = int("-100" + str(created_chat_id))
     return result, created_chat_id
-
-
-async def autopilot():
-    if BOTLOG_CHATID and str(BOTLOG_CHATID).startswith("-100"):
-        return
-    k = []  # To Refresh private ids
-    async for x in bot.iter_dialogs():
-        k.append(x.id)
-    if BOTLOG_CHATID:
-        try:
-            await bot.get_entity(int("BOTLOG_CHATID"))
-            return
-        except BaseException:
-            del heroku_var["BOTLOG_CHATID"]
-    try:
-        r = await bot(
-            CreateChannelRequest(
-                title="ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ʟᴏɢs",
-                about="ᴍʏ ᴛᴏɴɪᴄ ʟᴏɢs ɢʀᴏᴜᴘ\n\n Join @PrimeSupportGroup",
-                megagroup=True,
-            ),
-        )
-    except ChannelsTooMuchError:
-        LOGS.info(
-            "Terlalu banyak channel dan grup, hapus salah satu dan restart lagi"
-        )
-        exit(1)
-    except BaseException:
-        LOGS.info(
-            "Terjadi kesalahan, Buat sebuah grup lalu isi id nya di config var BOTLOG_CHATID."
-        )
-        exit(1)   
-    chat_id = r.chats[0].id
-    if not str(chat_id).startswith("-100"):
-        heroku_var["BOTLOG_CHATID"] = "-100" + str(chat_id)
-    else:
-        heroku_var["BOTLOG_CHATID"] = str(chat_id)
-    rights = ChatAdminRights(
-        add_admins=True,
-        invite_users=True,
-        change_info=True,
-        ban_users=True,
-        delete_messages=True,
-        pin_messages=True,
-        anonymous=False,
-        manage_call=True,
-    )
