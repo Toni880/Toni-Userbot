@@ -32,7 +32,7 @@ from userbot.utils import time_formatter
 REPOLINK = (
     str(UPSTREAM_REPO_URL)
     if UPSTREAM_REPO_URL
-    else "https://github.com/Tonic/Tonic-Userbot"
+    else "https://github.com/Toni880/Tonic-Userbot"
 )
 # ============================================
 
@@ -81,7 +81,7 @@ async def repo_is_here(wannasee):
 async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await edit_or_reply(wannasee,
-                        f"➣ **DEPLOY VIA WEB :** [KLIK DISINI](https://heroku.com/deploy?template=https://github.com/Tonic990/Tonic-Userbot)\n"
+                        f"➣ **DEPLOY VIA WEB :** [KLIK DISINI](https://heroku.com/deploy?template=https://github.com/Toni880/Tonic-Userbot)\n"
                         f"➣ **DEPLOY VIA BOT :** [KLIK DISINI](https://telegram.dog/XTZ_HerokuBot?start=VG9uaWM5OTAvVG9uaWMtVXNlcmJvdCBUb25pYy1Vc2VyYm90)\n"
                         )
 
@@ -115,7 +115,7 @@ async def killdabot(event):
 async def reedme(e):
     await edit_or_reply(e,
         "Here's Something for You to Read :\n"
-        "\n[✨ Tonic-UserBot Repo](https://github.com/Tonic990/Tonic-User/blob/Tonic-UserBot/README.md)"
+        "\n[✨ Tonic-UserBot Repo](https://github.com/Toni880/Tonic-User/blob/Tonic-UserBot/README.md)"
         "\n[Setup Guide - Basic](https://telegra.ph/How-to-host-a-Telegram-Userbot-11-02)"
         "\n[Special - Note](https://telegra.ph/Special-Note-11-02)"
     )
@@ -140,10 +140,10 @@ async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await edit_or_reply(wannasee,
         "✨ ᴛᴏɴɪᴄ ᴜsᴇʀʙᴏᴛ ✨ \n"
-        "✰ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Github](https://github.com/Tonic990/Tonic-User)\n"
+        "✰ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Github](https://github.com/Toni880/Tonic-Userbot)\n"
         "✰ **ᴏᴡɴᴇʀ ʙᴏᴛ :** [『TØNIC』 乂 ₭ILLΣR](t.me/Bukan_guudlooking)\n"
         "✰ **ᴄʜᴀɴɴᴇʟ :** [Channel](t.me/PrimeSupportChannel)\n"
-        "✰ **ʟɪᴄᴇɴsᴇ :** [GPL-3.0 License](https://github.com/Tonic990/Tonic-Userbot/blob/Tonic-Userbot/LICENSE)"
+        "✰ **ʟɪᴄᴇɴsᴇ :** [GPL-3.0 License](https://github.com/Toni880/Tonic-Userbot/blob/Tonic-Userbot/LICENSE)"
     )
 
 
