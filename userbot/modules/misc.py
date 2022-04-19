@@ -82,7 +82,7 @@ async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await edit_or_reply(wannasee,
                         f"➣ **DEPLOY VIA WEB :** [KLIK DISINI](https://heroku.com/deploy?template=https://github.com/Toni880/Tonic-Userbot)\n"
-                        f"➣ **DEPLOY VIA BOT :** [KLIK DISINI](https://telegram.dog/XTZ_HerokuBot?start=VG9uaWM5OTAvVG9uaWMtVXNlcmJvdCBUb25pYy1Vc2VyYm90)\n"
+                        f"➣ **DEPLOY VIA BOT :** [KLIK DISINI](https://telegram.dog/XTZ_HerokuBot?start=VG9uaTg4MC9Ub25pYy1Vc2VyYm90IFRvbmljLVVzZXJib3Q)\n"
                         )
 
 
