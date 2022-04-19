@@ -183,7 +183,7 @@ LYDIA_API_KEY = os.environ.get(
 # Custom (forked) repo URL for updater.
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
-    "https://github.com/Tonic990/Tonic-Userbot")
+    "https://github.com/Toni880/Tonic-Userbot")
 UPSTREAM_REPO_BRANCH = os.environ.get(
     "UPSTREAM_REPO_BRANCH", "Tonic-Userbot")
 
@@ -640,7 +640,7 @@ with bot:
                         0,
                         "image/jpeg",
                         []),
-                    text="**Tonic-Userbot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **ᴏᴡɴᴇʀ ʀᴇᴘᴏ :** [ৡৢ͡𝙳𝙱 𝙏𝙊𝙉𝙄-𝙀𝙓 [🇮🇩]](https://t.me/Bukan_guudlooking)\n✣ **sᴜᴘᴘᴏʀᴛ :** @PrimeSupportGroup\n✣ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Tonic-Userbot](https://github.com/Tonic990/Tonic-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    text="**Tonic-Userbot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **ᴏᴡɴᴇʀ ʀᴇᴘᴏ :** [ৡৢ͡𝙳𝙱 𝙏𝙊𝙉𝙄-𝙀𝙓 [🇮🇩]](https://t.me/Bukan_guudlooking)\n✣ **sᴜᴘᴘᴏʀᴛ :** @PrimeSupportGroup\n✣ **ʀᴇᴘᴏsɪᴛᴏʀʏ :** [Tonic-Userbot](https://github.com/Toni880/Tonic-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
@@ -648,7 +648,7 @@ with bot:
                                 "https://t.me/PrimeSupportGroup"),
                             custom.Button.url(
                                 "ʀᴇᴘᴏ",
-                                "https://github.com/Tonic990/Tonic-Userbot"),
+                                "https://github.com/Toni880/Tonic-Userbot"),
                         ],
                     ],
                     link_preview=False,
@@ -703,7 +703,7 @@ with bot:
                                 "https://t.me/PrimeSupportGroup"),
                             custom.Button.url(
                                 "ʀᴇᴘᴏ",
-                                "https://github.com/Tonic990/Tonic-Userbot"),
+                                "https://github.com/Toni880/Tonic-Userbot"),
                         ],
                     ],
                     link_preview=False,
