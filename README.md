@@ -2,10 +2,10 @@
 
 </p>
 <p align="center">
-    <a href="https://github.com/Tonic990/Tonic-User"> <img src="https://img.shields.io/github/repo-size/Tonic990/Tonic-Userbot?color=orange&logo=github&logoColor=green&style=for-the-badge" /></a>
-    <a href="https://github.com/Tonic990/Tonic-User/commits"> <img src="https://img.shields.io/github/last-commit/Tonic990/Tonic-Userbot?color=blue&logo=github&logoColor=green&style=for-the-badge" /></a>
-    <a href="https://github.com/Tonic990/Tonic-User/issues"> <img src="https://img.shields.io/github/issues/Tonic990/Tonic-Userbot?color=blueviolet&logo=github&logoColor=green&style=for-the-badge" /></a>
-    <a href="https://github.com/Tonic990/Tonic-User/network/members"> <img src="https://img.shields.io/github/forks/Tonic990/Tonic-Userbot?color=red&logo=github&logoColor=green&style=for-the-badge" /></a>  
+    <a href="https://github.com/Toni880/Tonic-User"> <img src="https://img.shields.io/github/repo-size/Toni880/Tonic-Userbot?color=orange&logo=github&logoColor=green&style=for-the-badge" /></a>
+    <a href="https://github.com/Toni880/Tonic-User/commits"> <img src="https://img.shields.io/github/last-commit/Toni880/Tonic-Userbot?color=blue&logo=github&logoColor=green&style=for-the-badge" /></a>
+    <a href="https://github.com/Toni880/Tonic-User/issues"> <img src="https://img.shields.io/github/issues/Toni880/Tonic-Userbot?color=blueviolet&logo=github&logoColor=green&style=for-the-badge" /></a>
+    <a href="https://github.com/Toni880/Tonic-User/network/members"> <img src="https://img.shields.io/github/forks/Toni880/Tonic-Userbot?color=red&logo=github&logoColor=green&style=for-the-badge" /></a>  
     <a href="https://pypi.org/project/Telethon/"> <img src="https://img.shields.io/pypi/v/telethon?color=yellow&label=telethon&logo=python&logoColor=green&style=for-the-badge" /></a>
 </p>
 
@@ -20,7 +20,7 @@
 
 ## <p align="center">DEPLOY TO WEB HEROKU</p>
 
-<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/Tonic990/Tonic-Userbot">
+<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/Toni880/Tonic-Userbot">
   <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-aqua?style=flat&logo=heroku" width="325" height="50.100" /></a></p>
 
 
