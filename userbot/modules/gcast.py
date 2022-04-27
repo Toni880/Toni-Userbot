@@ -34,6 +34,7 @@ GCAST_BLACKLIST = [
     -1001701551771,  # X-Binner Chat
     -1001267233272,  # Pocong Userbot
     -1001613504853,  # Solid support
+    -1001687155877,  # CilikSupport
 ]
 
 
